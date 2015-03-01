@@ -24,3 +24,13 @@ Sound as a fail safe at the end (but you would usually set another device anyway
 ## TODO
 
 * Test the hour on top of the minutes on one 8x8 screen with the 3x4 font (see sketches).
+
+## Libraries
+
+- Adafruit GFX Library ([GitHub](https://github.com/adafruit/Adafruit-GFX-Library) & [tutorial](https://learn.adafruit.com/adafruit-gfx-graphics-library/overview))
+- Adafruit NeoMatrix Library ([GitHub](https://github.com/adafruit/Adafruit_NeoMatrix) & [Uberguide](https://learn.adafruit.com/adafruit-neopixel-uberguide/neomatrix-library))
+- Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPixel) & see Uberguide above)
+
+## Credits
+
+I used [picmonkey](http://www.picmonkey.com/) to create the collages.
