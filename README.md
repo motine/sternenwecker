@@ -23,15 +23,19 @@ The alarm does not include sound as a fail safe, because you would usually set a
 ### TODO
 
 - [ ] Test the hour on top of the minutes on one 8x8 screen with the 3x4 font (see sketches).
+- [ ] We need to power the LEDs separately. As it seems, the Arduino is not happy when drawing to much power (to bright LEDs).
 
 ### Programming
 
-Here the libraries the program uses:
+Here the **libraries** the program uses:
 
 - Adafruit GFX Library ([GitHub](https://github.com/adafruit/Adafruit-GFX-Library) & [tutorial](https://learn.adafruit.com/adafruit-gfx-graphics-library/overview))
 - Adafruit NeoMatrix Library ([GitHub](https://github.com/adafruit/Adafruit_NeoMatrix) & [Uberguide](https://learn.adafruit.com/adafruit-neopixel-uberguide/neomatrix-library))
 - Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPixel) & see Uberguide above)
 
+Here some weird stuff (**known issues**):
+
+- If you make the matrix use full power (most LEDs at high brightness), you may not be able to upload your sketch. Just unplug the matrix's 5V, upload your sketch and replug.
 
 ## Box
 
