@@ -8,7 +8,7 @@
 - Adafruit NeoPixel 8x8 ([shop](http://www.flikto.de/products/adafruit-neopixel-neomatrix-8x8-64-rgb-led-pixel-matrix))
 - DS1307 Real Time clock ([shop](http://www.amazon.de/DS1307-AT24C32-Module-Arduino-Mega2560/dp/B00G6B6MGS/ref=sr_1_6?ie=UTF8&qid=1425019440&sr=8-6&keywords=Ds1307))
 - Rotary encoder with button functionality (since we could not find pods with push-down button function included)
-- External power source > 4A (the matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max)
+- External power source > 4A ([shop](http://www.amazon.de/dp/B004S7U4IO), the matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max, there are lots of alternatives at [conrad.de](http://conrad.de))
 
 ### Layout
 
