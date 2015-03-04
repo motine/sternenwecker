@@ -4,13 +4,19 @@
 
 ### Parts
 
-- Arduino ([shop](http://www.amazon.de/SainSmart-Kompatibel-Entwicklungsbrett-ATmega328P-enthaltend/dp/B00760RLFO/ref=sr_1_6?ie=UTF8&qid=1425220236&sr=8-6&keywords=Sainsmart) - uno compatible)
+- Arduino Uno ([shop](http://www.amazon.de/SainSmart-Kompatibel-Entwicklungsbrett-ATmega328P-enthaltend/dp/B00760RLFO/ref=sr_1_6?ie=UTF8&qid=1425220236&sr=8-6&keywords=Sainsmart) - uno compatible)
 - Adafruit NeoPixel 8x8 ([shop](http://www.flikto.de/products/adafruit-neopixel-neomatrix-8x8-64-rgb-led-pixel-matrix))
 - DS1307 Real Time clock ([shop](http://www.amazon.de/DS1307-AT24C32-Module-Arduino-Mega2560/dp/B00G6B6MGS/ref=sr_1_6?ie=UTF8&qid=1425019440&sr=8-6&keywords=Ds1307))
 - Rotary encoder with button functionality (since we could not find pods with push-down button function included)
 - External power source > 4A ([shop](http://www.amazon.de/dp/B004S7U4IO), the matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max, there are lots of alternatives at [conrad.de](http://conrad.de))
+- 500 Ohm resistor, 1000uF capacitor
+- Some cables ([shop](http://www.amazon.de/dp/B00PXBVRZS)) (maybe a bread board for developing)
 
-### Layout
+### Setup & layout
+
+I cut the cord of the power source and attached 5V & GND to the LED matrix. The LED matrix's data connection was connected to the running Arduino. Since, it did not light up straight away, I unplugged it very quickly and swapped the cables. Then the cables light up. Since I was a little bit of a coward, I did not power the Arduino with my laptop, but with a USB battery I had lying around... Now, I have soldered a red cable to 5V and a black cable to GND of the power source's cord. Only then I did try the matrix with full power. **Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs**.
+
+For now, please see the circuit [here](http://www.instructables.com/file/F7F8GS5HRCK17ZT) (thanks to [Friedlc](http://www.instructables.com/id/25D-Edge-Lighting-Pixel-LED-Cube/step4/Wire-them-up/)).
 
 * [ ] Do we need a resistor or a capacitor as mentioned [here](https://learn.adafruit.com/adafruit-neopixel-uberguide/power)?
 
@@ -42,7 +48,7 @@ Here the **libraries** the program uses:
 
 Here some weird stuff (**known issues**):
 
-- If you make the matrix use full power (most LEDs at high brightness), you may not be able to upload your sketch. Just unplug the matrix's 5V, upload your sketch and replug.
+- If you make the matrix use lot's of power (MAX_BRIGHTNESS > 20), you may not be able to upload your sketch. Just unplug the matrix's 5V, upload your sketch and replug.
 
 ## Box
 
