@@ -66,5 +66,6 @@ The front/top side will be bent. Here some resources for checking out how to do 
 
 * Thanks to my wife, because she pretends to be really interested in my little projects.
 * Thanks to Michael to listen to me, even if I am over excited.
+* Thanks to Armin for feedback on the button issue.
 * Thanks to Marcel for answering a couple of questions regarding the circuit.
 * I used [picmonkey](http://www.picmonkey.com/) to create the collages.
