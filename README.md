@@ -35,8 +35,16 @@ The alarm does not include sound as a fail safe, because you would usually set a
 
 ### TODO
 
+- [ ] Finish laser cut for box
+- [ ] Add Conrad order to parts
+- [ ] Solder the resistor into the cable (surround with shrinking hose)
+- [ ] Solder the resistor into the cable (surround with shrinking hose)
+- [ ] Rethink name of the project
 - [ ] Test the hour on top of the minutes on one 8x8 screen with the 3x4 font (see sketches).
-- [ ] We need to power the LEDs separately. As it seems, the Arduino is not happy when drawing to much power (to bright LEDs).
+- [ ] Make drawings for icons
+- [ ] Program encoder library ()
+- [ ] Program menu icons
+- [ ] Program shift animations
 
 ### Programming
 
