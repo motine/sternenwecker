@@ -10,6 +10,8 @@
 - External power source > 4A ([shop](http://www.amazon.de/dp/B004S7U4IO), the matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max, there are lots of alternatives at [conrad.de](http://conrad.de))
 - 500 Ohm resistor, 1000uF capacitor
 - Some cables ([shop](http://www.amazon.de/dp/B00PXBVRZS)) (maybe a bread board for developing)
+- 3mm MDF sheet(s) ([shop](http://www.modulor.de/en/Wood-Cork/Fibreboards/MDF-Boards/MDF-brown-uncoated.html))
+- 3mm Mat acrylic glass sheet (WH10) ([shop](http://www.modulor.de/en/Plastics-Rubber/Sheets-Mats-Films/Acrylic-Glass-GS-Sheets-and-Blocks/Plexiglas-GS-white-milky.html))
 
 ### Setup & layout
 
