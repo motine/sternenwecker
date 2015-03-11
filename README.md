@@ -36,16 +36,12 @@ The alarm does not include sound as a fail safe, because you would usually set a
 
 ### TODO
 
-- [ ] Finish laser cut for box
+- [ ] Account for sideways shift in box
 - [ ] Add Conrad order to parts
 - [ ] Solder the resistor into the cable (surround with shrinking hose)
-- [ ] Solder the resistor into the cable (surround with shrinking hose)
-- [ ] Rethink name of the project
 - [ ] Test the hour on top of the minutes on one 8x8 screen with the 3x4 font (see sketches).
-- [ ] Make drawings for icons
-- [ ] Program encoder library ()
-- [ ] Program menu icons
-- [ ] Program shift animations
+- [ ] Program encoder library
+- [ ] Program menu icons (with shift animation)
 
 ### Programming
 
