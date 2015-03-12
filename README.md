@@ -34,22 +34,19 @@ When the alarm is ongoing, show the time occasionally. The surrounding pixels wh
 
 The alarm does not include sound as a fail safe, because you would usually set another device anyway.
 
-### TODO
-
-- [ ] Account for sideways shift in box
-- [ ] Add Conrad order to parts
-- [ ] Solder the resistor into the cable (surround with shrinking hose)
-- [ ] Test the hour on top of the minutes on one 8x8 screen with the 3x4 font (see sketches).
-- [ ] Program encoder library
-- [ ] Program menu icons (with shift animation)
-
-### Programming
+## Programming
 
 Here the **libraries** the program uses:
 
 - Adafruit GFX Library ([GitHub](https://github.com/adafruit/Adafruit-GFX-Library) & [tutorial](https://learn.adafruit.com/adafruit-gfx-graphics-library/overview))
 - Adafruit NeoMatrix Library ([GitHub](https://github.com/adafruit/Adafruit_NeoMatrix) & [Uberguide](https://learn.adafruit.com/adafruit-neopixel-uberguide/neomatrix-library))
 - Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPixel) & see Uberguide above)
+
+Here some more info:
+
+* I used the [ALPS STEC12E Encoder](http://www.reichelt.de/Drehimpulsgeber/STEC12E08/3/index.html?;ACTION=3;LA=5000;GROUP=B29;GROUPID=3714;ARTICLE=73923;START=0;SORT=artnr;OFFSET=16;SID=12T8NM5n8AAAIAAFaMoB8531a88b7cd82ed0595530ee4614f0159) with the data sheet [specification](https://cdn-reichelt.de/documents/datenblatt/F100/402097STEC12E08.PDF).
+
+* I tried to use interrupts for the encoder, because the bounce was too hard. I do it in the `loop` now and works fine. As it seems as I do not need to debounce the signal in my case. But if you decide to do so, I found this [nice article](https://hifiduino.wordpress.com/2010/10/20/rotaryencoder-hw-sw-no-debounce) (i.e. see "updated" part). Also there is a [Arduino Playground page](http://playground.arduino.cc/code/bounce) about it.
 
 Here some weird stuff (**known issues**):
 
@@ -74,4 +71,23 @@ The front/top side will be bent. Here some resources for checking out how to do 
 * Thanks to Stefan who shared his experiences, so I didn't have to try and fail so often. 
 * Thanks to Armin for feedback on the button issue.
 * Thanks to Marcel for answering a couple of questions regarding the circuit.
-* I used [picmonkey](http://www.picmonkey.com/) to create the collages.
+
+
+I used to following software:
+
+* TextMate for text editing
+* Arduino GUI for compiling and uploading (with the external editor setting enabled)
+* [fritzing](fritzing.org) for circuit design
+* omniGraffle for the box design (for the laser cutter)
+* [picmonkey](http://www.picmonkey.com/) to create the collages
+
+
+# TODOs left
+
+- [ ] Account for sideways shift in box
+- [ ] Add Conrad order to parts
+- [ ] Solder the resistor into the cable (surround with shrinking hose)
+- [ ] Test the hour on top of the minutes on one 8x8 screen with the 3x4 font (see sketches).
+- [ ] Program encoder library
+- [ ] Program menu icons (with shift animation)
+
