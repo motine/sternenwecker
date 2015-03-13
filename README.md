@@ -55,7 +55,15 @@ Here some weird stuff (**known issues**):
 ## Box
 
 Here is the idea for the housing...
-![box](https://raw.githubusercontent.com/motine/lightalarmy/master/studies/box-retro.jpg)
+![box](https://raw.githubusercontent.com/motine/sternenwecker/master/studies/box-retro.jpg).
+
+To assemble:
+
+1. Assemble the support.
+1. Take some [blue tack](http://en.wikipedia.org/wiki/Blu-Tack) and stick the matrix to the support (or use glue if you are sure what you are doing).
+1. Then assemble the rest of the top bit (top+side+support+side+back).
+1. Put everything on the bottom.
+1. Slide in the drawer.
 
 The front/top side will be bent. Here some resources for checking out how to do this:
 
