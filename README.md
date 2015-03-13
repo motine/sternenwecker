@@ -6,9 +6,9 @@
 
 - Arduino Uno ([shop](http://www.amazon.de/SainSmart-Kompatibel-Entwicklungsbrett-ATmega328P-enthaltend/dp/B00760RLFO/ref=sr_1_6?ie=UTF8&qid=1425220236&sr=8-6&keywords=Sainsmart) - uno compatible)
 - Adafruit NeoPixel 8x8 ([shop](http://www.flikto.de/products/adafruit-neopixel-neomatrix-8x8-64-rgb-led-pixel-matrix))
-- Rotary encoder with button functionality (since we could not find pods with push-down button function included)
-- External power source > 4A ([shop](http://www.amazon.de/dp/B004S7U4IO), the matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max, there are lots of alternatives at [conrad.de](http://conrad.de))
-- 500 Ohm resistor, 1000uF capacitor
+- Rotary encoder with button functionality "Encoder 5 Vdc 0.001 A 360 ° ALPS STEC12E08" ([shop](http://www.conrad.com/ce/en/product/700708/Encoder-5-Vdc-0001-A-360-ALPS-STEC12E08-1-pcs)) with cap ([shop](http://www.conrad.com/ce/en/product/700619/ALPS-DK13-164A645-Rotary-Knob-For-Encoder-With-Plastic-Shaft-Rotary-button-?ref=oz))
+- External power source with around 4 Amperes ([shop](http://www.amazon.de/dp/B004S7U4IO), the matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max, there are lots of alternatives at [conrad.de](http://conrad.de))
+- 470 Ohm resistor
 - Some cables ([shop](http://www.amazon.de/dp/B00PXBVRZS)) (maybe a bread board for developing)
 - 3mm MDF sheet(s) ([shop](http://www.modulor.de/en/Wood-Cork/Fibreboards/MDF-Boards/MDF-brown-uncoated.html))
 - 3mm Mat acrylic glass sheet (WH10) ([shop](http://www.modulor.de/en/Plastics-Rubber/Sheets-Mats-Films/Acrylic-Glass-GS-Sheets-and-Blocks/Plexiglas-GS-white-milky.html))
