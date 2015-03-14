@@ -7,20 +7,20 @@
 
 #define LED_PIN 6
 #define MAX_BRIGHTNESS 20 // Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs.
-AlarmMatrix matrix = AlarmMatrix(LED_PIN, 64);
+AlarmMatrix matrix = AlarmMatrix(LED_PIN, 8, 8);
 
-const uint16_t BLACK  = matrix.Color(0,0,0);
-const uint16_t WHITE  = matrix.Color(255, 255, 255);
-const uint16_t RED    = matrix.Color(255, 0, 0);
-const uint16_t GREEN  = matrix.Color(0, 255, 0);
-const uint16_t BLUE  = matrix.Color(0, 0, 255);
-const uint16_t YELLOW = matrix.Color(255, 255, 0);
+const uint32_t BLACK  = matrix.Color(0,0,0);
+const uint32_t WHITE  = matrix.Color(255, 255, 255);
+const uint32_t RED    = matrix.Color(255, 0, 0);
+const uint32_t GREEN  = matrix.Color(0, 255, 0);
+const uint32_t BLUE   = matrix.Color(0, 0, 255);
+const uint32_t YELLOW = matrix.Color(255, 255, 0);
 
 #define COLOR_COUNT 4
 const uint16_t COLORS[COLOR_COUNT] = {WHITE, RED, GREEN, BLUE};
 #define BRIGHTNESS_STEPS 3
 
-volatile uint8_t counter_a = 0;
+volatile uint8_t counter_a = 5;
 volatile uint8_t counter_b = 5;
 
 void setup() {
@@ -91,23 +91,24 @@ void test_matrix() {
   }
 }
 
-uint8_t last;
-void rainbow() {
+#define SUNRISE_DURATION 1200000.0 // ms, must be float
+void sunrise() {
   // please try this code with full brightness, because the results will differ vastly.
-  double pos = fmod(millis() / 30000.0, 1.0);
+  double pos = fmod(millis() / SUNRISE_DURATION, 1.0);
   uint8_t r = pow(pos, 2) * 255;
   uint8_t g = pow(pos, 3) * 255;
   uint8_t b = pow(pos, 5) * 150;
-  if (pos != last) {
-    Serial.println(pos);
-    last = pos;
-  }
   matrix.fillScreen(matrix.Color(r,g,b));
   matrix.show();
 }
 
 void loop() {
-  encoder_loop();
-  // show_counters();
-  rainbow();
+  // encoder_loop();
+  show_counters();
+  // matrix.fillScreen(BLACK);
+  // matrix.draw3x5Digit(5, 1, 1, RED);
+  // matrix.show();
+  // matrix.drawPixel(1, 1, matrix.Color((millis()/10) % 256,0,0));
+  // matrix.show();
+  // sunrise();
 }
