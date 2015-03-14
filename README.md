@@ -36,11 +36,8 @@ The alarm does not include sound as a fail safe, because you would usually set a
 
 ## Programming
 
-Here the **libraries** the program uses:
+I only use the Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPixel) & see Uberguide above) library. It turns out that the NeoMatrix library uses only 16 bit for colors. This makes my color gradients look choppy.
 
-- Adafruit GFX Library ([GitHub](https://github.com/adafruit/Adafruit-GFX-Library) & [tutorial](https://learn.adafruit.com/adafruit-gfx-graphics-library/overview))
-- Adafruit NeoMatrix Library ([GitHub](https://github.com/adafruit/Adafruit_NeoMatrix) & [Uberguide](https://learn.adafruit.com/adafruit-neopixel-uberguide/neomatrix-library))
-- Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPixel) & see Uberguide above)
 
 Here some more info:
 
