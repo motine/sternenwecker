@@ -103,7 +103,7 @@ void sunrise() {
 }
 
 void loop() {
-  // encoder_loop();
+  encoder_loop();
   show_counters();
   // matrix.fillScreen(BLACK);
   // matrix.draw3x5Digit(5, 1, 1, RED);
