@@ -1,0 +1,21 @@
+#ifndef RESOURCES_H
+#define RESOURCES_H
+
+#include "alarm_matrix.h"
+#include "mode_master.h"
+
+#define ENCODER_A_PIN 3
+#define ENCODER_B_PIN 2
+#define ENCODER_BUTTON_PIN 4
+
+#define LED_PIN 6
+#define BRIGHTNESS 20 // Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs.
+
+
+extern ModeMaster mode_master;
+extern AlarmMatrix matrix;
+
+void setup_resources();
+void loop_resources();
+
+#endif
