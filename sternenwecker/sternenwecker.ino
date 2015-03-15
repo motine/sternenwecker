@@ -91,7 +91,7 @@ void test_matrix() {
   }
 }
 
-#define SUNRISE_DURATION 1200000.0 // ms, must be float
+#define SUNRISE_DURATION 30000.0 // ms, must be float
 void sunrise() {
   // please try this code with full brightness, because the results will differ vastly.
   double pos = fmod(millis() / SUNRISE_DURATION, 1.0);
@@ -104,11 +104,11 @@ void sunrise() {
 
 void loop() {
   encoder_loop();
-  show_counters();
+  // show_counters();
   // matrix.fillScreen(BLACK);
   // matrix.draw3x5Digit(5, 1, 1, RED);
   // matrix.show();
   // matrix.drawPixel(1, 1, matrix.Color((millis()/10) % 256,0,0));
   // matrix.show();
-  // sunrise();
+  sunrise();
 }
