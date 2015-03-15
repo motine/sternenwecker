@@ -8,9 +8,11 @@ ModeMaster::ModeMaster(Mode* initial_mode) : initial_mode(initial_mode) {
 ModeMaster::~ModeMaster() {
 }
 
+void ModeMaster::setup() {
+}
 void ModeMaster::loop() {
-  if (current_mode == NULL) {
-      setModeUnlessNull(initial_mode);
+  if (current_mode==NULL) {
+    setModeUnlessNull(initial_mode);    
   }
   setModeUnlessNull(current_mode->loop());
 }
@@ -23,4 +25,17 @@ void ModeMaster::setModeUnlessNull(Mode* mode) {
     current_mode = mode;
     current_mode->enter();
   }
+}
+
+void ModeMaster::press() {
+  setModeUnlessNull(current_mode->press());
+}
+void ModeMaster::longpress() {
+  setModeUnlessNull(current_mode->longpress());
+}
+void ModeMaster::left_turn() {
+  setModeUnlessNull(current_mode->left_turn());
+}
+void ModeMaster::right_turn() {
+  setModeUnlessNull(current_mode->right_turn());
 }

@@ -1,8 +1,7 @@
 #include "alarm_matrix.h"
 
 AlarmMatrix::AlarmMatrix(uint8_t pin, uint8_t width, uint8_t height):
-  Adafruit_NeoPixel(64, pin, NEO_GRB + NEO_KHZ800), width(width), height(height), count(width*height) {
-    
+  Adafruit_NeoPixel(width*height, pin, NEO_GRB + NEO_KHZ800), width(width), height(height), count(width*height) {
 };
 
 uint32_t AlarmMatrix::hue_to_rgb(uint16_t hue) {

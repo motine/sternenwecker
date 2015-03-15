@@ -29,9 +29,11 @@ void Button::loop() {
       millis_down = 0;
     } else { // we are still pressing
       if (millis() >= (millis_down+BUTTON_LONGPRESS_DURATION)) { // we have a long press
-        if (callback_button_longpress != NULL)
-          callback_button_longpress(pin);
-        press_callback_triggered = true;
+        if (!press_callback_triggered) {
+          if (callback_button_longpress != NULL)
+            callback_button_longpress(pin);
+          press_callback_triggered = true;
+        }
       }
     }
   }
