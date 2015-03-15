@@ -4,6 +4,7 @@
 #include "alarm_matrix.h"
 #include "mode_master.h"
 #include "button.h"
+#include "encoder.h"
 
 #define ENCODER_A_PIN 3
 #define ENCODER_B_PIN 2
@@ -15,6 +16,7 @@
 extern ModeMaster mode_master;
 extern AlarmMatrix matrix;
 extern Button button;
+extern Encoder encoder;
 
 void setup_resources();
 void loop_resources();
