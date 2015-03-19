@@ -78,7 +78,7 @@ class AlarmMatrix : public Adafruit_NeoPixel {
 
     // converts a HSV to RGB values. For optimization we assume full S and full V.
     // hue is between 0 and 360.
-    uint32_t hue_to_rgb(uint16_t hue);
+    uint32_t hue_to_color(uint16_t hue);
 
     const uint8_t width;
     const uint8_t height;

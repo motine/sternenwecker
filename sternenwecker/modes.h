@@ -1,6 +1,13 @@
 #ifndef MODES_H
 #define MODES_H
 
+#define MENU_COLOR matrix.Color(255, 0, 120)
+#define MENU_COUNT 4
+#define TORCH_HUE_START 8
+#define TORCH_HUE_STEPS 80
+#define TORCH_BRIGHTNESS_START 10
+#define TORCH_BRIGHTNESS_STEPS 30
+
 // If a method which returns Mode* is called and it returns something non-NULL, the mode will be set after execution of the method.
 class Mode {
   public:
@@ -16,21 +23,52 @@ class Mode {
     // called when the encoder button was pressed
     virtual Mode* press() { return NULL; };
     virtual Mode* longpress() { return NULL; };
+    virtual Mode* button_hold() { return NULL; };
     // called when the encoder turned clockwise or counter-clockwise
     virtual Mode* left_turn() { return NULL; };
     virtual Mode* right_turn() { return NULL; };
 };
 
-class MTest : public Mode {
+class MOff : public Mode {
   public:
-    MTest() : Mode() { };
+    MOff() : Mode() { };
     void enter();
-    Mode* loop();
+    Mode* press();
+};
+extern MOff m_off;
+
+class MMenu : public Mode {
+  public:
+    MMenu() : Mode() { };
+    void enter();
+    // Mode* loop();
     Mode* press();
     Mode* longpress();
     Mode* left_turn();
     Mode* right_turn();
+  private:
+    void update();
+    uint8_t current;
 };
-extern MTest m_test;
+extern MMenu m_menu;
+
+
+class MTorch : public Mode {
+  public:
+    MTorch() : Mode() { };
+    void enter();
+    void leave();
+    Mode* press();
+    Mode* longpress();
+    Mode* button_hold();
+    Mode* left_turn();
+    Mode* right_turn();
+  private:
+    void update();
+    uint16_t hue;
+    uint8_t brightness;
+};
+extern MTorch m_torch;
+
 
 #endif

@@ -14,6 +14,7 @@ class ModeMaster {
      // This class only delegates there and sets a new mode if needed.
      void press();
      void longpress();
+     void button_hold();
      void left_turn();
      void right_turn();
 

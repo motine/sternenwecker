@@ -1,12 +1,15 @@
 #include "resources.h"
 
-ModeMaster mode_master = ModeMaster(&m_test);
+ModeMaster mode_master = ModeMaster(&m_off);
 
 void button_press(uint8_t button_pin) {
   mode_master.press();
 }
 void button_longpress(uint8_t button_pin) {
   mode_master.longpress();
+}
+void button_hold(uint8_t button_pin) {
+  mode_master.button_hold();
 }
 
 void encoder_left_turn() {
@@ -17,7 +20,7 @@ void encoder_right_turn() {
 }
 
 AlarmMatrix matrix = AlarmMatrix(LED_PIN, 8, 8);
-Button button = Button(ENCODER_BUTTON_PIN, button_press, button_longpress);
+Button button = Button(ENCODER_BUTTON_PIN, button_press, button_longpress, button_hold);
 Encoder encoder = Encoder(ENCODER_A_PIN, ENCODER_B_PIN, encoder_left_turn, encoder_right_turn);
 
 void setup_resources() {

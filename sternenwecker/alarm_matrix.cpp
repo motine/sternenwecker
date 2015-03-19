@@ -4,7 +4,7 @@ AlarmMatrix::AlarmMatrix(uint8_t pin, uint8_t width, uint8_t height):
   Adafruit_NeoPixel(width*height, pin, NEO_GRB + NEO_KHZ800), width(width), height(height), count(width*height) {
 };
 
-uint32_t AlarmMatrix::hue_to_rgb(uint16_t hue) {
+uint32_t AlarmMatrix::hue_to_color(uint16_t hue) {
   // for conversion for:
   // - http://www.rapidtables.com/convert/color/hsv-to-rgb.htm
   // - http://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV

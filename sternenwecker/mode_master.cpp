@@ -33,6 +33,9 @@ void ModeMaster::press() {
 void ModeMaster::longpress() {
   setModeUnlessNull(current_mode->longpress());
 }
+void ModeMaster::button_hold() {
+  setModeUnlessNull(current_mode->button_hold());
+}
 void ModeMaster::left_turn() {
   setModeUnlessNull(current_mode->left_turn());
 }
