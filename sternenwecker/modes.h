@@ -7,6 +7,7 @@
 #define TORCH_HUE_STEPS 80
 #define TORCH_BRIGHTNESS_START 10
 #define TORCH_BRIGHTNESS_STEPS 30
+#define SET_COLOR matrix.Color(0, 100, 255)
 
 // If a method which returns Mode* is called and it returns something non-NULL, the mode will be set after execution of the method.
 class Mode {
@@ -41,7 +42,6 @@ class MMenu : public Mode {
   public:
     MMenu() : Mode() { };
     void enter();
-    // Mode* loop();
     Mode* press();
     Mode* longpress();
     Mode* left_turn();
@@ -70,5 +70,22 @@ class MTorch : public Mode {
 };
 extern MTorch m_torch;
 
+
+#define SET_STATE_MINUTE 1
+#define SET_STATE_HOUR 2
+class MSet : public Mode {
+  public:
+    MSet() : Mode() { };
+    void enter();
+    Mode* loop();
+    Mode* press();
+    Mode* longpress();
+    Mode* left_turn();
+    Mode* right_turn();
+  private:
+    void update();
+    uint8_t state;
+};
+extern MSet m_set;
 
 #endif

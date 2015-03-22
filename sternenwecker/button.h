@@ -24,4 +24,4 @@ class Button {
     const uint8_t pin;
 };
 
-#endif /* end of include guard: BUTTON_H */
+#endif

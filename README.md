@@ -89,10 +89,10 @@ I used to following software:
 
 # TODOs left
 
+- [ ] debounce button click
+- [ ] deal with overflow (approx. after 50 days) in clock
+- [ ] add confirmation after setting the time and the alarm
 - [ ] Account for sideways shift in box
-- [ ] Add Conrad order to parts
-- [ ] Solder the resistor into the cable (surround with shrinking hose)
 - [ ] Test the hour on top of the minutes on one 8x8 screen with the 3x4 font (see sketches).
-- [ ] Program encoder library
-- [ ] Program menu icons (with shift animation)
+- [ ] Program shift animation in menu
 

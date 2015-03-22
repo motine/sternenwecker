@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "resources.h"
+#include "clock.h"
 #include "modes.h"
 
 Mode::Mode() {
@@ -54,7 +55,7 @@ static const uint8_t PROGMEM
       B00000000,
       B00000000 },
     { B00000000,
-      B00000000,
+      B00011000,
       B00011000,
       B00011000,
       B00000000,
@@ -78,7 +79,7 @@ Mode* MMenu::press() {
     case 0: return &m_menu;
     case 1: return &m_menu;
     case 2: return &m_torch;
-    case 3: return &m_menu;
+    case 3: return &m_set;
     default: return &m_off;
   }
   // TODO
@@ -136,6 +137,62 @@ Mode* MTorch::right_turn() {
   if (brightness < TORCH_BRIGHTNESS_STEPS) {
     brightness++;
   }
+  update();
+  return NULL;
+}
+
+// --------- MSet ----------
+MSet m_set = MSet();
+void MSet::update() {
+  matrix.clear();
+  uint8_t num_to_show = (state == SET_STATE_MINUTE) ? get_current_minute() : get_current_hour();
+  uint8_t num_x = (state == SET_STATE_MINUTE) ? 2 : 0;
+  uint8_t dots_x = (state == SET_STATE_MINUTE) ? 0 : 7;
+  matrix.draw3x5Digit(num_to_show / 10, num_x,2, SET_COLOR);
+  matrix.draw3x5Digit(num_to_show % 10, num_x+3,2, SET_COLOR);
+  if (get_current_second() % 2 == 0) {
+    matrix.drawPixel(dots_x, 3, SET_COLOR);
+    matrix.drawPixel(dots_x, 5, SET_COLOR);
+  }
+  matrix.show();
+}
+
+void MSet::enter() {
+  state = SET_STATE_HOUR;
+  update();
+}
+
+Mode* MSet::loop() {
+  update();
+  return NULL;
+}
+
+Mode* MSet::press() {
+  switch (state) {
+  case SET_STATE_HOUR:
+    state = SET_STATE_MINUTE;
+    update();
+    return NULL;
+  case SET_STATE_MINUTE:
+    return &m_off;
+  }
+}
+Mode* MSet::longpress() { return &m_menu; }
+Mode* MSet::left_turn() {
+  if (state == SET_STATE_HOUR)
+    substract_hour_from_offset();
+  if (state == SET_STATE_MINUTE)
+    substract_minute_from_offset();
+
+  update();
+  return NULL;
+}
+Mode* MSet::right_turn() {
+  if (state == SET_STATE_HOUR)
+    add_hour_to_offset();
+  if (state == SET_STATE_MINUTE)
+    add_minute_to_offset();
+
   update();
   return NULL;
 }
