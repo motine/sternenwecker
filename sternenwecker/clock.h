@@ -11,4 +11,3 @@ void substract_hour_from_offset();
 void substract_minute_from_offset();
 
 #endif CLOCK_H
-

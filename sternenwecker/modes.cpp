@@ -14,7 +14,47 @@ void MOff::enter() {
 }
 
 Mode* MOff::press() {
+  return &m_time;
+}
+
+// --------- MShowTime ----------
+MTime m_time = MTime();
+
+Mode* MTime::loop() {
+  uint8_t hour = get_current_hour();
+  uint8_t minute = get_current_minute();
+
+  int8_t scroll_offset = 8 - (millis() - enter_millis) / TIME_SCROLL_STEP_DURATION;
+  
+  if (hour < 10)
+    scroll_offset-=4;
+  
+  if (scroll_offset < -18)
+    return &m_off;
+
+  matrix.clear();
+  if (hour >= 10)
+    matrix.draw3x5Digit(hour / 10, scroll_offset, 2, TIME_COLOR);
+  matrix.draw3x5Digit(hour % 10, scroll_offset+4, 2, TIME_COLOR);
+  matrix.drawPixel(scroll_offset+8, 3, TIME_COLOR);
+  matrix.drawPixel(scroll_offset+8, 5, TIME_COLOR);
+  matrix.draw3x5Digit(minute / 10, scroll_offset+11, 2, TIME_COLOR);
+  matrix.draw3x5Digit(minute % 10, scroll_offset+15, 2, TIME_COLOR);
+
+  matrix.show();
+  return NULL;
+}
+void MTime::enter() {
+  enter_millis = millis();
+}
+void MTime::leave() {
+}
+
+Mode* MTime::press() {
   return &m_menu;
+}
+Mode* MTime::longpress() {
+  return &m_off;
 }
 
 // --------- MMenu ----------
@@ -142,14 +182,17 @@ Mode* MTorch::right_turn() {
 }
 
 // --------- MSet ----------
+#define SET_STATE_MINUTE 1
+#define SET_STATE_HOUR 2
+
 MSet m_set = MSet();
 void MSet::update() {
   matrix.clear();
   uint8_t num_to_show = (state == SET_STATE_MINUTE) ? get_current_minute() : get_current_hour();
   uint8_t num_x = (state == SET_STATE_MINUTE) ? 2 : 0;
   uint8_t dots_x = (state == SET_STATE_MINUTE) ? 0 : 7;
-  matrix.draw3x5Digit(num_to_show / 10, num_x,2, SET_COLOR);
-  matrix.draw3x5Digit(num_to_show % 10, num_x+3,2, SET_COLOR);
+  matrix.draw3x5Digit(num_to_show / 10, num_x, 2, SET_COLOR);
+  matrix.draw3x5Digit(num_to_show % 10, num_x+3, 2, SET_COLOR);
   if (get_current_second() % 2 == 0) {
     matrix.drawPixel(dots_x, 3, SET_COLOR);
     matrix.drawPixel(dots_x, 5, SET_COLOR);
@@ -176,6 +219,7 @@ Mode* MSet::press() {
   case SET_STATE_MINUTE:
     return &m_off;
   }
+  return NULL;
 }
 Mode* MSet::longpress() { return &m_menu; }
 Mode* MSet::left_turn() {

@@ -42,5 +42,7 @@ void AlarmMatrix::draw3x5Digit(uint8_t no, uint8_t x, uint8_t y, uint32_t color)
 }
 
 void AlarmMatrix::drawPixel(uint8_t x, uint8_t y, uint32_t color) {
+  if ((x >= width) || (x < 0) || (y >= height) || y < 0)
+    return;
   setPixelColor(y*width+x, color);
 }

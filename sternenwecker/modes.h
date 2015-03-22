@@ -2,6 +2,8 @@
 #define MODES_H
 
 #define MENU_COLOR matrix.Color(255, 0, 120)
+#define TIME_COLOR matrix.Color(50, 10, 0) // regulate brightness via less color
+#define TIME_SCROLL_STEP_DURATION 80
 #define MENU_COUNT 4
 #define TORCH_HUE_START 8
 #define TORCH_HUE_STEPS 80
@@ -38,6 +40,20 @@ class MOff : public Mode {
 };
 extern MOff m_off;
 
+class MTime : public Mode {
+  public:
+    MTime() : Mode() { };
+    Mode* loop();
+    void enter();
+    void leave();
+    Mode* press();
+    Mode* longpress();
+  private:
+    unsigned long enter_millis;
+};
+extern MTime m_time;
+
+
 class MMenu : public Mode {
   public:
     MMenu() : Mode() { };
@@ -51,7 +67,6 @@ class MMenu : public Mode {
     uint8_t current;
 };
 extern MMenu m_menu;
-
 
 class MTorch : public Mode {
   public:
@@ -70,9 +85,6 @@ class MTorch : public Mode {
 };
 extern MTorch m_torch;
 
-
-#define SET_STATE_MINUTE 1
-#define SET_STATE_HOUR 2
 class MSet : public Mode {
   public:
     MSet() : Mode() { };

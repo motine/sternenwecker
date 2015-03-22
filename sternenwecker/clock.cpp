@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "clock.h"
 
-uint8_t minute_offset = 30;
+uint8_t minute_offset = 35;
 uint8_t hour_offset = 6;
 
 #define MINUTE_VALUE 60000UL
