@@ -167,7 +167,7 @@ Mode* MTorch::button_hold() {
 }
 
 Mode* MTorch::left_turn() {
-  if (brightness > 0) {
+  if (brightness > TORCH_BRIGHTNESS_MIN) {
     brightness--;
   }
   update();

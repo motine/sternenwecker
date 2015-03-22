@@ -3,7 +3,7 @@
 
 #define BUTTON_LONGPRESS_DURATION 500 // ms
 #define BUTTON_HOLD_FREQUENCY 100 // ms
-#define BUTTON_DEBOUNCE_INTERVAL 10
+#define BUTTON_DEBOUNCE_INTERVAL 10 // ms
 
 typedef void (*button_callback_t)(uint8_t button_pin);
 
