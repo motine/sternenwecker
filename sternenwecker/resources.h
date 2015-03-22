@@ -11,7 +11,7 @@
 #define ENCODER_BUTTON_PIN 4
 
 #define LED_PIN 6
-#define BRIGHTNESS 20 // Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs.
+#define BRIGHTNESS 255 // Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs.
 
 extern ModeMaster mode_master;
 extern AlarmMatrix matrix;

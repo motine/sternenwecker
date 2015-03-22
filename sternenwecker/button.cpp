@@ -10,6 +10,10 @@ void Button::setup() {
 
 void Button::loop() {
   int pin_state = digitalRead(pin);
+  
+  if (millis_last_edge+BUTTON_DEBOUNCE_INTERVAL > millis()) // we are still waiting for the debounce intervall to pass by
+    return;
+
   if (millis_down == 0) { // the button was up before
     if (pin_state == LOW) { // we have a push down
       millis_down = millis();
@@ -17,6 +21,7 @@ void Button::loop() {
         callback_button_down(pin);
       press_callback_triggered = false;
       millis_last_hold_fired = millis_down;
+      millis_last_edge = millis_down;
     }
   } else { // button was down before
     if (pin_state == HIGH) { // we have a release
@@ -27,6 +32,7 @@ void Button::loop() {
           callback_button_press(pin);
         press_callback_triggered = true;
       }
+      millis_last_edge = millis();
       millis_down = 0;
     } else { // we are still pressing
       if (millis() >= (millis_down+BUTTON_LONGPRESS_DURATION)) { // we have a long press
