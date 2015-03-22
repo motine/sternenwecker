@@ -1,15 +1,15 @@
 #ifndef MODES_H
 #define MODES_H
 
-#define MENU_COLOR matrix.Color(255, 0, 120)
-#define TIME_COLOR matrix.Color(50, 10, 0) // regulate brightness via less color
+#define MENU_COLOR matrix.Color(0, 100, 120)
+#define TIME_COLOR matrix.Color(10, 2, 0) // regulate brightness via less color
 #define TIME_SCROLL_STEP_DURATION 80
 #define MENU_COUNT 4
 #define TORCH_HUE_START 8
 #define TORCH_HUE_STEPS 80
 #define TORCH_BRIGHTNESS_START 10
 #define TORCH_BRIGHTNESS_STEPS 30
-#define SET_COLOR matrix.Color(0, 100, 255)
+#define SET_COLOR matrix.Color(100, 0, 120)
 
 // If a method which returns Mode* is called and it returns something non-NULL, the mode will be set after execution of the method.
 class Mode {

@@ -85,14 +85,3 @@ I used to following software:
 * [fritzing](fritzing.org) for circuit design
 * omniGraffle for the box design (for the laser cutter)
 * [picmonkey](http://www.picmonkey.com/) to create the collages
-
-
-# TODOs left
-
-- [ ] debounce button click
-- [ ] deal with overflow (approx. after 50 days) in clock
-- [ ] add confirmation after setting the time and the alarm
-- [ ] Account for sideways shift in box
-- [ ] Test the hour on top of the minutes on one 8x8 screen with the 3x4 font (see sketches).
-- [ ] Program shift animation in menu
-
