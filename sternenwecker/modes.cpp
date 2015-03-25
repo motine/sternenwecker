@@ -116,7 +116,7 @@ void MMenu::enter() {
 
 Mode* MMenu::press() {
   switch (current) {
-    case 0: return &m_menu;
+    case 0: return &m_set_alarm;
     case 1: return &m_menu;
     case 2: return &m_torch;
     case 3: return &m_set_time;
@@ -191,11 +191,11 @@ void MSetTime::update() {
   uint8_t num_to_show = (state == SET_STATE_MINUTE) ? get_current_minute() : get_current_hour();
   uint8_t num_x = (state == SET_STATE_MINUTE) ? 2 : 0;
   uint8_t dots_x = (state == SET_STATE_MINUTE) ? 0 : 7;
-  matrix.draw3x5Digit(num_to_show / 10, num_x, 2, SET_COLOR);
-  matrix.draw3x5Digit(num_to_show % 10, num_x+3, 2, SET_COLOR);
+  matrix.draw3x5Digit(num_to_show / 10, num_x, 2, SET_TIME_COLOR);
+  matrix.draw3x5Digit(num_to_show % 10, num_x+3, 2, SET_TIME_COLOR);
   if (get_current_second() % 2 == 0) {
-    matrix.drawPixel(dots_x, 3, SET_COLOR);
-    matrix.drawPixel(dots_x, 5, SET_COLOR);
+    matrix.drawPixel(dots_x, 3, SET_TIME_COLOR);
+    matrix.drawPixel(dots_x, 5, SET_TIME_COLOR);
   }
   matrix.show();
 }
@@ -224,9 +224,9 @@ Mode* MSetTime::press() {
 Mode* MSetTime::longpress() { return &m_menu; }
 Mode* MSetTime::left_turn() {
   if (state == SET_STATE_HOUR)
-    substract_hour_from_offset();
+    subtract_hour_from_offset();
   if (state == SET_STATE_MINUTE)
-    substract_minute_from_offset();
+    subtract_minute_from_offset();
 
   update();
   return NULL;
@@ -238,5 +238,86 @@ Mode* MSetTime::right_turn() {
     add_minute_to_offset();
 
   update();
+  return NULL;
+}
+
+// --------- MSetAlarm ----------
+MSetAlarm m_set_alarm = MSetAlarm();
+
+static const uint8_t PROGMEM 
+  ALARM_OFF[8] = {
+      B00000000,
+      B00000000,
+      B01000010,
+      B00100100,
+      B00011000,
+      B00100100,
+      B01000010,
+      B00000000 };
+
+void MSetAlarm::update() {
+  matrix.clear();
+  if (get_alarm_enabled()) {
+    matrix.draw3x5Digit(get_alarm_hour(), 0, 2, SET_ALARM_COLOR_HOUR);
+    uint8_t min = get_alarm_minute();
+    matrix.draw3x5Digit(min / 10, 3, 2, SET_ALARM_COLOR_MINUTE);
+    matrix.draw3x5Digit(min % 10, 6, 2, SET_ALARM_COLOR_MINUTE);
+  } else {
+    matrix.drawBitmap(0, 0, ALARM_OFF, 8, 8, SET_ALARM_COLOR_OFF);
+  }
+  matrix.show();
+}
+
+void MSetAlarm::enter() {
+  update();
+}
+
+Mode* MSetAlarm::press() {
+  return &m_off;
+}
+Mode* MSetAlarm::longpress() { return &m_menu; }
+
+void MSetAlarm::change_alarm(int8_t add) {
+  int8_t new_min = get_alarm_minute() + add;
+  int8_t new_hour = get_alarm_hour();
+  bool new_enabled = true;
+  
+  if (!get_alarm_enabled() && (add > 0)) { // exception: oho, we just enabled the alarm
+    new_hour = MIN_ALARM_HOUR;
+    new_min = 0;
+    new_enabled = true;
+  }
+  
+  if (new_min < 0) {
+    new_min+= 60;
+    new_hour-= 1;
+  }
+  if (new_min >= 60) {
+    new_min-= 60;
+    new_hour+= 1;
+  }
+  if (new_hour < MIN_ALARM_HOUR) {
+    new_hour = MIN_ALARM_HOUR;
+    new_min = 0;
+    new_enabled = false;
+  }
+  if (new_hour > MAX_ALARM_HOUR) {
+    new_hour = MAX_ALARM_HOUR;
+    new_min = 45;
+  }
+  set_alarm_hour(new_hour);
+  set_alarm_minute(new_min);
+  set_alarm_enabled(new_enabled);
+  update();
+}
+
+Mode* MSetAlarm::left_turn() {
+  if (!get_alarm_enabled()) // ignore left turns if the alarm is off anyway
+    return NULL;
+  change_alarm(-15);
+  return NULL;
+}
+Mode* MSetAlarm::right_turn() {
+  change_alarm(+15);
   return NULL;
 }

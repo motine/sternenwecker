@@ -27,16 +27,16 @@ void add_hour_to_offset() {
 void add_minute_to_offset() {
   minute_offset = (minute_offset + 1) % 60;
 }
-void substract_hour_from_offset() {
+void subtract_hour_from_offset() {
   hour_offset = (hour_offset + 24 - 1) % 24;
 }
-void substract_minute_from_offset() {
+void subtract_minute_from_offset() {
   minute_offset = (minute_offset + 60 - 1) % 60;
 }
 
-uint8_t alarm_minute = 1;
+uint8_t alarm_minute = 0;
 uint8_t alarm_hour = 0;
-bool alarm_enabled = true;
+bool alarm_enabled = false;
 unsigned long last_alarm_millis = 0;
 
 uint8_t get_alarm_hour() {

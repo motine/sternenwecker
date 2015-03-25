@@ -1,7 +1,7 @@
 #ifndef MODES_H
 #define MODES_H
 
-#define MENU_COLOR matrix.Color(0, 100, 120)
+#define MENU_COLOR matrix.Color(0, 30, 50)
 #define TIME_COLOR matrix.Color(10, 2, 0) // regulate brightness via less color
 #define TIME_SCROLL_STEP_DURATION 80
 #define MENU_COUNT 4
@@ -10,7 +10,12 @@
 #define TORCH_BRIGHTNESS_MIN 1
 #define TORCH_BRIGHTNESS_START 10
 #define TORCH_BRIGHTNESS_STEPS 30
-#define SET_COLOR matrix.Color(100, 0, 120)
+#define SET_TIME_COLOR matrix.Color(50, 0, 20)
+#define SET_ALARM_COLOR_OFF matrix.Color(40, 0, 0)
+#define SET_ALARM_COLOR_HOUR matrix.Color(20, 40, 0)
+#define SET_ALARM_COLOR_MINUTE matrix.Color(40, 30, 0)
+#define MIN_ALARM_HOUR 5 // will start only at 5:00
+#define MAX_ALARM_HOUR 9 // will only go to 9:45 (this shall not be more than one digit)
 
 // If a method which returns Mode* is called and it returns something non-NULL, the mode will be set after execution of the method.
 class Mode {
@@ -100,5 +105,19 @@ class MSetTime : public Mode {
     uint8_t state;
 };
 extern MSetTime m_set_time;
+
+class MSetAlarm : public Mode {
+  public:
+    MSetAlarm() : Mode() { };
+    void enter();
+    Mode* press();
+    Mode* longpress();
+    Mode* left_turn();
+    Mode* right_turn();
+  private:
+    void update();
+    void change_alarm(int8_t add);
+};
+extern MSetAlarm m_set_alarm;
 
 #endif

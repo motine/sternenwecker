@@ -9,8 +9,8 @@ uint8_t get_current_second();
 // setting the current time
 void add_hour_to_offset();
 void add_minute_to_offset();
-void substract_hour_from_offset();
-void substract_minute_from_offset();
+void subtract_hour_from_offset();
+void subtract_minute_from_offset();
 
 // getting the alarm time
 uint8_t get_alarm_hour();
