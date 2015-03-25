@@ -244,9 +244,9 @@ MSetAlarm m_set_alarm = MSetAlarm();
 static const uint8_t PROGMEM 
   ALARM_OFF[8] = {
       B00000000,
-      B00000000,
       B01000010,
       B00100100,
+      B00011000,
       B00011000,
       B00100100,
       B01000010,
