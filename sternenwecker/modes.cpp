@@ -62,28 +62,20 @@ MMenu m_menu = MMenu();
 
 static const uint8_t PROGMEM 
   MENU_ICONS[MENU_COUNT][8] = {
-    // { B01111111,
-    //   B01111111,
-    //   B00001111,
-    //   B00011111,
-    //   B00111011,
-    //   B01110011,
-    //   B11100011,
-    //   B11000000 },
     { B00000000,
       B00000000,
-      B00011100,
-      B00001100,
-      B00010100,
       B00100000,
+      B00010100,
+      B00001100,
+      B00011100,
       B00000000,
       B00000000 },
     { B00000000,
       B00000000,
-      B00100000,
-      B00010100,
-      B00001100,
       B00011100,
+      B00001100,
+      B00010100,
+      B00100000,
       B00000000,
       B00000000 },
     { B00000000,
@@ -116,8 +108,8 @@ void MMenu::enter() {
 
 Mode* MMenu::press() {
   switch (current) {
-    case 0: return &m_set_alarm;
-    case 1: return &m_menu;
+    case 0: return &m_menu;
+    case 1: return &m_set_alarm;
     case 2: return &m_torch;
     case 3: return &m_set_time;
     default: return &m_off;
@@ -193,7 +185,7 @@ void MSetTime::update() {
   uint8_t dots_x = (state == SET_STATE_MINUTE) ? 0 : 7;
   matrix.draw3x5Digit(num_to_show / 10, num_x, 2, SET_TIME_COLOR);
   matrix.draw3x5Digit(num_to_show % 10, num_x+3, 2, SET_TIME_COLOR);
-  if (get_current_second() % 2 == 0) {
+  if (get_current_halfsecond() % 2 == 0) {
     matrix.drawPixel(dots_x, 3, SET_TIME_COLOR);
     matrix.drawPixel(dots_x, 5, SET_TIME_COLOR);
   }
@@ -321,3 +313,13 @@ Mode* MSetAlarm::right_turn() {
   change_alarm(+15);
   return NULL;
 }
+
+// void sunrise() {
+//   // please try this code with full brightness, because the results will differ vastly.
+//   double pos = fmod(millis() / SUNRISE_DURATION, 1.0);
+//   uint8_t r = pow(pos, 2) * 255;
+//   uint8_t g = pow(pos, 3) * 255;
+//   uint8_t b = pow(pos, 5) * 150;
+//   matrix.fillScreen(matrix.Color(r,g,b));
+//   matrix.show();
+// }

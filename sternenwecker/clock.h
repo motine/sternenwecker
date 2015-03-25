@@ -5,6 +5,7 @@
 uint8_t get_current_hour();
 uint8_t get_current_minute();
 uint8_t get_current_second();
+uint8_t get_current_halfsecond();
 
 // setting the current time
 void add_hour_to_offset();

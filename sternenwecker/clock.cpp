@@ -7,6 +7,7 @@ uint8_t hour_offset = 0;
 #define MINUTE_VALUE 60000UL
 #define HOUR_VALUE 3600000UL
 #define SECOND_VALUE 1000
+#define HALF_SECOND_VALUE 500
 
 unsigned long shifted_millis() {
   return millis() + minute_offset * MINUTE_VALUE + hour_offset * HOUR_VALUE;
@@ -19,6 +20,9 @@ uint8_t get_current_minute() {
 }
 uint8_t get_current_second() {
   return (shifted_millis() / SECOND_VALUE) % 60;
+}
+uint8_t get_current_halfsecond() {
+  return (shifted_millis() / HALF_SECOND_VALUE) % 120;
 }
 
 void add_hour_to_offset() {
