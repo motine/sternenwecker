@@ -108,7 +108,7 @@ void MMenu::enter() {
 
 Mode* MMenu::press() {
   switch (current) {
-    case 0: return &m_menu;
+    case 0: return &m_alarming; // TODO
     case 1: return &m_set_alarm;
     case 2: return &m_torch;
     case 3: return &m_set_time;
@@ -314,12 +314,35 @@ Mode* MSetAlarm::right_turn() {
   return NULL;
 }
 
-// void sunrise() {
-//   // please try this code with full brightness, because the results will differ vastly.
-//   double pos = fmod(millis() / SUNRISE_DURATION, 1.0);
-//   uint8_t r = pow(pos, 2) * 255;
-//   uint8_t g = pow(pos, 3) * 255;
-//   uint8_t b = pow(pos, 5) * 150;
-//   matrix.fillScreen(matrix.Color(r,g,b));
-//   matrix.show();
-// }
+// --------- MSetAlarm ----------
+MAlarming m_alarming = MAlarming();
+void MAlarming::enter() {
+  start_millis = millis();
+}
+
+Mode* MAlarming::loop() {
+  double pos;
+  unsigned long millis_since_start = millis() - start_millis;
+  if (millis_since_start > ALARMING_AUTO_OFF)
+    return &m_off;
+  if (millis_since_start > ALARMING_RISE_DURATION)
+    pos = 1.0;
+  else
+    pos = fmod((double)millis_since_start / ALARMING_RISE_DURATION, 1.0);
+  
+  uint8_t r = pow(pos, 2) * 255;
+  uint8_t g = pow(pos, 3) * 255;
+  uint8_t b = pow(pos, 5) * 150;
+  matrix.fillScreen(matrix.Color(r,g,b));
+  if (get_current_second() % 2 == 0)
+    matrix.drawPixel(7, 7, ALARMING_BLINKER_COLOR);
+  matrix.show();
+  return NULL;
+}
+
+Mode* MAlarming::press() {
+  return &m_off;
+}
+Mode* MAlarming::longpress() {
+  return &m_off;
+}

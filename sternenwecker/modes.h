@@ -16,6 +16,9 @@
 #define SET_ALARM_COLOR_MINUTE matrix.Color(40, 30, 0)
 #define MIN_ALARM_HOUR 5 // will start only at 5:00
 #define MAX_ALARM_HOUR 9 // will only go to 9:45 (this shall not be more than one digit)
+#define ALARMING_RISE_DURATION 1800000UL // ms
+#define ALARMING_AUTO_OFF 5400000UL // ms, turns the LEDs off after this many milliseconds after the alarm has started (so the LEDs dont get too hot)
+#define ALARMING_BLINKER_COLOR matrix.Color(10,0,0)
 
 // If a method which returns Mode* is called and it returns something non-NULL, the mode will be set after execution of the method.
 class Mode {
@@ -119,5 +122,18 @@ class MSetAlarm : public Mode {
     void change_alarm(int8_t add);
 };
 extern MSetAlarm m_set_alarm;
+
+class MAlarming : public Mode {
+  public:
+    MAlarming() : Mode() { };
+    void enter();
+    Mode* loop();
+    Mode* press();
+    Mode* longpress();
+  private:
+    unsigned long start_millis;
+};
+extern MAlarming m_alarming;
+
 
 #endif
