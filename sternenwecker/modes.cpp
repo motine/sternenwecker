@@ -13,6 +13,11 @@ void MOff::enter() {
   matrix.show();
 }
 
+Mode* MOff::loop() {
+  delay(50); // reduce the load during off
+  return NULL;
+}
+
 Mode* MOff::press() {
   return &m_time;
 }
@@ -80,9 +85,9 @@ static const uint8_t PROGMEM
       B00000000 },
     { B00000000,
       B00000000,
-      B00000000,
       B00111100,
-      B00000000,
+      B00111100,
+      B00111100,
       B00111100,
       B00000000,
       B00000000 },

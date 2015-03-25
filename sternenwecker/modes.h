@@ -1,8 +1,8 @@
 #ifndef MODES_H
 #define MODES_H
 
-#define MENU_COLOR matrix.Color(0, 30, 50)
-#define TIME_COLOR matrix.Color(10, 2, 0) // regulate brightness via less color
+#define MENU_COLOR matrix.Color(0, 10, 30) // regulate brightness via smaller color components
+#define TIME_COLOR matrix.Color(10, 2, 0)
 #define TIME_SCROLL_STEP_DURATION 80
 #define MENU_COUNT 4
 #define TORCH_HUE_START 8
@@ -10,7 +10,7 @@
 #define TORCH_BRIGHTNESS_MIN 1
 #define TORCH_BRIGHTNESS_START 10
 #define TORCH_BRIGHTNESS_STEPS 30
-#define SET_TIME_COLOR matrix.Color(50, 0, 20)
+#define SET_TIME_COLOR matrix.Color(30, 0, 10)
 #define SET_ALARM_COLOR_OFF matrix.Color(40, 0, 0)
 #define SET_ALARM_COLOR_HOUR matrix.Color(20, 40, 0)
 #define SET_ALARM_COLOR_MINUTE matrix.Color(40, 30, 0)
@@ -45,6 +45,7 @@ class Mode {
 class MOff : public Mode {
   public:
     MOff() : Mode() { };
+    Mode* loop();
     void enter();
     Mode* press();
 };

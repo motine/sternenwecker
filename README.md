@@ -34,6 +34,8 @@ When the alarm is ongoing, show the time occasionally. The surrounding pixels wh
 
 The alarm does not include sound as a fail safe, because you would usually set another device anyway.
 
+After I did my design I found this great [8x8 icon set](http://graphicriver.net/item/nano-icons-8x8/4453769).
+
 ## Programming
 
 I only use the Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPixel) & see Uberguide above) library. Please install it from Github directly, because they recently added the `clear()` method. It turns out that the NeoMatrix library uses only 16 bit for colors. This makes my color gradients look choppy.
