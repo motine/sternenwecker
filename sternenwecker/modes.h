@@ -19,7 +19,8 @@
 #define ALARMING_RISE_DURATION 1800000UL // ms
 #define ALARMING_AUTO_OFF 5400000UL // ms, turns the LEDs off after this many milliseconds after the alarm has started (so the LEDs dont get too hot)
 #define ALARMING_BLINKER_COLOR matrix.Color(10,0,0)
-
+#define SUNSET_DURATION  1200000UL // ms
+#define SUNSET_TURN_VALUE  30000UL // ms, added/subtracted when the encoder is turned. advances/shifts back the start_millis.
 // If a method which returns Mode* is called and it returns something non-NULL, the mode will be set after execution of the method.
 class Mode {
   public:
@@ -135,5 +136,18 @@ class MAlarming : public Mode {
 };
 extern MAlarming m_alarming;
 
+class MSunset : public Mode {
+  public:
+    MSunset() : Mode() { };
+    void enter();
+    Mode* loop();
+    Mode* press();
+    Mode* longpress();
+    Mode* left_turn();
+    Mode* right_turn();
+  private:
+    unsigned long start_millis;
+};
+extern MSunset m_sunset;
 
 #endif

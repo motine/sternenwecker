@@ -108,7 +108,7 @@ void MMenu::enter() {
 
 Mode* MMenu::press() {
   switch (current) {
-    case 0: return &m_alarming; // TODO
+    case 0: return &m_sunset;
     case 1: return &m_set_alarm;
     case 2: return &m_torch;
     case 3: return &m_set_time;
@@ -314,7 +314,7 @@ Mode* MSetAlarm::right_turn() {
   return NULL;
 }
 
-// --------- MSetAlarm ----------
+// --------- MAlarming ----------
 MAlarming m_alarming = MAlarming();
 void MAlarming::enter() {
   start_millis = millis();
@@ -345,4 +345,40 @@ Mode* MAlarming::press() {
 }
 Mode* MAlarming::longpress() {
   return &m_off;
+}
+
+// --------- MSunset ----------
+MSunset m_sunset = MSunset();
+void MSunset::enter() {
+  start_millis = millis();
+}
+
+Mode* MSunset::loop() {
+  unsigned long millis_since_start = millis() - start_millis;
+  if (millis_since_start >= SUNSET_DURATION)
+    return &m_off;
+
+  double pos = (double)millis_since_start / SUNSET_DURATION;
+  uint8_t r = (1.0-pos) * 60;
+  uint8_t g = (1.0-pos) * 30;
+  matrix.fillScreen(matrix.Color(r,g,0));
+  matrix.show();
+  return NULL;
+}
+
+Mode* MSunset::press() {
+  return &m_off;
+}
+Mode* MSunset::longpress() {
+  return &m_menu;
+}
+Mode* MSunset::left_turn() {
+  start_millis -= SUNSET_TURN_VALUE; // TODO this can lead to an error if millis is still a low number
+  return NULL;
+}
+Mode* MSunset::right_turn() {
+  start_millis += SUNSET_TURN_VALUE;
+  if (start_millis > millis())
+    start_millis = millis();
+  return NULL;
 }
