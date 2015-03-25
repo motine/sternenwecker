@@ -86,9 +86,9 @@ class MTorch : public Mode {
 };
 extern MTorch m_torch;
 
-class MSet : public Mode {
+class MSetTime : public Mode {
   public:
-    MSet() : Mode() { };
+    MSetTime() : Mode() { };
     void enter();
     Mode* loop();
     Mode* press();
@@ -99,6 +99,6 @@ class MSet : public Mode {
     void update();
     uint8_t state;
 };
-extern MSet m_set;
+extern MSetTime m_set_time;
 
 #endif

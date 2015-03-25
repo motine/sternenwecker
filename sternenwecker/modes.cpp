@@ -119,7 +119,7 @@ Mode* MMenu::press() {
     case 0: return &m_menu;
     case 1: return &m_menu;
     case 2: return &m_torch;
-    case 3: return &m_set;
+    case 3: return &m_set_time;
     default: return &m_off;
   }
   // TODO
@@ -181,12 +181,12 @@ Mode* MTorch::right_turn() {
   return NULL;
 }
 
-// --------- MSet ----------
+// --------- MSetTime ----------
 #define SET_STATE_MINUTE 1
 #define SET_STATE_HOUR 2
 
-MSet m_set = MSet();
-void MSet::update() {
+MSetTime m_set_time = MSetTime();
+void MSetTime::update() {
   matrix.clear();
   uint8_t num_to_show = (state == SET_STATE_MINUTE) ? get_current_minute() : get_current_hour();
   uint8_t num_x = (state == SET_STATE_MINUTE) ? 2 : 0;
@@ -200,17 +200,17 @@ void MSet::update() {
   matrix.show();
 }
 
-void MSet::enter() {
+void MSetTime::enter() {
   state = SET_STATE_HOUR;
   update();
 }
 
-Mode* MSet::loop() {
+Mode* MSetTime::loop() {
   update();
   return NULL;
 }
 
-Mode* MSet::press() {
+Mode* MSetTime::press() {
   switch (state) {
   case SET_STATE_HOUR:
     state = SET_STATE_MINUTE;
@@ -221,8 +221,8 @@ Mode* MSet::press() {
   }
   return NULL;
 }
-Mode* MSet::longpress() { return &m_menu; }
-Mode* MSet::left_turn() {
+Mode* MSetTime::longpress() { return &m_menu; }
+Mode* MSetTime::left_turn() {
   if (state == SET_STATE_HOUR)
     substract_hour_from_offset();
   if (state == SET_STATE_MINUTE)
@@ -231,7 +231,7 @@ Mode* MSet::left_turn() {
   update();
   return NULL;
 }
-Mode* MSet::right_turn() {
+Mode* MSetTime::right_turn() {
   if (state == SET_STATE_HOUR)
     add_hour_to_offset();
   if (state == SET_STATE_MINUTE)

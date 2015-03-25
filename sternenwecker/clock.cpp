@@ -33,3 +33,44 @@ void substract_hour_from_offset() {
 void substract_minute_from_offset() {
   minute_offset = (minute_offset + 60 - 1) % 60;
 }
+
+uint8_t alarm_minute = 1;
+uint8_t alarm_hour = 0;
+bool alarm_enabled = true;
+unsigned long last_alarm_millis = 0;
+
+uint8_t get_alarm_hour() {
+  return alarm_hour;
+}
+uint8_t get_alarm_minute() {
+  return alarm_minute;
+}
+uint8_t get_alarm_enabled() {
+  return alarm_enabled;
+}
+
+bool alarm_is_due() {
+  if (!alarm_enabled) { // alarm is off
+    return false;
+  }
+  if (last_alarm_millis + 61000 > millis()) { // the alarm was just fired, so we don't want to fire again
+      // TODO deal with millis() overflow
+      return false;
+  }
+  return (get_current_hour() == alarm_hour) && (get_current_minute() == alarm_minute);
+}
+
+void alarm_fired() {
+  last_alarm_millis = millis();
+}
+
+// setting the alarm time
+void set_alarm_hour(uint8_t hour) {
+  alarm_hour = hour;
+}
+void set_alarm_minute(uint8_t minute) {
+  alarm_minute = minute;
+}
+void set_alarm_enabled(bool enabled) {
+  alarm_enabled = enabled;    
+}

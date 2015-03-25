@@ -37,6 +37,10 @@ void setup_resources() {
 }
 
 void loop_resources() {
+  if (alarm_is_due()) {
+    alarm_fired();
+    mode_master.setModeUnlessNull(&m_torch);
+  }
   button.loop();
   encoder.loop();
   mode_master.loop();

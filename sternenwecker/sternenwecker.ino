@@ -4,7 +4,6 @@
 
 void setup() {
   Serial.begin(9600);
-  Serial.println(F("yyy"));
   setup_resources();
 }
 

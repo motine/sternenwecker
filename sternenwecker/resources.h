@@ -5,6 +5,7 @@
 #include "mode_master.h"
 #include "button.h"
 #include "encoder.h"
+#include "clock.h"
 
 #define ENCODER_A_PIN 3
 #define ENCODER_B_PIN 2
