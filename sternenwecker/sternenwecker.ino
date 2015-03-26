@@ -1,5 +1,6 @@
 #include <Adafruit_NeoPixel.h>
 #include "modes.h"
+#include "display_test.h"
 #include "resources.h"
 
 void setup() {

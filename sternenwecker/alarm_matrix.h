@@ -66,6 +66,7 @@ class AlarmMatrix : public Adafruit_NeoPixel {
 
     void drawPixel(uint8_t x, uint8_t y, uint32_t color);
     void fillScreen(uint32_t color);
+    void fillRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint32_t color);
 
     // bitmap is assumed to be a one-dimensional array of bytes.
     // Each of the bytes represents a row with the individual bits representing the values for the columns.

@@ -48,6 +48,7 @@ class MOff : public Mode {
     Mode* loop();
     void enter();
     Mode* press();
+    Mode* longpress();
 };
 extern MOff m_off;
 

@@ -27,12 +27,21 @@ void AlarmMatrix::fillScreen(uint32_t color) {
   }
 }
 
+void AlarmMatrix::fillRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint32_t color) {
+  for (uint8_t j=y; j < y+height; j++) {
+    for (uint8_t i=x; i < x+width; i++) {
+      drawPixel(i, j, color);
+    }
+  }
+}
+
+
 void AlarmMatrix::drawBitmap(uint8_t origin_x, uint8_t origin_y, const uint8_t bitmap[], uint8_t width, uint8_t height, uint32_t color) {
   // use setPixelColor to save time
-  uint32_t black = Color(0,0,0); // color for pixels which are set to 0 in the bitmap
   for (uint8_t j=0; j < height; j++) {
     for (uint8_t i=0; i < width; i++) {
-      drawPixel(origin_x+i, origin_y+j, ((pgm_read_byte(bitmap+j) >> (7-i)) & 1) ? color : black);
+      if ((pgm_read_byte(bitmap+j) >> (7-i)) & 1)
+        drawPixel(origin_x+i, origin_y+j, color);
     }
   }
 }

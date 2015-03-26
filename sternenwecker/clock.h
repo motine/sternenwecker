@@ -25,4 +25,4 @@ void set_alarm_hour(uint8_t hour);
 void set_alarm_minute(uint8_t minute);
 void set_alarm_enabled(bool enabled);
 
-#endif CLOCK_H
+#endif

@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "resources.h"
 #include "clock.h"
+#include "display_test.h"
 #include "modes.h"
 
 Mode::Mode() {
@@ -20,6 +21,9 @@ Mode* MOff::loop() {
 
 Mode* MOff::press() {
   return &m_time;
+}
+Mode* MOff::longpress() {
+  return &m_display_test;
 }
 
 // --------- MShowTime ----------
@@ -102,6 +106,7 @@ static const uint8_t PROGMEM
     };
 
 void MMenu::update() {
+  matrix.clear();
   matrix.drawBitmap(0, 0, MENU_ICONS[current], 8, 8, MENU_COLOR);
   matrix.show();
 }
@@ -117,9 +122,7 @@ Mode* MMenu::press() {
     case 1: return &m_set_alarm;
     case 2: return &m_torch;
     case 3: return &m_set_time;
-    default: return &m_off;
   }
-  // TODO
   return &m_menu;
 }
 
