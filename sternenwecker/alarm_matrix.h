@@ -31,6 +31,7 @@ class AlarmMatrix : public Adafruit_NeoPixel {
     // no may be between 0..9
     void draw3x5Digit(uint8_t no, uint8_t x, uint8_t y, uint32_t color);
     void displayMenuIcon(menu_icon_t menu_icon, uint32_t color);
+    void displayConfirm(uint32_t color);
     void displayOff(uint32_t color);
     void displayTimeComponent(uint8_t number, bool dots_left, bool show_dots, uint32_t color);
     void displayDigitAndHand(uint8_t hour, uint8_t minute, uint32_t digit_color, uint32_t hand_color, uint32_t overlap_color);

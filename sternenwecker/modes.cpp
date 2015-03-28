@@ -23,7 +23,7 @@ Mode* MOff::press() {
   return &m_time;
 }
 Mode* MOff::longpress() {
-  return &m_alarming; // testing
+  return &m_confirm; // testing
 }
 
 // --------- MShowTime ----------
@@ -172,7 +172,7 @@ Mode* MSetTime::press() {
     update();
     return NULL;
   case SET_STATE_MINUTE:
-    return &m_off;
+    return &m_confirm;
   }
   return NULL;
 }
@@ -211,7 +211,7 @@ void MSetAlarm::enter() {
 }
 
 Mode* MSetAlarm::press() {
-  return &m_off;
+  return &m_confirm;
 }
 Mode* MSetAlarm::longpress() { return &m_menu; }
 
@@ -334,4 +334,22 @@ Mode* MSunset::right_turn() {
   if (start_millis > millis())
     start_millis = millis();
   return NULL;
+}
+
+// --------- MConfirm ----------
+MConfirm m_confirm = MConfirm();
+void MConfirm::enter() {
+  enter_millis = millis();
+  matrix.displayConfirm(CONFIRM_COLOR);
+}
+
+Mode* MConfirm::loop() {
+  if (enter_millis + CONFIRM_DURATION > millis())
+    return NULL;
+  else
+    return &m_off;
+}
+
+Mode* MConfirm::press() {
+  return &m_off;
 }

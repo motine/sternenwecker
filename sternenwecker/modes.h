@@ -25,6 +25,9 @@
 #define ALARMING_OVERLAP_COLOR matrix.Color(10, 10, 0)
 #define SUNSET_DURATION  1200000UL // ms
 #define SUNSET_TURN_VALUE  30000UL // ms, added/subtracted when the encoder is turned. advances/shifts back the start_millis.
+#define CONFIRM_DURATION 1200 // ms
+#define CONFIRM_COLOR matrix.Color(0, 30, 0)
+
 // If a method which returns Mode* is called and it returns something non-NULL, the mode will be set after execution of the method.
 class Mode {
   public:
@@ -68,7 +71,6 @@ class MTime : public Mode {
     unsigned long enter_millis;
 };
 extern MTime m_time;
-
 
 class MMenu : public Mode {
   public:
@@ -156,5 +158,16 @@ class MSunset : public Mode {
     unsigned long start_millis;
 };
 extern MSunset m_sunset;
+
+class MConfirm : public Mode {
+  public:
+    MConfirm() : Mode() { };
+    void enter();
+    Mode* loop();
+    Mode* press();
+  private:
+    unsigned long enter_millis;
+};
+extern MConfirm m_confirm;
 
 #endif

@@ -67,6 +67,17 @@ static const uint8_t PROGMEM
       B00000000 };
 
 static const uint8_t PROGMEM 
+  BITMAP_CONFIRM[8] = {
+      B00000000,
+      B00000000,
+      B00000010,
+      B00000100,
+      B00101000,
+      B00010000,
+      B00000000,
+      B00000000 };
+
+static const uint8_t PROGMEM 
   HAND_8_8x8[8][8] = {
     { B00001000,
       B00001000,
@@ -251,6 +262,11 @@ void AlarmMatrix::displayMenuIcon(menu_icon_t menu_icon, uint32_t color) {
   show();
 }
 
+void AlarmMatrix::displayConfirm(uint32_t color) {
+  clear();
+  drawBitmap(0,0, BITMAP_CONFIRM, 8,8, color);
+  show();
+}
 void AlarmMatrix::displayOff(uint32_t color) {
   clear();
   drawBitmap(0,0, BITMAP_OFF, 8,8, color);
