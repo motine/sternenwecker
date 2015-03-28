@@ -11,14 +11,18 @@
 #define TORCH_BRIGHTNESS_START 10
 #define TORCH_BRIGHTNESS_STEPS 30
 #define SET_TIME_COLOR matrix.Color(30, 0, 10)
-#define SET_ALARM_COLOR_OFF matrix.Color(40, 0, 0)
-#define SET_ALARM_COLOR_HOUR matrix.Color(10, 30, 0)
-#define SET_ALARM_COLOR_MINUTE matrix.Color(30, 10, 0)
+#define SET_ALARM_COLOR_OFF matrix.Color(30, 0, 0)
+#define SET_ALARM_DIGIT_COLOR matrix.Color(10, 30, 0)
+#define SET_ALARM_HAND_COLOR matrix.Color(30, 10, 0)
+#define SET_ALARM_OVERLAP_COLOR matrix.Color(20, 20, 0)
 #define MIN_ALARM_HOUR 5 // will start only at 5:00
 #define MAX_ALARM_HOUR 9 // will only go to 9:45 (this shall not be more than one digit)
 #define ALARMING_RISE_DURATION 1800000UL // ms
 #define ALARMING_AUTO_OFF 5400000UL // ms, turns the LEDs off after this many milliseconds after the alarm has started (so the LEDs dont get too hot)
-#define ALARMING_BLINKER_COLOR matrix.Color(10,0,0)
+#define ALARMING_SHOW_TIME_DURATION 2000 // ms
+#define ALARMING_DIGIT_COLOR matrix.Color(5, 15, 0)
+#define ALARMING_HAND_COLOR matrix.Color(15, 5, 0)
+#define ALARMING_OVERLAP_COLOR matrix.Color(10, 10, 0)
 #define SUNSET_DURATION  1200000UL // ms
 #define SUNSET_TURN_VALUE  30000UL // ms, added/subtracted when the encoder is turned. advances/shifts back the start_millis.
 // If a method which returns Mode* is called and it returns something non-NULL, the mode will be set after execution of the method.
@@ -135,6 +139,7 @@ class MAlarming : public Mode {
     Mode* longpress();
   private:
     unsigned long start_millis;
+    unsigned long start_show_time_millis;
 };
 extern MAlarming m_alarming;
 

@@ -23,7 +23,7 @@ Mode* MOff::press() {
   return &m_time;
 }
 Mode* MOff::longpress() {
-  return &m_display_test;
+  return &m_alarming; // testing
 }
 
 // --------- MShowTime ----------
@@ -69,46 +69,8 @@ Mode* MTime::longpress() {
 // --------- MMenu ----------
 MMenu m_menu = MMenu();
 
-static const uint8_t PROGMEM 
-  MENU_ICONS[MENU_COUNT][8] = {
-    { B00000000,
-      B00000000,
-      B00100000,
-      B00010100,
-      B00001100,
-      B00011100,
-      B00000000,
-      B00000000 },
-    { B00000000,
-      B00000000,
-      B00011100,
-      B00001100,
-      B00010100,
-      B00100000,
-      B00000000,
-      B00000000 },
-    { B00000000,
-      B00000000,
-      B00111100,
-      B00111100,
-      B00111100,
-      B00111100,
-      B00000000,
-      B00000000 },
-    { B00000000,
-      B00011000,
-      B00011000,
-      B00011000,
-      B00000000,
-      B00011000,
-      B00000000,
-      B00000000 },
-    };
-
 void MMenu::update() {
-  matrix.clear();
-  matrix.drawBitmap(0, 0, MENU_ICONS[current], 8, 8, MENU_COLOR);
-  matrix.show();
+  matrix.displayMenuIcon((menu_icon_t)current, MENU_COLOR);
 }
 
 void MMenu::enter() {
@@ -187,17 +149,10 @@ Mode* MTorch::right_turn() {
 
 MSetTime m_set_time = MSetTime();
 void MSetTime::update() {
-  matrix.clear();
-  uint8_t num_to_show = (state == SET_STATE_MINUTE) ? get_current_minute() : get_current_hour();
-  uint8_t num_x = (state == SET_STATE_MINUTE) ? 2 : 0;
-  uint8_t dots_x = (state == SET_STATE_MINUTE) ? 0 : 7;
-  matrix.draw3x5Digit(num_to_show / 10, num_x, 2, SET_TIME_COLOR);
-  matrix.draw3x5Digit(num_to_show % 10, num_x+3, 2, SET_TIME_COLOR);
-  if (get_current_halfsecond() % 2 == 0) {
-    matrix.drawPixel(dots_x, 3, SET_TIME_COLOR);
-    matrix.drawPixel(dots_x, 5, SET_TIME_COLOR);
-  }
-  matrix.show();
+  uint8_t number = (state == SET_STATE_MINUTE) ? get_current_minute() : get_current_hour();
+  bool dots_left = (state == SET_STATE_MINUTE);
+  bool show_dots = (get_current_halfsecond() % 2 == 0);
+  matrix.displayTimeComponent(number, dots_left, show_dots, SET_TIME_COLOR);
 }
 
 void MSetTime::enter() {
@@ -244,28 +199,11 @@ Mode* MSetTime::right_turn() {
 // --------- MSetAlarm ----------
 MSetAlarm m_set_alarm = MSetAlarm();
 
-static const uint8_t PROGMEM 
-  ALARM_OFF[8] = {
-      B00000000,
-      B01000010,
-      B00100100,
-      B00011000,
-      B00011000,
-      B00100100,
-      B01000010,
-      B00000000 };
-
 void MSetAlarm::update() {
-  matrix.clear();
-  if (get_alarm_enabled()) {
-    matrix.draw3x5Digit(get_alarm_hour(), 0, 2, SET_ALARM_COLOR_HOUR);
-    uint8_t min = get_alarm_minute();
-    matrix.draw3x5Digit(min / 10, 3, 2, SET_ALARM_COLOR_MINUTE);
-    matrix.draw3x5Digit(min % 10, 6, 2, SET_ALARM_COLOR_MINUTE);
-  } else {
-    matrix.drawBitmap(0, 0, ALARM_OFF, 8, 8, SET_ALARM_COLOR_OFF);
-  }
-  matrix.show();
+  if (get_alarm_enabled())
+    matrix.displayDigitAndHand(get_alarm_hour(), get_alarm_minute(), SET_ALARM_DIGIT_COLOR, SET_ALARM_HAND_COLOR, SET_ALARM_OVERLAP_COLOR);
+  else
+    matrix.displayOff(SET_ALARM_COLOR_OFF);
 }
 
 void MSetAlarm::enter() {
@@ -326,9 +264,17 @@ Mode* MSetAlarm::right_turn() {
 MAlarming m_alarming = MAlarming();
 void MAlarming::enter() {
   start_millis = millis();
+  start_show_time_millis = 0;
 }
 
 Mode* MAlarming::loop() {
+  if (start_show_time_millis + ALARMING_SHOW_TIME_DURATION > millis()) {
+    matrix.clear();
+    matrix.displayDigitAndHand(get_current_hour(), get_current_minute(), ALARMING_DIGIT_COLOR, ALARMING_HAND_COLOR, ALARMING_OVERLAP_COLOR);
+    matrix.show();
+    return NULL;
+  }
+  
   double pos;
   unsigned long millis_since_start = millis() - start_millis;
   if (millis_since_start > ALARMING_AUTO_OFF)
@@ -342,14 +288,13 @@ Mode* MAlarming::loop() {
   uint8_t g = pow(pos, 3) * 255;
   uint8_t b = pow(pos, 5) * 150;
   matrix.fillScreen(matrix.Color(r,g,b));
-  if (get_current_second() % 2 == 0)
-    matrix.drawPixel(7, 7, ALARMING_BLINKER_COLOR);
   matrix.show();
   return NULL;
 }
 
 Mode* MAlarming::press() {
-  return &m_off;
+  start_show_time_millis = millis();
+  return NULL;
 }
 Mode* MAlarming::longpress() {
   return &m_off;

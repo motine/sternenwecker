@@ -1,6 +1,6 @@
 #include "resources.h"
 
-ModeMaster mode_master = ModeMaster(&m_off);
+ModeMaster mode_master = ModeMaster(&m_time);
 
 void button_press(uint8_t button_pin) {
   mode_master.press();
