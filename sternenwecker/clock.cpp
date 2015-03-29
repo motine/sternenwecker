@@ -13,7 +13,7 @@ unsigned long shifted_millis() {
   return millis() + minute_offset * MINUTE_VALUE + hour_offset * HOUR_VALUE;
 }
 uint8_t get_current_hour() {
-  return (shifted_millis() / HOUR_VALUE) % 60;
+  return (shifted_millis() / HOUR_VALUE) % 24;
 }
 uint8_t get_current_minute() {
   return (shifted_millis() / MINUTE_VALUE) % 60;

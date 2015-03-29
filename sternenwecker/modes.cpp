@@ -23,7 +23,7 @@ Mode* MOff::press() {
   return &m_time;
 }
 Mode* MOff::longpress() {
-  return &m_confirm; // testing
+  return &m_display_test; // hidden easter egg (testing)
 }
 
 // --------- MShowTime ----------

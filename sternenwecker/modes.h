@@ -16,7 +16,7 @@
 #define SET_ALARM_HAND_COLOR matrix.Color(30, 10, 0)
 #define SET_ALARM_OVERLAP_COLOR matrix.Color(20, 20, 0)
 #define MIN_ALARM_HOUR 5 // will start only at 5:00
-#define MAX_ALARM_HOUR 9 // will only go to 9:45 (this shall not be more than one digit)
+#define MAX_ALARM_HOUR 23 // will only go to XX:45
 #define ALARMING_RISE_DURATION 1800000UL // ms
 #define ALARMING_AUTO_OFF 5400000UL // ms, turns the LEDs off after this many milliseconds after the alarm has started (so the LEDs dont get too hot)
 #define ALARMING_SHOW_TIME_DURATION 2000 // ms
