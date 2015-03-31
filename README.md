@@ -39,7 +39,7 @@ Here some weird stuff (**known issues**):
 ## Box
 
 Here is the sketch for the housing...
-![box](https://raw.githubusercontent.com/motine/sternenwecker/master/studies/box-retro.jpg).
+![box](https://github.com/motine/sternenwecker/blob/master/documentation/box-retro.jpg).
 
 To assemble:
 
@@ -64,7 +64,7 @@ To assemble:
 * Thanks to my wife, because she pretends to be really interested in my little projects.
 * Thanks to Michael to listen to me, even if I am over excited.
 * Thanks to Stefan who shared his experiences, so I didn't have to try and fail so often. 
-* Thanks to Armin for feedback on the button issue.
+* Thanks to Armin for feedback on the "where to put the button" issue.
 * Thanks to Marcel for answering a couple of questions regarding the circuit.
 
 
