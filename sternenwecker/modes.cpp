@@ -30,25 +30,22 @@ Mode* MOff::longpress() {
 MTime m_time = MTime();
 
 Mode* MTime::loop() {
-  uint8_t hour = get_current_hour();
-  uint8_t minute = get_current_minute();
-
   int8_t scroll_offset = 8 - (millis() - enter_millis) / TIME_SCROLL_STEP_DURATION;
   
-  if (hour < 10)
+  if (current_hour < 10)
     scroll_offset-=4;
   
   if (scroll_offset < -18)
     return &m_off;
 
   matrix.clear();
-  if (hour >= 10)
-    matrix.draw3x5Digit(hour / 10, scroll_offset, 2, TIME_COLOR);
-  matrix.draw3x5Digit(hour % 10, scroll_offset+4, 2, TIME_COLOR);
+  if (current_hour >= 10)
+    matrix.draw3x5Digit(current_hour / 10, scroll_offset, 2, TIME_COLOR);
+  matrix.draw3x5Digit(current_hour % 10, scroll_offset+4, 2, TIME_COLOR);
   matrix.drawPixel(scroll_offset+8, 3, TIME_COLOR);
   matrix.drawPixel(scroll_offset+8, 5, TIME_COLOR);
-  matrix.draw3x5Digit(minute / 10, scroll_offset+11, 2, TIME_COLOR);
-  matrix.draw3x5Digit(minute % 10, scroll_offset+15, 2, TIME_COLOR);
+  matrix.draw3x5Digit(current_minute / 10, scroll_offset+11, 2, TIME_COLOR);
+  matrix.draw3x5Digit(current_minute % 10, scroll_offset+15, 2, TIME_COLOR);
 
   matrix.show();
   return NULL;
@@ -149,9 +146,9 @@ Mode* MTorch::right_turn() {
 
 MSetTime m_set_time = MSetTime();
 void MSetTime::update() {
-  uint8_t number = (state == SET_STATE_MINUTE) ? get_current_minute() : get_current_hour();
+  uint8_t number = (state == SET_STATE_MINUTE) ? current_minute : current_hour;
   bool dots_left = (state == SET_STATE_MINUTE);
-  bool show_dots = (get_current_halfsecond() % 2 == 0);
+  bool show_dots = (is_blinker_on() % 2 == 0);
   matrix.displayTimeComponent(number, dots_left, show_dots, SET_TIME_COLOR);
 }
 
@@ -178,19 +175,21 @@ Mode* MSetTime::press() {
 }
 Mode* MSetTime::longpress() { return &m_menu; }
 Mode* MSetTime::left_turn() {
-  if (state == SET_STATE_HOUR)
-    subtract_hour_from_offset();
-  if (state == SET_STATE_MINUTE)
-    subtract_minute_from_offset();
+  // TODO
+  // if (state == SET_STATE_HOUR)
+  //   subtract_hour_from_offset();
+  // if (state == SET_STATE_MINUTE)
+  //   subtract_minute_from_offset();
 
   update();
   return NULL;
 }
 Mode* MSetTime::right_turn() {
-  if (state == SET_STATE_HOUR)
-    add_hour_to_offset();
-  if (state == SET_STATE_MINUTE)
-    add_minute_to_offset();
+  // TODO
+  // if (state == SET_STATE_HOUR)
+  //   add_hour_to_offset();
+  // if (state == SET_STATE_MINUTE)
+  //   add_minute_to_offset();
 
   update();
   return NULL;
@@ -200,8 +199,8 @@ Mode* MSetTime::right_turn() {
 MSetAlarm m_set_alarm = MSetAlarm();
 
 void MSetAlarm::update() {
-  if (get_alarm_enabled())
-    matrix.displayDigitAndHand(get_alarm_hour(), get_alarm_minute(), SET_ALARM_DIGIT_COLOR, SET_ALARM_HAND_COLOR, SET_ALARM_OVERLAP_COLOR);
+  if (alarm_enabled)
+    matrix.displayDigitAndHand(alarm_hour, alarm_minute, SET_ALARM_DIGIT_COLOR, SET_ALARM_HAND_COLOR, SET_ALARM_OVERLAP_COLOR);
   else
     matrix.displayOff(SET_ALARM_COLOR_OFF);
 }
@@ -216,11 +215,11 @@ Mode* MSetAlarm::press() {
 Mode* MSetAlarm::longpress() { return &m_menu; }
 
 void MSetAlarm::change_alarm(int8_t add) {
-  int8_t new_min = get_alarm_minute() + add;
-  int8_t new_hour = get_alarm_hour();
+  int8_t new_min = alarm_minute + add;
+  int8_t new_hour = alarm_hour;
   bool new_enabled = true;
   
-  if (!get_alarm_enabled() && (add > 0)) { // exception: oho, we just enabled the alarm
+  if (!alarm_enabled && (add > 0)) { // exception: oho, we just enabled the alarm
     new_hour = MIN_ALARM_HOUR;
     new_min = 0;
     new_enabled = true;
@@ -250,7 +249,7 @@ void MSetAlarm::change_alarm(int8_t add) {
 }
 
 Mode* MSetAlarm::left_turn() {
-  if (!get_alarm_enabled()) // ignore left turns if the alarm is off anyway
+  if (!alarm_enabled) // ignore left turns if the alarm is off anyway
     return NULL;
   change_alarm(-15);
   return NULL;
@@ -270,7 +269,7 @@ void MAlarming::enter() {
 Mode* MAlarming::loop() {
   if (start_show_time_millis + ALARMING_SHOW_TIME_DURATION > millis()) {
     matrix.clear();
-    matrix.displayDigitAndHand(get_current_hour(), get_current_minute(), ALARMING_DIGIT_COLOR, ALARMING_HAND_COLOR, ALARMING_OVERLAP_COLOR);
+    matrix.displayDigitAndHand(current_hour, current_minute, ALARMING_DIGIT_COLOR, ALARMING_HAND_COLOR, ALARMING_OVERLAP_COLOR);
     matrix.show();
     return NULL;
   }

@@ -1,71 +1,57 @@
 #include <Arduino.h>
+#include <Wire.h>
+#include <RTClib.h>
 #include "clock.h"
 
-uint8_t minute_offset = 0;
-uint8_t hour_offset = 0;
+RTC_DS1307 RTC;
 
-#define MINUTE_VALUE 60000UL
-#define HOUR_VALUE 3600000UL
-#define SECOND_VALUE 1000
-#define HALF_SECOND_VALUE 500
+void check_alarm();
 
-unsigned long shifted_millis() {
-  return millis() + minute_offset * MINUTE_VALUE + hour_offset * HOUR_VALUE;
-}
-uint8_t get_current_hour() {
-  return (shifted_millis() / HOUR_VALUE) % 24;
-}
-uint8_t get_current_minute() {
-  return (shifted_millis() / MINUTE_VALUE) % 60;
-}
-uint8_t get_current_second() {
-  return (shifted_millis() / SECOND_VALUE) % 60;
-}
-uint8_t get_current_halfsecond() {
-  return (shifted_millis() / HALF_SECOND_VALUE) % 120;
+uint8_t current_hour = 0;
+uint8_t current_minute = 0;
+unsigned long last_sync = 0;
+
+void setup_clock() {
+  Wire.begin();
+  RTC.begin();
+  // following line sets the RTC to the date & time this sketch was compiled
+  // RTC.adjust(DateTime(__DATE__, __TIME__));
 }
 
-void add_hour_to_offset() {
-  hour_offset = (hour_offset + 1) % 24;
+void loop_clock() {
+  // sync current time variables
+  if (millis() - last_sync > TIME_SYNC_INTERVAL) {
+    last_sync = millis();
+    DateTime now = RTC.now();
+    current_hour = now.hour();
+    current_minute = now.minute();
+    // check for alarm
+    check_alarm();
+  }
 }
-void add_minute_to_offset() {
-  minute_offset = (minute_offset + 1) % 60;
-}
-void subtract_hour_from_offset() {
-  hour_offset = (hour_offset + 24 - 1) % 24;
-}
-void subtract_minute_from_offset() {
-  minute_offset = (minute_offset + 60 - 1) % 60;
+
+uint8_t is_blinker_on() {
+  return (millis() / 500) % 2;
 }
 
 uint8_t alarm_minute = 0;
 uint8_t alarm_hour = 0;
 bool alarm_enabled = false;
+alarm_callback_t alarm_callback;
 unsigned long last_alarm_millis = 0;
 
-uint8_t get_alarm_hour() {
-  return alarm_hour;
-}
-uint8_t get_alarm_minute() {
-  return alarm_minute;
-}
-uint8_t get_alarm_enabled() {
-  return alarm_enabled;
-}
-
-bool alarm_is_due() {
+void check_alarm() {
   if (!alarm_enabled) { // alarm is off
-    return false;
+    return;
   }
   if (last_alarm_millis + 61000 > millis()) { // the alarm was just fired, so we don't want to fire again
       // TODO deal with millis() overflow
-      return false;
+      return;
   }
-  return (get_current_hour() == alarm_hour) && (get_current_minute() == alarm_minute);
-}
-
-void alarm_fired() {
-  last_alarm_millis = millis();
+  if ((current_hour == alarm_hour) && (current_minute == alarm_minute)) {
+    alarm_callback();
+    last_alarm_millis = millis();
+  }
 }
 
 // setting the alarm time
