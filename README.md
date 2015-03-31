@@ -1,7 +1,6 @@
 # sternenwecker
 
 ## Circuit
-
 ### Parts
 
 - Arduino Uno ([shop](http://www.amazon.de/SainSmart-Kompatibel-Entwicklungsbrett-ATmega328P-enthaltend/dp/B00760RLFO/ref=sr_1_6?ie=UTF8&qid=1425220236&sr=8-6&keywords=Sainsmart) - uno compatible)
@@ -15,6 +14,8 @@
 - 3mm Mat acrylic glass sheet (WH10) ([shop](http://www.modulor.de/en/Plastics-Rubber/Sheets-Mats-Films/Acrylic-Glass-GS-Sheets-and-Blocks/Plexiglas-GS-white-milky.html))
 
 ### Setup & layout
+
+![circuit](https://raw.githubusercontent.com/motine/sternenwecker/master/circuit/circuit.png)
 
 I cut the cord of the power source and attached 5V & GND to the LED matrix. The LED matrix's data connection was connected to the running Arduino. Since, it did not light up straight away, I unplugged it very quickly and swapped the cables. Then the LEDs light up. In my case the cable with text was 5V. Since I was a little bit of a coward during the first try, I did not power the Arduino with my laptop, but with a USB battery I had lying around... Now, I have soldered a red cable to 5V and a black cable to GND of the power source's cord. Only then I did try the matrix with full power. **Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs**.
 
