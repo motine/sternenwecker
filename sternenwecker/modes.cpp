@@ -15,7 +15,7 @@ void MOff::enter() {
 }
 
 Mode* MOff::loop() {
-  delay(50); // reduce the load during off
+  delay(IDLE_DELAY); // reduce the load during off
   return NULL;
 }
 
@@ -315,6 +315,7 @@ Mode* MSunset::loop() {
   uint8_t g = (1.0-pos) * 30;
   matrix.fillScreen(matrix.Color(r,g,0));
   matrix.show();
+  delay(IDLE_DELAY);
   return NULL;
 }
 

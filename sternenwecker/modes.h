@@ -1,6 +1,7 @@
 #ifndef MODES_H
 #define MODES_H
 
+#define IDLE_DELAY 50 // ms, used when the arduino is not supposed to do much (e.g. during MOff or MSunset)
 #define MENU_COLOR matrix.Color(0, 10, 30) // regulate brightness via smaller color components
 #define TIME_COLOR matrix.Color(2, 0, 0)
 #define TIME_SCROLL_STEP_DURATION 80
