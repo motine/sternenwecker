@@ -20,28 +20,11 @@ I cut the cord of the power source and attached 5V & GND to the LED matrix. The 
 
 After I proudly introduced my nightstand to its new companion (the alarm), I found that the time drifts very much. So I woke a little earlier than expected. After this experience I decided to add the real time module.
 
-## Display and modes
-
-### Notes
-
-When waking, use a gradient from red over blue to white.
-
-Use the pot to set the alarm. One can only set alarms between 6:00-9:55. The pot operates in 5 min steps. For displaying the hour use 3x5 digit and twice 2x5 for the minutes. This leaves one pixel space between hour and minutes.
-The time is only shown if the pot is pushed down. The time then scrolls through.
-
-When the alarm is ongoing, show the time occasionally. The surrounding pixels which are not needed to show the scrolling digits shall then still be bright white.
-
-The alarm does not include sound as a fail safe, because you would usually set another device anyway.
-
-After I did my design I found this great [8x8 icon set](http://graphicriver.net/item/nano-icons-8x8/4453769).
-
 ## Programming
 
-I use the Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPixel) & see Uberguide above) library. Please install it from Github directly, because they recently added the `clear()` method. I could not use the the `NeoMatrix` library, because it turns out that it uses only 16 bit for colors. This makes my color gradients look choppy.
+I use the Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPixel) & see Uberguide above) library. **Please install it directly from Github**, because they recently added the `clear()` method. I could not use the the `NeoMatrix` library, because it turns out that it uses only 16 bit for colors. This makes my color gradients look choppy.
 
-I also use [RTClib](https://github.com/jcw/rtclib). Please also install it.
-
-Here some more info:
+**Please also install [RTClib](https://github.com/jcw/rtclib)**.
 
 * I used the [ALPS STEC12E Encoder](http://www.reichelt.de/Drehimpulsgeber/STEC12E08/3/index.html?;ACTION=3;LA=5000;GROUP=B29;GROUPID=3714;ARTICLE=73923;START=0;SORT=artnr;OFFSET=16;SID=12T8NM5n8AAAIAAFaMoB8531a88b7cd82ed0595530ee4614f0159) with the data sheet [specification](https://cdn-reichelt.de/documents/datenblatt/F100/402097STEC12E08.PDF).
 
@@ -55,7 +38,7 @@ Here some weird stuff (**known issues**):
 
 ## Box
 
-Here is the idea for the housing...
+Here is the sketch for the housing...
 ![box](https://raw.githubusercontent.com/motine/sternenwecker/master/studies/box-retro.jpg).
 
 To assemble:
@@ -66,11 +49,14 @@ To assemble:
 1. Put everything on the bottom.
 1. Slide in the drawer.
 
-The front/top side will be bent. Here some resources for checking out how to do this:
+## Random notes
 
-* [A guy testing patterns](http://m.instructables.com/id/Curved-laser-bent-wood/?ALLSTEPS)
-* [Some calculations in math](http://www.deferredprocrastination.co.uk/blog/2012/minimum-bend-radius/)
-* [More resources](http://www.deferredprocrastination.co.uk/blog/category/def-proc/lattice-hinges/)
+* After I did my icon design, I found this great [8x8 icon set](http://graphicriver.net/item/nano-icons-8x8/4453769).
+* The alarm does not include sound as a fail safe, because you would usually set another device anyway.
+* The front/top side will be bent. Here some resources for checking out how to do this:
+  * [A guy testing patterns](http://m.instructables.com/id/Curved-laser-bent-wood/?ALLSTEPS)
+  * [Some calculations in math](http://www.deferredprocrastination.co.uk/blog/2012/minimum-bend-radius/)
+  * [More resources](http://www.deferredprocrastination.co.uk/blog/category/def-proc/lattice-hinges/)
 
 
 ## Credits
