@@ -5,7 +5,7 @@
 #include "mode_master.h"
 #include "button.h"
 #include "encoder.h"
-#include "clock.h"
+#include "alarm_clock.h"
 
 #define ENCODER_A_PIN 3
 #define ENCODER_B_PIN 2
@@ -18,6 +18,7 @@ extern ModeMaster mode_master;
 extern AlarmMatrix matrix;
 extern Button button;
 extern Encoder encoder;
+extern AlarmClock clock;
 
 void setup_resources();
 void loop_resources();

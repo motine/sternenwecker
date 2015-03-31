@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "resources.h"
-#include "clock.h"
+#include "alarm_clock.h"
 #include "display_test.h"
 #include "modes.h"
 
@@ -32,20 +32,20 @@ MTime m_time = MTime();
 Mode* MTime::loop() {
   int8_t scroll_offset = 8 - (millis() - enter_millis) / TIME_SCROLL_STEP_DURATION;
   
-  if (current_hour < 10)
+  if (clock.alarm_hour < 10)
     scroll_offset-=4;
   
   if (scroll_offset < -18)
     return &m_off;
 
   matrix.clear();
-  if (current_hour >= 10)
-    matrix.draw3x5Digit(current_hour / 10, scroll_offset, 2, TIME_COLOR);
-  matrix.draw3x5Digit(current_hour % 10, scroll_offset+4, 2, TIME_COLOR);
+  if (clock.current_hour >= 10)
+    matrix.draw3x5Digit(clock.current_hour / 10, scroll_offset, 2, TIME_COLOR);
+  matrix.draw3x5Digit(clock.current_hour % 10, scroll_offset+4, 2, TIME_COLOR);
   matrix.drawPixel(scroll_offset+8, 3, TIME_COLOR);
   matrix.drawPixel(scroll_offset+8, 5, TIME_COLOR);
-  matrix.draw3x5Digit(current_minute / 10, scroll_offset+11, 2, TIME_COLOR);
-  matrix.draw3x5Digit(current_minute % 10, scroll_offset+15, 2, TIME_COLOR);
+  matrix.draw3x5Digit(clock.current_minute / 10, scroll_offset+11, 2, TIME_COLOR);
+  matrix.draw3x5Digit(clock.current_minute % 10, scroll_offset+15, 2, TIME_COLOR);
 
   matrix.show();
   return NULL;
@@ -146,9 +146,9 @@ Mode* MTorch::right_turn() {
 
 MSetTime m_set_time = MSetTime();
 void MSetTime::update() {
-  uint8_t number = (state == SET_STATE_MINUTE) ? current_minute : current_hour;
+  uint8_t number = (state == SET_STATE_MINUTE) ? clock.current_minute : clock.current_hour;
   bool dots_left = (state == SET_STATE_MINUTE);
-  bool show_dots = (is_blinker_on() % 2 == 0);
+  bool show_dots = (clock.is_blinker_on() % 2 == 0);
   matrix.displayTimeComponent(number, dots_left, show_dots, SET_TIME_COLOR);
 }
 
@@ -199,8 +199,8 @@ Mode* MSetTime::right_turn() {
 MSetAlarm m_set_alarm = MSetAlarm();
 
 void MSetAlarm::update() {
-  if (alarm_enabled)
-    matrix.displayDigitAndHand(alarm_hour, alarm_minute, SET_ALARM_DIGIT_COLOR, SET_ALARM_HAND_COLOR, SET_ALARM_OVERLAP_COLOR);
+  if (clock.alarm_enabled)
+    matrix.displayDigitAndHand(clock.alarm_hour, clock.alarm_minute, SET_ALARM_DIGIT_COLOR, SET_ALARM_HAND_COLOR, SET_ALARM_OVERLAP_COLOR);
   else
     matrix.displayOff(SET_ALARM_COLOR_OFF);
 }
@@ -215,11 +215,11 @@ Mode* MSetAlarm::press() {
 Mode* MSetAlarm::longpress() { return &m_menu; }
 
 void MSetAlarm::change_alarm(int8_t add) {
-  int8_t new_min = alarm_minute + add;
-  int8_t new_hour = alarm_hour;
+  int8_t new_min = clock.alarm_minute + add;
+  int8_t new_hour = clock.alarm_hour;
   bool new_enabled = true;
   
-  if (!alarm_enabled && (add > 0)) { // exception: oho, we just enabled the alarm
+  if (!clock.alarm_enabled && (add > 0)) { // exception: oho, we just enabled the alarm
     new_hour = MIN_ALARM_HOUR;
     new_min = 0;
     new_enabled = true;
@@ -242,14 +242,14 @@ void MSetAlarm::change_alarm(int8_t add) {
     new_hour = MAX_ALARM_HOUR;
     new_min = 45;
   }
-  set_alarm_hour(new_hour);
-  set_alarm_minute(new_min);
-  set_alarm_enabled(new_enabled);
+  clock.alarm_hour = new_hour;
+  clock.alarm_minute = new_min;
+  clock.alarm_enabled =new_enabled;
   update();
 }
 
 Mode* MSetAlarm::left_turn() {
-  if (!alarm_enabled) // ignore left turns if the alarm is off anyway
+  if (!clock.alarm_enabled) // ignore left turns if the alarm is off anyway
     return NULL;
   change_alarm(-15);
   return NULL;
@@ -269,7 +269,7 @@ void MAlarming::enter() {
 Mode* MAlarming::loop() {
   if (start_show_time_millis + ALARMING_SHOW_TIME_DURATION > millis()) {
     matrix.clear();
-    matrix.displayDigitAndHand(current_hour, current_minute, ALARMING_DIGIT_COLOR, ALARMING_HAND_COLOR, ALARMING_OVERLAP_COLOR);
+    matrix.displayDigitAndHand(clock.current_hour, clock.current_minute, ALARMING_DIGIT_COLOR, ALARMING_HAND_COLOR, ALARMING_OVERLAP_COLOR);
     matrix.show();
     return NULL;
   }

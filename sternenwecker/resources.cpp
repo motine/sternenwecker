@@ -19,13 +19,14 @@ void encoder_right_turn() {
   mode_master.right_turn();
 }
 
-AlarmMatrix matrix = AlarmMatrix(LED_PIN, 8, 8);
-Button button = Button(ENCODER_BUTTON_PIN, button_press, button_longpress, button_hold);
-Encoder encoder = Encoder(ENCODER_A_PIN, ENCODER_B_PIN, encoder_left_turn, encoder_right_turn);
-
 void alarm_fired() {
   mode_master.setModeUnlessNull(&m_alarming);
 }
+
+AlarmMatrix matrix = AlarmMatrix(LED_PIN, 8, 8);
+Button button = Button(ENCODER_BUTTON_PIN, button_press, button_longpress, button_hold);
+Encoder encoder = Encoder(ENCODER_A_PIN, ENCODER_B_PIN, encoder_left_turn, encoder_right_turn);
+AlarmClock clock = AlarmClock(alarm_fired);
 
 void setup_resources() {
   // LEDs
@@ -40,14 +41,13 @@ void setup_resources() {
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
   
-  setup_clock();
-  alarm_callback = alarm_callback;
+  clock.setup();
   
   mode_master.setup();
 }
 
 void loop_resources() {
-  loop_clock();
+  clock.loop();
   button.loop();
   encoder.loop();
   mode_master.loop();
