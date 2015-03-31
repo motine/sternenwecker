@@ -37,7 +37,9 @@ After I did my design I found this great [8x8 icon set](http://graphicriver.net/
 
 ## Programming
 
-I only use the Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPixel) & see Uberguide above) library. Please install it from Github directly, because they recently added the `clear()` method. It turns out that the NeoMatrix library uses only 16 bit for colors. This makes my color gradients look choppy.
+I use the Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPixel) & see Uberguide above) library. Please install it from Github directly, because they recently added the `clear()` method. I could not use the the `NeoMatrix` library, because it turns out that it uses only 16 bit for colors. This makes my color gradients look choppy.
+
+I also use [RTClib](https://github.com/jcw/rtclib). Please also install it.
 
 Here some more info:
 
@@ -45,7 +47,7 @@ Here some more info:
 
 * I tried to use interrupts for the encoder, because the bounce was too hard. I do it in the `loop` now and works fine. As it seems as I do not need to debounce the signal in my case. But if you decide to do so, I found this [nice article](https://hifiduino.wordpress.com/2010/10/20/rotaryencoder-hw-sw-no-debounce) (i.e. see "updated" part). Also there is a [Arduino Playground page](http://playground.arduino.cc/code/bounce) about it.
 
-* For the DS1307 Real Time Clock Module, [Adafruit's page](https://learn.adafruit.com/ds1307-real-time-clock-breakout-board-kit/arduino-library) was helpful.
+* For the DS1307 Real Time Clock Module, I found some [documentation](http://www.sainsmart.com/arduino-i2c-rtc-ds1307-at24c32-real-time-clock-module-board-for-avr-arm-pic.html) (not necessarily what I bought, but better than nothing). Also [Adafruit's page](https://learn.adafruit.com/ds1307-real-time-clock-breakout-board-kit/arduino-library) was helpful.
 
 Here some weird stuff (**known issues**):
 
