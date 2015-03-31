@@ -45,6 +45,8 @@ Here some more info:
 
 * I tried to use interrupts for the encoder, because the bounce was too hard. I do it in the `loop` now and works fine. As it seems as I do not need to debounce the signal in my case. But if you decide to do so, I found this [nice article](https://hifiduino.wordpress.com/2010/10/20/rotaryencoder-hw-sw-no-debounce) (i.e. see "updated" part). Also there is a [Arduino Playground page](http://playground.arduino.cc/code/bounce) about it.
 
+* For the DS1307 Real Time Clock Module, [Adafruit's page](https://learn.adafruit.com/ds1307-real-time-clock-breakout-board-kit/arduino-library) was helpful.
+
 Here some weird stuff (**known issues**):
 
 - If you make the matrix use lot's of power (MAX_BRIGHTNESS > 20), you may not be able to upload your sketch. Just unplug the matrix's 5V, upload your sketch and replug.
