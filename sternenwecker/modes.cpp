@@ -23,6 +23,7 @@ Mode* MOff::press() {
   return &m_time;
 }
 Mode* MOff::longpress() {
+  // return &m_display_test; // hidden easter egg (testing)
   return &m_display_test; // hidden easter egg (testing)
 }
 
@@ -30,23 +31,10 @@ Mode* MOff::longpress() {
 MTime m_time = MTime();
 
 Mode* MTime::loop() {
-  int8_t scroll_offset = 8 - (millis() - enter_millis) / TIME_SCROLL_STEP_DURATION;
-  
-  if (clock.alarm_hour < 10)
-    scroll_offset-=4;
-  
-  if (scroll_offset < -18)
+  if (enter_millis + TIME_DURATION < millis())
     return &m_off;
-
   matrix.clear();
-  if (clock.current_hour >= 10)
-    matrix.draw3x5Digit(clock.current_hour / 10, scroll_offset, 2, TIME_COLOR);
-  matrix.draw3x5Digit(clock.current_hour % 10, scroll_offset+4, 2, TIME_COLOR);
-  matrix.drawPixel(scroll_offset+8, 3, TIME_COLOR);
-  matrix.drawPixel(scroll_offset+8, 5, TIME_COLOR);
-  matrix.draw3x5Digit(clock.current_minute / 10, scroll_offset+11, 2, TIME_COLOR);
-  matrix.draw3x5Digit(clock.current_minute % 10, scroll_offset+15, 2, TIME_COLOR);
-
+  matrix.displayDigitAndHand(clock.current_hour, clock.current_minute, TIME_DIGIT_COLOR, TIME_HAND_COLOR, TIME_OVERLAP_COLOR);
   matrix.show();
   return NULL;
 }
@@ -283,7 +271,7 @@ Mode* MAlarming::loop() {
   else
     pos = fmod((double)millis_since_start / ALARMING_RISE_DURATION, 1.0);
   
-  uint8_t r = pow(pos, 2) * 255;
+  uint8_t r = 1+pow(pos, 2) * 254;
   uint8_t g = pow(pos, 3) * 255;
   uint8_t b = pow(pos, 5) * 150;
   matrix.fillScreen(matrix.Color(r,g,b));

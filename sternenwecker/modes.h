@@ -3,8 +3,10 @@
 
 #define IDLE_DELAY 50 // ms, used when the arduino is not supposed to do much (e.g. during MOff or MSunset)
 #define MENU_COLOR matrix.Color(0, 10, 30) // regulate brightness via smaller color components
-#define TIME_COLOR matrix.Color(2, 0, 0)
-#define TIME_SCROLL_STEP_DURATION 80
+#define TIME_DURATION 2000 // ms
+#define TIME_DIGIT_COLOR matrix.Color(2, 0, 0)
+#define TIME_HAND_COLOR matrix.Color(1, 1, 0)
+#define TIME_OVERLAP_COLOR matrix.Color(2, 1, 0)
 #define MENU_COUNT 4
 #define TORCH_HUE_START 8
 #define TORCH_HUE_STEPS 80

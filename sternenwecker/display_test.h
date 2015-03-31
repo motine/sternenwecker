@@ -14,6 +14,7 @@ class MDisplayTest : public Mode {
     int8_t hour;
     int8_t min;
     int8_t current_test;
+    unsigned long enter_millis;
 };
 extern MDisplayTest m_display_test;
 

@@ -4,6 +4,7 @@
 
 MDisplayTest m_display_test = MDisplayTest();
 void MDisplayTest::enter() {
+  enter_millis = millis();
   current_test = 0;
   hour = 5;
   min = 45;
@@ -306,6 +307,29 @@ Mode* MDisplayTest::loop() {
   matrix.fillScreen(background);
   
   if (current_test == 0) {
+    matrix.clear();
+    // this used to me in MTime
+    uint8_t TIME_SCROLL_STEP_DURATION = 80;
+    int8_t scroll_offset = 8 - (millis() - enter_millis) / TIME_SCROLL_STEP_DURATION;
+
+    if (clock.current_hour < 10)
+      scroll_offset-=4;
+
+    if (scroll_offset < -24) { // use -18 if you want no pause between scrolls
+      enter_millis = millis();
+      // start again
+    }
+
+    if (clock.current_hour >= 10)
+      matrix.draw3x5Digit(clock.current_hour / 10, scroll_offset, 2, color1);
+    matrix.draw3x5Digit(clock.current_hour % 10, scroll_offset+4, 2, color1);
+    matrix.drawPixel(scroll_offset+8, 3, color1);
+    matrix.drawPixel(scroll_offset+8, 5, color1);
+    matrix.draw3x5Digit(clock.current_minute / 10, scroll_offset+11, 2, color1);
+    matrix.draw3x5Digit(clock.current_minute % 10, scroll_offset+15, 2, color1);
+  }
+  
+  if (current_test == 1) {
     // one digit, 4x5 rectangle
     matrix.draw3x5Digit(hour % 10, 0, 2, color1);
     uint32_t c;
@@ -316,7 +340,7 @@ Mode* MDisplayTest::loop() {
       matrix.drawPixel(OFFSET_LEFT + i%4, OFFSET_TOP +4 -i/4, c);
     }
   }
-  if (current_test == 1) {
+  if (current_test == 2) {
     // one digit, 4x6 rectangle
     matrix.draw3x5Digit(hour % 10, 0, 2, color1);
     uint32_t c;
@@ -327,14 +351,14 @@ Mode* MDisplayTest::loop() {
       matrix.drawPixel(OFFSET_LEFT + i%4, OFFSET_TOP +5 -i/4, c);
     }
   }
-  if (current_test == 2) {
+  if (current_test == 3) {
     // one digit, hand in a 4x4 rectangle
     matrix.draw3x5Digit(hour % 10, 0, 2, color1);
     matrix.fillRect(4, 3, 4, 4, color1_dark);
     matrix.drawBitmap(4, 3, HAND_4x4[(min*12)/60], 4, 4, color1);
   }
   
-  if (current_test == 3) {
+  if (current_test == 4) {
     // one digit, full-screen hand with 20 bitmaps
     matrix.drawBitmap(0, 0, HAND_20_8x8[min/3], 8, 8, color1);
     uint8_t hand_x = 0;
@@ -342,7 +366,7 @@ Mode* MDisplayTest::loop() {
       hand_x = 5;
     matrix.draw3x5Digit(hour % 10, hand_x, 2, color2);
   }
-  if (current_test == 4) {
+  if (current_test == 5) {
     // one digit, full-screen hand with 8 bitmaps
     matrix.drawBitmap(0, 0, HAND_8_8x8[min*8/60], 8, 8, color1);
     uint8_t hand_x = 0;
@@ -356,7 +380,7 @@ Mode* MDisplayTest::loop() {
 }
 
 Mode* MDisplayTest::press() {
-  current_test = (current_test + 1) % 5;
+  current_test = (current_test + 1) % 6;
   return NULL;
 }
 Mode* MDisplayTest::longpress() {
