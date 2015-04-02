@@ -201,6 +201,26 @@ uint32_t AlarmMatrix::hue_to_color(uint16_t hue) {
   }
 }
 
+uint32_t AlarmMatrix::hsv_to_color(uint16_t hue, float saturation, float value) {
+  float h = hue / 60.0;
+  float c = saturation * value;
+  float x = c * (1.0 - fabs(fmod(h, 2.0) - 1.0));
+  float m = value - c;
+  uint8_t hi = h;
+  uint8_t ci = c * 255;
+  uint8_t xi = x * 255;
+  uint8_t mi = m * 255;
+
+  switch (hi) {
+    case 0:  return Color(ci+mi, xi+mi,  0+mi);
+    case 1:  return Color(xi+mi, ci+mi,  0+mi);
+    case 2:  return Color( 0+mi, ci+mi, xi+mi);
+    case 3:  return Color( 0+mi, xi+mi, ci+mi);
+    case 4:  return Color(xi+mi,  0+mi, ci+mi);
+    default: return Color(ci+mi,  0+mi, xi+mi);
+  }
+}
+
 void AlarmMatrix::fillScreen(uint32_t color) {
   for (uint8_t i=0; i < count; i++) {
     setPixelColor(i, color);
