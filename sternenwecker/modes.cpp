@@ -98,6 +98,7 @@ void MTorch::update() {
 }
 
 void MTorch::enter() {
+  enter_millis = millis();
   hue = TORCH_HUE_START;
   brightness = TORCH_BRIGHTNESS_START;
   update();
@@ -106,7 +107,11 @@ void MTorch::leave() {
   // clean up and set to default brightness
   matrix.setBrightness(BRIGHTNESS);
 }
-
+Mode* MTorch::loop() {
+  if ((millis() - enter_millis) > TORCH_AUTO_OFF)
+    return &m_off;
+  return NULL;
+}
 Mode* MTorch::press() { return &m_off; }
 Mode* MTorch::longpress() { return NULL; }
 Mode* MTorch::button_hold() {

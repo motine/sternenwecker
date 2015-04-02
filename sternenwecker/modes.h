@@ -8,6 +8,7 @@
 #define TIME_HAND_COLOR matrix.Color(1, 1, 0)
 #define TIME_OVERLAP_COLOR matrix.Color(2, 1, 0)
 #define MENU_COUNT 4
+#define TORCH_AUTO_OFF 5400000UL // ms, turn off after this many milliseconds since torch was activated (prevent overheating)
 #define TORCH_HUE_START 8
 #define TORCH_HUE_STEPS 80
 #define TORCH_BRIGHTNESS_MIN 1
@@ -94,6 +95,7 @@ class MTorch : public Mode {
     MTorch() : Mode() { };
     void enter();
     void leave();
+    Mode* loop();
     Mode* press();
     Mode* longpress();
     Mode* button_hold();
@@ -103,6 +105,7 @@ class MTorch : public Mode {
     void update();
     uint16_t hue;
     uint8_t brightness;
+    unsigned long enter_millis;
 };
 extern MTorch m_torch;
 
