@@ -16,6 +16,7 @@ class AlarmClock {
     uint8_t current_hour;   // read-only
     uint8_t current_minute; // read-only
     uint8_t is_blinker_on(); // returns boolean if the dots between hour and minute shall be on
+    void set_time(uint8_t hour, uint8_t minute);
 
     uint8_t alarm_minute;
     uint8_t alarm_hour;

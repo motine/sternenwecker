@@ -134,7 +134,7 @@ Mode* MTorch::right_turn() {
 
 MSetTime m_set_time = MSetTime();
 void MSetTime::update() {
-  uint8_t number = (state == SET_STATE_MINUTE) ? clock.current_minute : clock.current_hour;
+  uint8_t number = (state == SET_STATE_MINUTE) ? minute : hour;
   bool dots_left = (state == SET_STATE_MINUTE);
   bool show_dots = (clock.is_blinker_on() % 2 == 0);
   matrix.displayTimeComponent(number, dots_left, show_dots, SET_TIME_COLOR);
@@ -142,6 +142,8 @@ void MSetTime::update() {
 
 void MSetTime::enter() {
   state = SET_STATE_HOUR;
+  hour = clock.current_hour;
+  minute = clock.current_minute;
   update();
 }
 
@@ -157,27 +159,26 @@ Mode* MSetTime::press() {
     update();
     return NULL;
   case SET_STATE_MINUTE:
+    clock.set_time(hour, minute);
     return &m_confirm;
   }
   return NULL;
 }
 Mode* MSetTime::longpress() { return &m_menu; }
 Mode* MSetTime::left_turn() {
-  // TODO
-  // if (state == SET_STATE_HOUR)
-  //   subtract_hour_from_offset();
-  // if (state == SET_STATE_MINUTE)
-  //   subtract_minute_from_offset();
+  if (state == SET_STATE_HOUR)
+    hour = (hour + 24 - 1) % 24;
+  if (state == SET_STATE_MINUTE)
+    minute = (minute + 60 - 1) % 60;
 
   update();
   return NULL;
 }
 Mode* MSetTime::right_turn() {
-  // TODO
-  // if (state == SET_STATE_HOUR)
-  //   add_hour_to_offset();
-  // if (state == SET_STATE_MINUTE)
-  //   add_minute_to_offset();
+  if (state == SET_STATE_HOUR)
+    hour = (hour + 1) % 60;
+  if (state == SET_STATE_MINUTE)
+    minute = (minute + 1) % 60;
 
   update();
   return NULL;

@@ -31,6 +31,10 @@ uint8_t AlarmClock::is_blinker_on() {
   return (millis() / 500) % 2;
 }
 
+void AlarmClock::set_time(uint8_t hour, uint8_t minute) {
+  RTC.adjust(DateTime(2015, 01, 24, hour, minute, 0)); // we do not care about the date...
+}
+
 void AlarmClock::check_alarm() {
   if (!alarm_enabled) { // alarm is off
     return;

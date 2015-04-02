@@ -118,6 +118,7 @@ class MSetTime : public Mode {
   private:
     void update();
     uint8_t state;
+    uint8_t hour, minute;
 };
 extern MSetTime m_set_time;
 
