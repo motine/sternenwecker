@@ -115,7 +115,7 @@ void MTorch::update() {
 void MTorch::enter() {
   enter_millis = millis();
   hue = TORCH_HUE_START;
-  brightness = 0.5;
+  brightness = TORCH_BRIGHTNESS_START;
 }
 Mode* MTorch::loop() {
   if ((millis() - enter_millis) > TORCH_AUTO_OFF)
