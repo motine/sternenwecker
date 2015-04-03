@@ -1,12 +1,17 @@
 #ifndef MODES_H
 #define MODES_H
 
+#define TIME_DURATION 2000 // ms
+#define TIME_DIGIT_DIM_COLOR matrix.Color(2, 0, 0)
+#define TIME_HAND_DIM_COLOR matrix.Color(1, 1, 0)
+#define TIME_OVERLAP_DIM_COLOR matrix.Color(2, 1, 0)
+#define TIME_DIGIT_COLOR matrix.Color(5, 15, 0)
+#define TIME_HAND_COLOR matrix.Color(15, 5, 0)
+#define TIME_OVERLAP_COLOR matrix.Color(10, 10, 0)
+
+
 #define IDLE_DELAY 50 // ms, used when the arduino is not supposed to do much (i.e. if it does not need to respond to encoder rotations)
 #define MENU_COLOR matrix.Color(0, 10, 30) // regulate brightness via smaller color components
-#define TIME_DURATION 2000 // ms
-#define TIME_DIGIT_COLOR matrix.Color(2, 0, 0)
-#define TIME_HAND_COLOR matrix.Color(1, 1, 0)
-#define TIME_OVERLAP_COLOR matrix.Color(2, 1, 0)
 #define MENU_COUNT 4
 #define TORCH_AUTO_OFF 5400000UL // ms, turn off after this many milliseconds since torch was activated (prevent overheating)
 #define TORCH_HUE_START 8
@@ -23,19 +28,29 @@
 #define MAX_ALARM_HOUR 23 // will only go to XX:45
 #define ALARMING_RISE_DURATION 1800000UL // ms
 #define ALARMING_AUTO_OFF 5400000UL // ms, turns the LEDs off after this many milliseconds after the alarm has started (so the LEDs dont get too hot)
-#define ALARMING_SHOW_TIME_DURATION 2000 // ms
-#define ALARMING_DIGIT_COLOR matrix.Color(5, 15, 0)
-#define ALARMING_HAND_COLOR matrix.Color(15, 5, 0)
-#define ALARMING_OVERLAP_COLOR matrix.Color(10, 10, 0)
 #define SUNSET_DURATION  1200000UL // ms
 #define SUNSET_TURN_VALUE  30000UL // ms, added/subtracted when the encoder is turned. advances/shifts back the start_millis.
 #define CONFIRM_DURATION 1200 // ms
 #define CONFIRM_COLOR matrix.Color(0, 30, 0)
 
+// Helper class
+
+class TimeShow {
+  public:
+    TimeShow(uint32_t duration, bool use_dim_colors);
+    void start(); // starts showing the time
+    bool show(); // draws the time on the matrix and returns true if the time is still showing (true until duration has elapsed since start)
+    bool is_showing(); // returns true if the time is still showing
+  private:
+    bool use_dim_colors;
+    uint32_t duration;
+    unsigned long start_millis;
+};
+
 // If a method which returns Mode* is called and it returns something non-NULL, the mode will be set after execution of the method.
 class Mode {
   public:
-    Mode();
+    Mode() {};
     // if loop returns a Mode, the mode will be set by ModeMaster after completing this call.
     virtual Mode* loop() { return NULL; };
     // called when the sketch initializes
@@ -65,14 +80,13 @@ extern MOff m_off;
 
 class MTime : public Mode {
   public:
-    MTime() : Mode() { };
+    MTime() : Mode(), time_show(TimeShow(TIME_DURATION, true)) { };
     Mode* loop();
     void enter();
-    void leave();
     Mode* press();
     Mode* longpress();
   private:
-    unsigned long enter_millis;
+    TimeShow time_show;
 };
 extern MTime m_time;
 
@@ -92,9 +106,8 @@ extern MMenu m_menu;
 
 class MTorch : public Mode {
   public:
-    MTorch() : Mode() { };
+    MTorch() : Mode(), time_show(TimeShow(TIME_DURATION, false)) { };
     void enter();
-    void leave();
     Mode* loop();
     Mode* press();
     Mode* longpress();
@@ -106,6 +119,7 @@ class MTorch : public Mode {
     uint16_t hue;
     uint8_t brightness;
     unsigned long enter_millis;
+    TimeShow time_show;
 };
 extern MTorch m_torch;
 
@@ -141,20 +155,20 @@ extern MSetAlarm m_set_alarm;
 
 class MAlarming : public Mode {
   public:
-    MAlarming() : Mode() { };
+    MAlarming() : Mode(), time_show(TimeShow(TIME_DURATION, true)) { };
     void enter();
     Mode* loop();
     Mode* press();
     Mode* longpress();
   private:
     unsigned long start_millis;
-    unsigned long start_show_time_millis;
+    TimeShow time_show;
 };
 extern MAlarming m_alarming;
 
 class MSunset : public Mode {
   public:
-    MSunset() : Mode() { };
+    MSunset() : Mode(), time_show(TimeShow(TIME_DURATION, false)) { };
     void enter();
     Mode* loop();
     Mode* press();
@@ -163,6 +177,7 @@ class MSunset : public Mode {
     Mode* right_turn();
   private:
     unsigned long start_millis;
+    TimeShow time_show;
 };
 extern MSunset m_sunset;
 
