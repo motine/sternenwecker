@@ -374,13 +374,16 @@ Mode* MDisplayTest::loop() {
       hand_x = 5;
     matrix.draw3x5Digit(hour % 10, hand_x, 2, color2);
   }
+  if (current_test == 6) {
+    matrix.displayDigitAndHand(hour, min, color1, color2, color3);
+  }
   
   matrix.show();
   return NULL;
 }
 
 Mode* MDisplayTest::press() {
-  current_test = (current_test + 1) % 6;
+  current_test = (current_test + 1) % 7;
   return NULL;
 }
 Mode* MDisplayTest::longpress() {

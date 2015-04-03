@@ -44,8 +44,8 @@ Mode* MOff::press() {
   return &m_time;
 }
 Mode* MOff::longpress() {
-  return &m_alarming; // hidden easter egg (testing)
-  // return &m_display_test; // hidden easter egg (testing)
+  // return &m_alarming; // hidden easter egg (testing)
+  return &m_display_test; // hidden easter egg (testing)
 }
 
 // --------- MTime ----------
