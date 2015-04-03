@@ -91,7 +91,7 @@ MTorch m_torch = MTorch();
 void MTorch::update() {
   // uint32_t color = matrix.hue_to_color((hue * 360.0)/TORCH_HUE_STEPS);
   float normalized_brightness = brightness / (float)TORCH_BRIGHTNESS_STEPS;
-  uint32_t color = matrix.hsv_to_color((hue * 360.0)/TORCH_HUE_STEPS, 1.0-1.0*pow(normalized_brightness, 2), 1.0);
+  uint32_t color = matrix.hsv_to_color((hue * 360.0)/TORCH_HUE_STEPS, 1.0-0.3*pow(normalized_brightness, 3), 1.0);
   matrix.setBrightness(BRIGHTNESS * normalized_brightness);
   matrix.fillScreen(color);
   matrix.show();
