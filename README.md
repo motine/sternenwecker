@@ -29,9 +29,10 @@ After I proudly introduced my nightstand to its new companion (the alarm), I fou
 
 ## Programming
 
-I use the Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPixel) & see Uberguide above) library. **Please install it directly from Github**, because they recently added the `clear()` method. I could not use the the `NeoMatrix` library, because it turns out that it uses only 16 bit for colors. This makes my color gradients look choppy.
+- Please [install](https://learn.adafruit.com/adafruit-all-about-arduino-libraries-install-use/arduino-libraries) The Adafruit NeoPixel from [GitHub](https://github.com/adafruit/Adafruit_NeoPixel).
+- And the [RTClib](https://github.com/jcw/rtclib).
 
-**Please also install [RTClib](https://github.com/jcw/rtclib)**.
+I use the Adafruit NeoPixel library. **Please install it directly from Github**, because they recently added the `clear()` method. I could not use the more comprehensive `NeoMatrix` library, because it turns out that it uses only 16 bit for colors. This makes my color gradients look choppy.
 
 * I used the [ALPS STEC12E Encoder](http://www.reichelt.de/Drehimpulsgeber/STEC12E08/3/index.html?;ACTION=3;LA=5000;GROUP=B29;GROUPID=3714;ARTICLE=73923;START=0;SORT=artnr;OFFSET=16;SID=12T8NM5n8AAAIAAFaMoB8531a88b7cd82ed0595530ee4614f0159) with the data sheet [specification](https://cdn-reichelt.de/documents/datenblatt/F100/402097STEC12E08.PDF).
 
@@ -39,32 +40,9 @@ I use the Adafruit NeoPixel ([GitHub](https://github.com/adafruit/Adafruit_NeoPi
 
 * For the DS1307 Real Time Clock Module, I found some [documentation](http://www.sainsmart.com/arduino-i2c-rtc-ds1307-at24c32-real-time-clock-module-board-for-avr-arm-pic.html) (not necessarily what I bought, but better than nothing). Also [Adafruit's page](https://learn.adafruit.com/ds1307-real-time-clock-breakout-board-kit/arduino-library) was helpful.
 
-Here some weird stuff (**known issues**):
-
-- If you make the matrix use lot's of power (MAX_BRIGHTNESS > 20), you may not be able to upload your sketch. Just unplug the matrix's 5V, upload your sketch and replug.
-
 ## Box
 
-Here is the sketch for the housing...
-![box](https://github.com/motine/sternenwecker/blob/master/documentation/box-retro.jpg).
-
-To assemble:
-
-1. Assemble the support.
-1. Take some [blue tack](http://en.wikipedia.org/wiki/Blu-Tack) and stick the matrix to the support (or use glue if you are sure what you are doing).
-1. Then assemble the rest of the top bit (top+side+support+side+back).
-1. Put everything on the bottom.
-1. Slide in the drawer.
-
-## Random notes
-
-* After I did my icon design, I found this great [8x8 icon set](http://graphicriver.net/item/nano-icons-8x8/4453769).
-* The alarm does not include sound as a fail safe, because you would usually set another device anyway.
-* The front/top side will be bent. Here some resources for checking out how to do this:
-  * [A guy testing patterns](http://m.instructables.com/id/Curved-laser-bent-wood/?ALLSTEPS)
-  * [Some calculations in math](http://www.deferredprocrastination.co.uk/blog/2012/minimum-bend-radius/)
-  * [More resources](http://www.deferredprocrastination.co.uk/blog/category/def-proc/lattice-hinges/)
-
+**TODO**
 
 ## Credits
 
@@ -74,11 +52,8 @@ To assemble:
 * Thanks to Armin for feedback on the "where to put the button" issue.
 * Thanks to Marcel for answering a couple of questions regarding the circuit.
 
-
 I used to following software:
 
 * TextMate for text editing
 * Arduino GUI for compiling and uploading (with the external editor setting enabled)
-* [fritzing](fritzing.org) for circuit design
 * omniGraffle for the box design (for the laser cutter)
-* [picmonkey](http://www.picmonkey.com/) to create the collages
