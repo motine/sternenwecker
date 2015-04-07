@@ -40,7 +40,7 @@ Here some weird stuff (**known issues**):
 ## Box
 
 Here is the sketch for the housing...
-![box](https://github.com/motine/sternenwecker/blob/master/documentation/box-retro.jpg).
+![box](https://github.com/motine/sternenwecker/blob/single_matrix/documentation/box-retro.jpg).
 
 To assemble:
 
