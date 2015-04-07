@@ -1,23 +1,29 @@
 # sternenwecker
 
+This branch is about the "LED strip behind the bed" version.
+There is also a [table top version](https://github.com/motine/sternenwecker/tree/single_matrix).
+
+**!!TODO!!!** Adjust circuit, box design and readme for this version. (part list already done)
+
 ## Circuit
 ### Parts
 
-- Arduino Uno ([shop](http://www.amazon.de/SainSmart-Kompatibel-Entwicklungsbrett-ATmega328P-enthaltend/dp/B00760RLFO/ref=sr_1_6?ie=UTF8&qid=1425220236&sr=8-6&keywords=Sainsmart) - uno compatible)
-- Adafruit NeoPixel 8x8 ([shop](http://www.flikto.de/products/adafruit-neopixel-neomatrix-8x8-64-rgb-led-pixel-matrix))
-- Rotary encoder with button functionality "Encoder 5 Vdc 0.001 A 360 ° ALPS STEC12E08" ([shop](http://www.conrad.com/ce/en/product/700708/Encoder-5-Vdc-0001-A-360-ALPS-STEC12E08-1-pcs)) with cap ([shop](http://www.conrad.com/ce/en/product/700619/ALPS-DK13-164A645-Rotary-Knob-For-Encoder-With-Plastic-Shaft-Rotary-button-?ref=oz))
-- A real time clock module ([shop](http://www.amazon.de/dp/B00NW50PA0))
-- External power source with around 4 Amperes ([shop](http://www.amazon.de/dp/B004S7U4IO), the matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max, there are lots of alternatives at [conrad.de](http://conrad.de))
+- [Arduino Pro Mini](http://www.amazon.de/dp/B00PLD3E1S) + [Programmer](http://www.exp-tech.de/foca-v2-2-ft232rl-tiny-breakout-usb-to-serial-uart-interface)
+- [Connectors](http://www.exp-tech.de/waterproof-dc-power-cable-set-5-5-2-1mm)
+- [Adafruit Bicolor LED Square Pixel Matrix with I2C Backpack](http://www.exp-tech.de/adafruit-bicolor-led-square-pixel-matrix-with-i2c-backpack)
+- [60 RGB LED Strip WS2812B](http://r.ebay.com/bDToHk)
+- [Rotary encoder with button](http://www.conrad.com/ce/en/product/700708/Encoder-5-Vdc-0001-A-360-ALPS-STEC12E08-1-pcs) with [cap](http://www.conrad.com/ce/en/product/700619/ALPS-DK13-164A645-Rotary-Knob-For-Encoder-With-Plastic-Shaft-Rotary-button-?ref=oz)
+- [Tiny RTC](http://www.amazon.de/dp/B00NW50PA0) (Real Time Clock)
+- [External power source](http://www.amazon.de/dp/B004S7U4IO) with around 4A
 - 470 Ohm resistor
-- Some cables ([shop](http://www.amazon.de/dp/B00PXBVRZS)) (maybe a bread board for developing)
-- 3mm MDF sheet(s) ([shop](http://www.modulor.de/en/Wood-Cork/Fibreboards/MDF-Boards/MDF-brown-uncoated.html))
-- 3mm Mat acrylic glass sheet (WH10) ([shop](http://www.modulor.de/en/Plastics-Rubber/Sheets-Mats-Films/Acrylic-Glass-GS-Sheets-and-Blocks/Plexiglas-GS-white-milky.html))
+- [Some cables](http://www.amazon.de/dp/B00PXBVRZS) (maybe a bread board for developing)
+- [3mm MDF sheet(s)](http://www.modulor.de/en/Wood-Cork/Fibreboards/MDF-Boards/MDF-brown-uncoated.html)
 
 ### Setup & layout
 
 ![circuit](https://raw.githubusercontent.com/motine/sternenwecker/master/circuit/circuit.png)
 
-I cut the cord of the power source and attached 5V & GND to the LED matrix. The LED matrix's data connection was connected to the running Arduino. Since, it did not light up straight away, I unplugged it very quickly and swapped the cables. Then the LEDs light up. In my case the cable with text was 5V. Since I was a little bit of a coward during the first try, I did not power the Arduino with my laptop, but with a USB battery I had lying around... Now, I have soldered a red cable to 5V and a black cable to GND of the power source's cord. Only then I did try the matrix with full power. **Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs**.
+I cut the cord of the power source and attached 5V & GND to the LED matrix. The LED matrix's data connection was connected to the running Arduino. Since, it did not light up straight away, I unplugged it very quickly and swapped the cables. Then the LEDs light up. In my case the cable with text was 5V. Since I was a little bit of a coward during the first try, I did not power the Arduino with my laptop, but with a USB battery I had lying around... Now, I have soldered a red cable to 5V and a black cable to GND of the power source's cord. Only then I did try the matrix with full power. **Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs**. The matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max!
 
 After I proudly introduced my nightstand to its new companion (the alarm), I found that the time drifts very much. So I woke a little earlier than expected. After this experience I decided to add the real time module.
 
