@@ -8,7 +8,7 @@ There is also a [table top version](https://github.com/motine/sternenwecker/tree
 ## Circuit
 ### Parts
 
-- [Arduino Pro Mini](http://www.amazon.de/dp/B00PLD3E1S) + [Programmer](http://www.exp-tech.de/foca-v2-2-ft232rl-tiny-breakout-usb-to-serial-uart-interface)
+- [Arduino Pro Mini](http://www.amazon.de/dp/B00PLD3E1S) + [FTDI Board](http://www.exp-tech.de/foca-v2-2-ft232rl-tiny-breakout-usb-to-serial-uart-interface)
 - [Connectors](http://www.exp-tech.de/waterproof-dc-power-cable-set-5-5-2-1mm)
 - [Adafruit Bicolor LED Square Pixel Matrix with I2C Backpack](http://www.exp-tech.de/adafruit-bicolor-led-square-pixel-matrix-with-i2c-backpack)
 - [60 RGB LED Strip WS2812B](http://r.ebay.com/bDToHk)
@@ -21,13 +21,17 @@ There is also a [table top version](https://github.com/motine/sternenwecker/tree
 
 ### Setup & layout
 
-![circuit](https://raw.githubusercontent.com/motine/sternenwecker/master/circuit/circuit.png)
+![circuit](https://raw.githubusercontent.com/motine/sternenwecker/master/wiring/circuit.png)
 
 I cut the cord of the power source and attached 5V & GND to the LED matrix. The LED matrix's data connection was connected to the running Arduino. Since, it did not light up straight away, I unplugged it very quickly and swapped the cables. Then the LEDs light up. In my case the cable with text was 5V. Since I was a little bit of a coward during the first try, I did not power the Arduino with my laptop, but with a USB battery I had lying around... Now, I have soldered a red cable to 5V and a black cable to GND of the power source's cord. Only then I did try the matrix with full power. **Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs**. The matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max!
 
 After I proudly introduced my nightstand to its new companion (the alarm), I found that the time drifts very much. So I woke a little earlier than expected. After this experience I decided to add the real time module.
 
 ## Programming
+
+In order to program the Arduino Pro Mini, please use a FTDI board (the Arduino does not have a USB connection, so we have to go through a serial connection). Here my wiring for the setup (note that I did not solder the headers to the Arduino so I can easily remove it):
+
+![USB - FTDI - Arduino Pro Mini](https://raw.githubusercontent.com/motine/sternenwecker/master/wiring/usb-serial-aruino.png)
 
 - Please [install](https://learn.adafruit.com/adafruit-all-about-arduino-libraries-install-use/arduino-libraries) The Adafruit NeoPixel from [GitHub](https://github.com/adafruit/Adafruit_NeoPixel).
 - And the [RTClib](https://github.com/jcw/rtclib).
