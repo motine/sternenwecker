@@ -4,6 +4,8 @@ This branch is about the "LED strip behind the bed" version.
 There is also a [table top version](https://github.com/motine/sternenwecker/tree/single_matrix).
 
 **!!TODO!!!** Adjust circuit, box design and readme for this version. (part list already done)
+**Add note about hitting reset**
+
 
 ## Circuit
 ### Parts
@@ -23,7 +25,7 @@ There is also a [table top version](https://github.com/motine/sternenwecker/tree
 
 ![circuit](https://raw.githubusercontent.com/motine/sternenwecker/master/wiring/circuit.png)
 
-The chosen power supply says that it is regulated (german _stabilisiert_), but when I measured the idle output the voltage was higher than 5V (5.5V). I was surprised that, an unregulated 5V power supply gives more that the 5V if you don't draw close to the maximum current. Regulated then means that the power supply does _not_ exceed its voltage even if there is less current drawn. With this in mind I wanted to make sure that nothing blows, so I am using Arduino's `RAW` pin instead of `VCC`. This way we include the onboard voltage regulator.
+The chosen power supply says that it is regulated (german _stabilisiert_), but when I measured the idle output the voltage was higher than 5V (5.5V). I was surprised that, an unregulated 5V power supply gives more that the 5V if you don't draw close to the maximum current. Regulated then means that the power supply does _not_ exceed its voltage even if there is less current drawn. With this in mind I wanted to make sure that nothing blows, so I am using Arduino's `RAW` pin instead of `VCC`. This way we include the Arduino's onboard voltage regulator.
 
 I cut the cord of the power source and attached 5V & GND to the LED matrix. The LED matrix's data connection was connected to the running Arduino. Since, it did not light up straight away, I unplugged it very quickly and swapped the cables. Then the LEDs light up. In my case the cable with text was 5V. Since I was a little bit of a coward during the first try, I did not power the Arduino with my laptop, but with a USB battery I had lying around... Now, I have soldered a red cable to 5V and a black cable to GND of the power source's cord. Only then I did try the matrix with full power. **Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs**. The matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max!
 
