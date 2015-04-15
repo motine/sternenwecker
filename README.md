@@ -50,7 +50,7 @@ I use the Adafruit NeoPixel library. **Please install it directly from Github**,
 
 ## Box
 
-**TODO**
+![tinybox](https://raw.githubusercontent.com/motine/sternenwecker/master/box/tinybox.png)
 
 ## Credits
 
