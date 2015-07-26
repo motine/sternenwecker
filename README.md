@@ -3,8 +3,12 @@
 This branch is about the "LED strip behind the bed" version.
 There is also a [table top version](https://github.com/motine/sternenwecker/tree/single_matrix).
 
+
+remove click to show time, always show it.
+refactor TimeShow to be permanent
+
+
 **!!TODO!!!** Adjust circuit, box design and readme for this version. (part list already done)
-**Add note about hitting reset**
 
 
 ## Circuit
@@ -33,20 +37,48 @@ After I proudly introduced my nightstand to its new companion (the alarm), I fou
 
 ## Programming
 
-In order to program the Arduino Pro Mini, please use a FTDI board (the Arduino does not have a USB connection, so we have to go through a serial connection). Here my wiring for the setup (note that I did not solder the headers to the Arduino so I can easily remove it):
+We need the Adafruit's '[NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel) and [LED-Backpack](https://github.com/adafruit/Adafruit-LED-Backpack-Library) (with [GFX](https://github.com/adafruit/Adafruit-GFX-Library)) libs from GitHub.
+And the [RTClib](https://github.com/jcw/rtclib).
+
+Please run the following in a shell (needs `git` installed):
+
+```bash
+# This applies to Mac OSX, please adjust the paths if you have another OS.
+mkdir -p ~/Documents/Arduino/libraries/
+cd ~/Documents/Arduino/libraries/
+# get LED-Backpack (needs a new version)
+git clone https://github.com/adafruit/Adafruit-LED-Backpack-Library.git
+mv Adafruit-LED-Backpack-Library Adafruit_LEDBackpack
+# get GFX
+git clone https://github.com/adafruit/Adafruit-GFX-Library.git
+mv Adafruit-GFX-Library Adafruit_GFX
+# get NeoPixel
+git clone https://github.com/adafruit/Adafruit_NeoPixel.git
+# get RTC
+git clone https://github.com/jcw/rtclib.git
+mv rtclib RTClib
+```
+
+**Notes**
+
+* Note, I wanted to use the more elaborate `NeoMatrix` library, but it turns out that it only uses 16 bit for colors. This makes my color gradients look choppy.
+* I used the [ALPS STEC12E Encoder](http://www.reichelt.de/Drehimpulsgeber/STEC12E08/3/index.html?;ACTION=3;LA=5000;GROUP=B29;GROUPID=3714;ARTICLE=73923;START=0;SORT=artnr;OFFSET=16;SID=12T8NM5n8AAAIAAFaMoB8531a88b7cd82ed0595530ee4614f0159) with the data sheet [specification](https://cdn-reichelt.de/documents/datenblatt/F100/402097STEC12E08.PDF).
+* I tried to use interrupts for the encoder, because the bounce was too hard. I do it in the `loop` now and works fine. As it seems as I do not need to debounce the signal in my case. But if you decide to do so, I found this [nice article](https://hifiduino.wordpress.com/2010/10/20/rotaryencoder-hw-sw-no-debounce) (i.e. see "updated" part). Also there is a [Arduino Playground page](http://playground.arduino.cc/code/bounce) about it.
+* For the DS1307 Real Time Clock Module, I found some [documentation](http://www.sainsmart.com/arduino-i2c-rtc-ds1307-at24c32-real-time-clock-module-board-for-avr-arm-pic.html) (not necessarily what I bought, but better than nothing). Also [Adafruit's page](https://learn.adafruit.com/ds1307-real-time-clock-breakout-board-kit/arduino-library) was helpful.
+
+## Uploading
+
+**Add note about hitting reset**
+**Add instructions what to choose in the Arduino GUI**
+
+In order to program the Arduino Pro Mini, please use a FTDI board (the Arduino does not have a USB connection, so we have to go through a serial connection).
+Here my wiring for the setup (note that I did not solder the headers to the Arduino so I can easily remove it):
 
 ![USB - FTDI - Arduino Pro Mini](https://raw.githubusercontent.com/motine/sternenwecker/master/wiring/usb-serial-aruino.png)
 
-- Please [install](https://learn.adafruit.com/adafruit-all-about-arduino-libraries-install-use/arduino-libraries) The Adafruit NeoPixel from [GitHub](https://github.com/adafruit/Adafruit_NeoPixel).
-- And the [RTClib](https://github.com/jcw/rtclib).
+## Troubleshooting
 
-I use the Adafruit NeoPixel library. **Please install it directly from Github**, because they recently added the `clear()` method. I could not use the more comprehensive `NeoMatrix` library, because it turns out that it uses only 16 bit for colors. This makes my color gradients look choppy.
-
-* I used the [ALPS STEC12E Encoder](http://www.reichelt.de/Drehimpulsgeber/STEC12E08/3/index.html?;ACTION=3;LA=5000;GROUP=B29;GROUPID=3714;ARTICLE=73923;START=0;SORT=artnr;OFFSET=16;SID=12T8NM5n8AAAIAAFaMoB8531a88b7cd82ed0595530ee4614f0159) with the data sheet [specification](https://cdn-reichelt.de/documents/datenblatt/F100/402097STEC12E08.PDF).
-
-* I tried to use interrupts for the encoder, because the bounce was too hard. I do it in the `loop` now and works fine. As it seems as I do not need to debounce the signal in my case. But if you decide to do so, I found this [nice article](https://hifiduino.wordpress.com/2010/10/20/rotaryencoder-hw-sw-no-debounce) (i.e. see "updated" part). Also there is a [Arduino Playground page](http://playground.arduino.cc/code/bounce) about it.
-
-* For the DS1307 Real Time Clock Module, I found some [documentation](http://www.sainsmart.com/arduino-i2c-rtc-ds1307-at24c32-real-time-clock-module-board-for-avr-arm-pic.html) (not necessarily what I bought, but better than nothing). Also [Adafruit's page](https://learn.adafruit.com/ds1307-real-time-clock-breakout-board-kit/arduino-library) was helpful.
+**Add reference to TESTING.md**
 
 ## Box
 
