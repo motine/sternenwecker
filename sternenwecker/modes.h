@@ -2,16 +2,11 @@
 #define MODES_H
 
 #define TIME_DURATION 2000 // ms
-#define TIME_DIGIT_DIM_COLOR matrix.Color(2, 0, 0)
-#define TIME_HAND_DIM_COLOR matrix.Color(1, 1, 0)
-#define TIME_OVERLAP_DIM_COLOR matrix.Color(2, 1, 0)
-#define TIME_DIGIT_COLOR matrix.Color(5, 15, 0)
-#define TIME_HAND_COLOR matrix.Color(15, 5, 0)
-#define TIME_OVERLAP_COLOR matrix.Color(10, 10, 0)
+#define TIME_BRIGHTNESS_DIM 0 // 0-15
+#define TIME_BRIGHTNESS_FULL 15 // 0-15
 
 
 #define IDLE_DELAY 50 // ms, used when the arduino is not supposed to do much (i.e. if it does not need to respond to encoder rotations)
-#define MENU_COLOR matrix.Color(0, 10, 30) // regulate brightness via smaller color components
 #define MENU_COUNT 4
 #define TORCH_AUTO_OFF 5400000UL // ms, turn off after this many milliseconds since torch was activated (prevent overheating)
 #define TORCH_HUE_START 8
@@ -19,11 +14,6 @@
 #define TORCH_BRIGHTNESS_MIN 1
 #define TORCH_BRIGHTNESS_START 7
 #define TORCH_BRIGHTNESS_STEPS 30
-#define SET_TIME_COLOR matrix.Color(30, 0, 10)
-#define SET_ALARM_COLOR_OFF matrix.Color(30, 0, 0)
-#define SET_ALARM_DIGIT_COLOR matrix.Color(10, 30, 0)
-#define SET_ALARM_HAND_COLOR matrix.Color(30, 10, 0)
-#define SET_ALARM_OVERLAP_COLOR matrix.Color(20, 20, 0)
 #define MIN_ALARM_HOUR 5 // will start only at 5:00
 #define MAX_ALARM_HOUR 23 // will only go to XX:45
 #define ALARMING_RISE_DURATION 1800000UL // ms
@@ -31,7 +21,6 @@
 #define SUNSET_DURATION  1200000UL // ms
 #define SUNSET_TURN_VALUE  30000UL // ms, added/subtracted when the encoder is turned. advances/shifts back the start_millis.
 #define CONFIRM_DURATION 1200 // ms
-#define CONFIRM_COLOR matrix.Color(0, 30, 0)
 
 // Helper class
 
@@ -83,6 +72,7 @@ class MTime : public Mode {
     MTime() : Mode(), time_show(TimeShow(TIME_DURATION, true)) { };
     Mode* loop();
     void enter();
+    void leave();
     Mode* press();
     Mode* longpress();
   private:

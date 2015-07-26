@@ -1,4 +1,6 @@
 #include <Adafruit_NeoPixel.h>
+#include "Adafruit_LEDBackpack.h"
+#include "Adafruit_GFX.h"
 #include <Wire.h>
 #include <RTClib.h>
 #include "modes.h"

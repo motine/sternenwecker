@@ -3,13 +3,15 @@
 This branch is about the "LED strip behind the bed" version.
 There is also a [table top version](https://github.com/motine/sternenwecker/tree/single_matrix).
 
+## Work to do...
 
-remove click to show time, always show it.
-refactor TimeShow to be permanent
+* change add bitmap. render image in memory and then write to display
+* enable strip
+* remove click to show time, always show it. refactor TimeShow code (probably no need to have `is_showing` anymore)
 
-
-**!!TODO!!!** Adjust circuit, box design and readme for this version. (part list already done)
-
+* Make this Readme nice
+* Adjust box design and readme for this version
+* Change part list to Arduino Pro Mini with USB
 
 ## Circuit
 ### Parts
@@ -82,7 +84,7 @@ Here my wiring for the setup (note that I did not solder the headers to the Ardu
 
 ## Box
 
-![tinybox](https://raw.githubusercontent.com/motine/sternenwecker/master/box/tinybox-larger.png)
+![tinybox](https://raw.githubusercontent.com/motine/sternenwecker/master/box/boxes-assembled.jpg)
 
 ## Credits
 

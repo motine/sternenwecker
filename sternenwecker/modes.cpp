@@ -3,9 +3,9 @@
 #include "alarm_clock.h"
 #include "display_test.h"
 #include "modes.h"
+#include "Adafruit_LEDBackpack.h"
 
 TimeShow::TimeShow(uint32_t duration, bool use_dim_colors) : duration(duration), use_dim_colors(use_dim_colors), start_millis(0) {
-
 }
 
 void TimeShow::start() {
@@ -18,21 +18,25 @@ bool TimeShow::is_showing() {
 bool TimeShow::show() {
   if (is_showing()) {
     matrix.clear();
-    if (use_dim_colors)
-      matrix.displayDigitAndHand(clock.current_hour, clock.current_minute, TIME_DIGIT_DIM_COLOR, TIME_HAND_DIM_COLOR, TIME_OVERLAP_DIM_COLOR);
-    else
-      matrix.displayDigitAndHand(clock.current_hour, clock.current_minute, TIME_DIGIT_COLOR, TIME_HAND_COLOR, TIME_OVERLAP_COLOR);
-    matrix.show();
+    if (use_dim_colors) {
+      matrix.setBrightness(TIME_BRIGHTNESS_DIM);
+      matrix.displayDigitAndHand(clock.current_hour, clock.current_minute);
+    } else {
+      matrix.setBrightness(TIME_BRIGHTNESS_FULL);
+      matrix.displayDigitAndHand(clock.current_hour, clock.current_minute);
+    }
+    matrix.writeDisplay();
     return true;
   }
   return false;
+  // TODO add back in that the brightness reset ti full after this is done.
 }
 
 // --------- MOff ----------
 MOff m_off = MOff();
 void MOff::enter() {
   matrix.clear();
-  matrix.show();
+  matrix.writeDisplay();
 }
 
 Mode* MOff::loop() {
@@ -60,6 +64,9 @@ Mode* MTime::loop() {
 void MTime::enter() {
   time_show.start();
 }
+void MTime::leave() {
+  matrix.setBrightness(15);
+}
 
 Mode* MTime::press() {
   return &m_menu;
@@ -72,7 +79,7 @@ Mode* MTime::longpress() {
 MMenu m_menu = MMenu();
 
 void MMenu::update() {
-  matrix.displayMenuIcon((menu_icon_t)current, MENU_COLOR);
+  matrix.displayMenuIcon((menu_icon_t)current);
 }
 
 void MMenu::enter() {
@@ -106,10 +113,11 @@ Mode* MMenu::right_turn() {
 // --------- MTorch ----------
 MTorch m_torch = MTorch();
 void MTorch::update() {
-  float normalized_brightness = brightness / (float)TORCH_BRIGHTNESS_STEPS;
-  uint32_t color = matrix.hsv_to_color((hue * 360.0)/TORCH_HUE_STEPS, 1.0-0.3*pow(normalized_brightness, 3), normalized_brightness);
-  matrix.fillScreen(color);
-  matrix.show();
+  // TODO
+  // float normalized_brightness = brightness / (float)TORCH_BRIGHTNESS_STEPS;
+  // uint32_t color = matrix.hsv_to_color((hue * 360.0)/TORCH_HUE_STEPS, 1.0-0.3*pow(normalized_brightness, 3), normalized_brightness);
+  // matrix.fillScreen(color);
+  // matrix.show();
 }
 
 void MTorch::enter() {
@@ -161,7 +169,7 @@ void MSetTime::update() {
   uint8_t number = (state == SET_STATE_MINUTE) ? minute : hour;
   bool dots_left = (state == SET_STATE_MINUTE);
   bool show_dots = (clock.is_blinker_on() % 2 == 0);
-  matrix.displayTimeComponent(number, dots_left, show_dots, SET_TIME_COLOR);
+  matrix.displayTimeComponent(number, dots_left, show_dots);
 }
 
 void MSetTime::enter() {
@@ -213,9 +221,9 @@ MSetAlarm m_set_alarm = MSetAlarm();
 
 void MSetAlarm::update() {
   if (clock.alarm_enabled)
-    matrix.displayDigitAndHand(clock.alarm_hour, clock.alarm_minute, SET_ALARM_DIGIT_COLOR, SET_ALARM_HAND_COLOR, SET_ALARM_OVERLAP_COLOR);
+    matrix.displayDigitAndHand(clock.alarm_hour, clock.alarm_minute);
   else
-    matrix.displayOff(SET_ALARM_COLOR_OFF);
+    matrix.displayOff();
 }
 
 void MSetAlarm::enter() {
@@ -281,21 +289,21 @@ void MAlarming::enter() {
 Mode* MAlarming::loop() {
   if (time_show.show())
     return NULL;
-    
-  double pos;
-  unsigned long millis_since_start = millis() - start_millis;
-  if (millis_since_start > ALARMING_AUTO_OFF)
-    return &m_off;
-  if (millis_since_start > ALARMING_RISE_DURATION)
-    pos = 1.0;
-  else
-    pos = fmod((double)millis_since_start / ALARMING_RISE_DURATION, 1.0);
-  
-  uint8_t r = 1+pow(pos, 2) * 254;
-  uint8_t g = pow(pos, 3) * 255;
-  uint8_t b = pow(pos, 5) * 150;
-  matrix.fillScreen(matrix.Color(r,g,b));
-  matrix.show();
+  // TODO
+  // double pos;
+  // unsigned long millis_since_start = millis() - start_millis;
+  // if (millis_since_start > ALARMING_AUTO_OFF)
+  //   return &m_off;
+  // if (millis_since_start > ALARMING_RISE_DURATION)
+  //   pos = 1.0;
+  // else
+  //   pos = fmod((double)millis_since_start / ALARMING_RISE_DURATION, 1.0);
+  //
+  // uint8_t r = 1+pow(pos, 2) * 254;
+  // uint8_t g = pow(pos, 3) * 255;
+  // uint8_t b = pow(pos, 5) * 150;
+  // matrix.fillScreen(matrix.Color(r,g,b));
+  // matrix.show();
   return NULL;
 }
 
@@ -316,15 +324,16 @@ void MSunset::enter() {
 Mode* MSunset::loop() {
   if (time_show.show())
     return NULL;
-  unsigned long millis_since_start = millis() - start_millis;
-  if (millis_since_start >= SUNSET_DURATION)
-    return &m_off;
-
-  double pos = (double)millis_since_start / SUNSET_DURATION;
-  uint8_t r = (1.0-pos) * 60;
-  uint8_t g = (1.0-pos) * 30;
-  matrix.fillScreen(matrix.Color(r,g,0));
-  matrix.show();
+  // TODO
+  // unsigned long millis_since_start = millis() - start_millis;
+  // if (millis_since_start >= SUNSET_DURATION)
+  //   return &m_off;
+  //
+  // double pos = (double)millis_since_start / SUNSET_DURATION;
+  // uint8_t r = (1.0-pos) * 60;
+  // uint8_t g = (1.0-pos) * 30;
+  // matrix.fillScreen(matrix.Color(r,g,0));
+  // matrix.show();
   return NULL;
 }
 
@@ -354,7 +363,7 @@ Mode* MSunset::right_turn() {
 MConfirm m_confirm = MConfirm();
 void MConfirm::enter() {
   enter_millis = millis();
-  matrix.displayConfirm(CONFIRM_COLOR);
+  matrix.displayConfirm();
 }
 
 Mode* MConfirm::loop() {

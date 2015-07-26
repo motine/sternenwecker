@@ -23,17 +23,18 @@ void alarm_fired() {
   mode_master.setModeUnlessNull(&m_alarming);
 }
 
-AlarmMatrix matrix = AlarmMatrix(LED_PIN, 8, 8);
+AlarmMatrix matrix = AlarmMatrix();
 Button button = Button(ENCODER_BUTTON_PIN, button_press, button_longpress, button_hold);
 Encoder encoder = Encoder(ENCODER_A_PIN, ENCODER_B_PIN, encoder_left_turn, encoder_right_turn);
 AlarmClock clock = AlarmClock(alarm_fired);
 
 void setup_resources() {
   // LEDs
-  matrix.begin();
-  matrix.setBrightness(BRIGHTNESS);
-  matrix.clear();
-  matrix.show();
+  matrix.begin(0x70);
+  // matrix.begin();
+  // matrix.setBrightness(BRIGHTNESS);
+  // matrix.clear();
+  // matrix.show();
 
   button.setup();
   encoder.setup();
