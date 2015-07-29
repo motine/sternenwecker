@@ -229,6 +229,13 @@ AlarmMatrix::AlarmMatrix():
 //   }
 // }
 
+void AlarmMatrix::dim() {
+  setBrightness(TIME_BRIGHTNESS_DIM);
+}
+void AlarmMatrix::undim() {
+  setBrightness(TIME_BRIGHTNESS_FULL);  
+}
+
 void AlarmMatrix::addBitmap(uint8_t target[], const uint8_t source[], uint8_t left, uint8_t top, uint8_t width, uint8_t height) {
   for (uint8_t j = 0; j < height; j++) {
     for (uint8_t i = 0; i < width; i++) {
@@ -254,31 +261,7 @@ void AlarmMatrix::drawTwoBitmaps(const uint8_t a[], const uint8_t b[], uint16_t 
       }
     }
   }
-  writeDisplay();
-  // drawBitmap(0, 0, bitmap, 8, 8, color);
-//   // very similar to drawBitmap (refactor!)
-//   for (uint8_t j=0; j < height; j++) {
-//     for (uint8_t i=0; i < width; i++) {
-//       if ((pgm_read_byte(bitmap+j) >> (7-i)) & 1) {
-//         uint32_t c = color;
-//         if (getPixel(origin_x+i, origin_y+j) > 0)
-//           c = overlap_color;
-//         drawPixel(origin_x+i, origin_y+j, c);
-//       }
-//     }
-//   }
 }
-
-// void AlarmMatrix::draw3x5Digit(uint8_t no, uint8_t x, uint8_t y, uint16_t color) {
-//   drawBitmap(x, y, FONT_3x5[no], 3, 5, color);
-//   writeDisplay();
-// }
-
-// uint32_t AlarmMatrix::getPixel(uint8_t x, uint8_t y) {
-//   if ((x >= width) || (x < 0) || (y >= height) || y < 0)
-//     return 0;
-//   getPixelColor(y*width+x);
-// }
 
 void AlarmMatrix::displayMenuIcon(menu_icon_t menu_icon) {
   clear();
@@ -321,4 +304,5 @@ void AlarmMatrix::displayDigitAndHand(uint8_t hour, uint8_t minute) {
     addBitmap(digits, FONT_3x5[hour % 10], 4,2, 3,5);
   }
   drawTwoBitmaps(digits, HAND_8_8x8[minute*8/60], LED_RED, LED_YELLOW, LED_YELLOW);
+  writeDisplay();
 }

@@ -2,9 +2,6 @@
 #define MODES_H
 
 #define TIME_DURATION 2000 // ms
-#define TIME_BRIGHTNESS_DIM 0 // 0-15
-#define TIME_BRIGHTNESS_FULL 15 // 0-15
-
 
 #define IDLE_DELAY 50 // ms, used when the arduino is not supposed to do much (i.e. if it does not need to respond to encoder rotations)
 #define MENU_COUNT 4
@@ -21,20 +18,6 @@
 #define SUNSET_DURATION  1200000UL // ms
 #define SUNSET_TURN_VALUE  30000UL // ms, added/subtracted when the encoder is turned. advances/shifts back the start_millis.
 #define CONFIRM_DURATION 1200 // ms
-
-// Helper class
-
-class TimeShow {
-  public:
-    TimeShow(uint32_t duration, bool use_dim_colors);
-    void start(); // starts showing the time
-    bool show(); // draws the time on the matrix and returns true if the time is still showing (true until duration has elapsed since start)
-    bool is_showing(); // returns true if the time is still showing
-  private:
-    bool use_dim_colors;
-    uint32_t duration;
-    unsigned long start_millis;
-};
 
 // If a method which returns Mode* is called and it returns something non-NULL, the mode will be set after execution of the method.
 class Mode {
@@ -55,6 +38,8 @@ class Mode {
     // called when the encoder turned clockwise or counter-clockwise
     virtual Mode* left_turn() { return NULL; };
     virtual Mode* right_turn() { return NULL; };
+  protected:
+    void show_time();
 };
 
 class MOff : public Mode {
@@ -69,14 +54,13 @@ extern MOff m_off;
 
 class MTime : public Mode {
   public:
-    MTime() : Mode(), time_show(TimeShow(TIME_DURATION, true)) { };
     Mode* loop();
     void enter();
     void leave();
     Mode* press();
     Mode* longpress();
   private:
-    TimeShow time_show;
+    unsigned long start_millis;
 };
 extern MTime m_time;
 
@@ -96,11 +80,10 @@ extern MMenu m_menu;
 
 class MTorch : public Mode {
   public:
-    MTorch() : Mode(), time_show(TimeShow(TIME_DURATION, false)) { };
     void enter();
     Mode* loop();
     Mode* press();
-    Mode* longpress();
+    // longpress may not be used when having button_hold
     Mode* button_hold();
     Mode* left_turn();
     Mode* right_turn();
@@ -109,7 +92,6 @@ class MTorch : public Mode {
     uint16_t hue;
     uint8_t brightness;
     unsigned long enter_millis;
-    TimeShow time_show;
 };
 extern MTorch m_torch;
 
@@ -145,29 +127,23 @@ extern MSetAlarm m_set_alarm;
 
 class MAlarming : public Mode {
   public:
-    MAlarming() : Mode(), time_show(TimeShow(TIME_DURATION, true)) { };
     void enter();
     Mode* loop();
     Mode* press();
-    Mode* longpress();
   private:
     unsigned long start_millis;
-    TimeShow time_show;
 };
 extern MAlarming m_alarming;
 
 class MSunset : public Mode {
   public:
-    MSunset() : Mode(), time_show(TimeShow(TIME_DURATION, false)) { };
     void enter();
     Mode* loop();
     Mode* press();
-    Mode* longpress();
     Mode* left_turn();
     Mode* right_turn();
   private:
     unsigned long start_millis;
-    TimeShow time_show;
 };
 extern MSunset m_sunset;
 

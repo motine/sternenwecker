@@ -5,6 +5,9 @@
 #include <avr/pgmspace.h>
 #include "Adafruit_LEDBackpack.h"
 
+#define TIME_BRIGHTNESS_DIM 0 // 0-15
+#define TIME_BRIGHTNESS_FULL 15 // 0-15
+
 enum menu_icon_t {
   MenuIconSunset = 0,
   MenuIconSetAlarm = 1,
@@ -16,9 +19,9 @@ class AlarmMatrix : public Adafruit_BicolorMatrix {
   public:
     AlarmMatrix();
 
-    // uint32_t getPixel(uint8_t x, uint8_t y);
-    // void fillScreen(uint16_t color);
-
+    void dim();
+    void undim();
+      
     // adds source on target by changing target. left, top, width and height work like the ones in drawBitmap.
     // target is assumed to be in non-pgm and source to be in pgm memory.
     void addBitmap(uint8_t target[], const uint8_t source[], uint8_t left, uint8_t top, uint8_t width, uint8_t height);
@@ -26,7 +29,6 @@ class AlarmMatrix : public Adafruit_BicolorMatrix {
     // a is assumed to be in non-pgm and b to be in pgm memory.
     void drawTwoBitmaps(const uint8_t a[], const uint8_t b[], uint16_t a_color, uint16_t b_color, uint16_t overlap_color);
     // no may be between 0..9
-    // void draw3x5Digit(uint8_t no, uint8_t x, uint8_t y, uint16_t color);
     void displayMenuIcon(menu_icon_t menu_icon);
     void displayConfirm();
     void displayOff();

@@ -5,9 +5,8 @@ There is also a [table top version](https://github.com/motine/sternenwecker/tree
 
 ## Work to do...
 
-* change add bitmap. render image in memory and then write to display
 * enable strip
-* remove click to show time, always show it. refactor TimeShow code (probably no need to have `is_showing` anymore)
+* rethink what states should do when clicked (we do not need the press for showing the time anymore)
 
 * Make this Readme nice
 * Adjust box design and readme for this version

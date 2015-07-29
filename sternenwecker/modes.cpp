@@ -5,31 +5,8 @@
 #include "modes.h"
 #include "Adafruit_LEDBackpack.h"
 
-TimeShow::TimeShow(uint32_t duration, bool use_dim_colors) : duration(duration), use_dim_colors(use_dim_colors), start_millis(0) {
-}
-
-void TimeShow::start() {
-  start_millis = millis();
-}
-bool TimeShow::is_showing() {
-  return start_millis + duration > millis();
-}
-
-bool TimeShow::show() {
-  if (is_showing()) {
-    matrix.clear();
-    if (use_dim_colors) {
-      matrix.setBrightness(TIME_BRIGHTNESS_DIM);
-      matrix.displayDigitAndHand(clock.current_hour, clock.current_minute);
-    } else {
-      matrix.setBrightness(TIME_BRIGHTNESS_FULL);
-      matrix.displayDigitAndHand(clock.current_hour, clock.current_minute);
-    }
-    matrix.writeDisplay();
-    return true;
-  }
-  return false;
-  // TODO add back in that the brightness reset ti full after this is done.
+void Mode::show_time() {
+  matrix.displayDigitAndHand(clock.current_hour, clock.current_minute);
 }
 
 // --------- MOff ----------
@@ -56,16 +33,18 @@ Mode* MOff::longpress() {
 MTime m_time = MTime();
 
 Mode* MTime::loop() {
-  if (time_show.show())
+  show_time();
+  if (start_millis + TIME_DURATION > millis()) // still showing?
     return NULL;
   else
     return &m_off;
 }
 void MTime::enter() {
-  time_show.start();
+  start_millis = millis();
+  matrix.dim();
 }
 void MTime::leave() {
-  matrix.setBrightness(15);
+  matrix.undim();
 }
 
 Mode* MTime::press() {
@@ -113,6 +92,7 @@ Mode* MMenu::right_turn() {
 // --------- MTorch ----------
 MTorch m_torch = MTorch();
 void MTorch::update() {
+  show_time();
   // TODO
   // float normalized_brightness = brightness / (float)TORCH_BRIGHTNESS_STEPS;
   // uint32_t color = matrix.hsv_to_color((hue * 360.0)/TORCH_HUE_STEPS, 1.0-0.3*pow(normalized_brightness, 3), normalized_brightness);
@@ -128,21 +108,11 @@ void MTorch::enter() {
 Mode* MTorch::loop() {
   if ((millis() - enter_millis) > TORCH_AUTO_OFF)
     return &m_off;
-  if (time_show.show())
-    return NULL;
   update();
   return NULL;
 }
 Mode* MTorch::press() {
-  if (time_show.is_showing()) {
-    return &m_off;
-  } else {
-    time_show.start();
-    return NULL;
-  }
-}
-Mode* MTorch::longpress() {
-  return NULL;
+  return &m_off;
 }
 Mode* MTorch::button_hold() {
   hue = (hue + 1) % TORCH_HUE_STEPS;
@@ -287,8 +257,7 @@ void MAlarming::enter() {
 }
 
 Mode* MAlarming::loop() {
-  if (time_show.show())
-    return NULL;
+  show_time();
   // TODO
   // double pos;
   // unsigned long millis_since_start = millis() - start_millis;
@@ -308,10 +277,6 @@ Mode* MAlarming::loop() {
 }
 
 Mode* MAlarming::press() {
-  time_show.start();
-  return NULL;
-}
-Mode* MAlarming::longpress() {
   return &m_off;
 }
 
@@ -322,8 +287,7 @@ void MSunset::enter() {
 }
 
 Mode* MSunset::loop() {
-  if (time_show.show())
-    return NULL;
+  show_time();
   // TODO
   // unsigned long millis_since_start = millis() - start_millis;
   // if (millis_since_start >= SUNSET_DURATION)
@@ -338,14 +302,6 @@ Mode* MSunset::loop() {
 }
 
 Mode* MSunset::press() {
-  if (time_show.is_showing()) {
-    return &m_off;
-  } else {
-    time_show.start();
-    return NULL;
-  }
-}
-Mode* MSunset::longpress() {
   return &m_off;
 }
 Mode* MSunset::left_turn() {
