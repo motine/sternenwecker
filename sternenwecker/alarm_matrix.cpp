@@ -221,28 +221,41 @@ AlarmMatrix::AlarmMatrix():
 //   }
 // }
 
-void AlarmMatrix::fillScreen(uint16_t color) {
-  for (uint8_t j=0; j < 8; j++) {
-    for (uint8_t i=0; i < 8; i++) {
-      drawPixel(i, j, color);
+// void AlarmMatrix::fillScreen(uint16_t color) {
+//   for (uint8_t j=0; j < 8; j++) {
+//     for (uint8_t i=0; i < 8; i++) {
+//       drawPixel(i, j, color);
+//     }
+//   }
+// }
+
+void AlarmMatrix::addBitmap(uint8_t target[], const uint8_t source[], uint8_t left, uint8_t top, uint8_t width, uint8_t height) {
+  for (uint8_t j = 0; j < height; j++) {
+    for (uint8_t i = 0; i < width; i++) {
+      target[j+top] = target[j+top] | ((pgm_read_byte(source + j) & (128 >> i)) >> left);
     }
   }
 }
 
-void AlarmMatrix::addBitmap(uint8_t origin_x, uint8_t origin_y, const uint8_t bitmap[], uint8_t width, uint8_t height, uint16_t color, uint16_t overlap_color) {
-  // TODO
-  drawBitmap(origin_x, origin_y, bitmap, width, height, color);
-//   int16_t i, j, byteWidth = (w + 7) / 8;
-//
-//   for(j=0; j<h; j++) {
-//     for(i=0; i<w; i++ ) {
-//       if(pgm_read_byte(bitmap + j * byteWidth + i / 8) & (128 >> (i & 7))) {
-//         drawPixel(x+i, y+j, color);
-//       }
-//     }
-//   }
-// }  
-  
+void AlarmMatrix::drawTwoBitmaps(const uint8_t a[], const uint8_t b[], uint16_t a_color, uint16_t b_color, uint16_t overlap_color) {
+  uint8_t is_a = false;
+  uint8_t is_b = false;
+  for (uint8_t j = 0; j < 8; j++) {
+    for (uint8_t i = 0; i < 8; i++) {
+      is_a = a[j] & (128 >> i);
+      is_b = pgm_read_byte(b + j) & (128 >> i);
+      if (is_a && is_b) {
+        drawPixel(i, j, overlap_color);
+      } else {
+        if (is_a)
+          drawPixel(i, j, a_color);
+        if (is_b)
+          drawPixel(i, j, b_color);
+      }
+    }
+  }
+  writeDisplay();
+  // drawBitmap(0, 0, bitmap, 8, 8, color);
 //   // very similar to drawBitmap (refactor!)
 //   for (uint8_t j=0; j < height; j++) {
 //     for (uint8_t i=0; i < width; i++) {
@@ -254,13 +267,12 @@ void AlarmMatrix::addBitmap(uint8_t origin_x, uint8_t origin_y, const uint8_t bi
 //       }
 //     }
 //   }
-  writeDisplay();
 }
 
-void AlarmMatrix::draw3x5Digit(uint8_t no, uint8_t x, uint8_t y, uint16_t color) {
-  drawBitmap(x, y, FONT_3x5[no], 3, 5, color);
-  writeDisplay();
-}
+// void AlarmMatrix::draw3x5Digit(uint8_t no, uint8_t x, uint8_t y, uint16_t color) {
+//   drawBitmap(x, y, FONT_3x5[no], 3, 5, color);
+//   writeDisplay();
+// }
 
 // uint32_t AlarmMatrix::getPixel(uint8_t x, uint8_t y) {
 //   if ((x >= width) || (x < 0) || (y >= height) || y < 0)
@@ -286,27 +298,27 @@ void AlarmMatrix::displayOff() {
 }
 
 void AlarmMatrix::displayTimeComponent(uint8_t number, bool dots_left, bool show_dots) {
-  // TODO
-  // clear();
-  // uint8_t num_x = (dots_left) ? 2 : 0;
-  // draw3x5Digit(number / 10, num_x, 2, color);
-  // draw3x5Digit(number % 10, num_x+3, 2, color);
-  // if (show_dots) {
-  //   uint8_t dots_x = (dots_left) ? 0 : 7;
-  //   drawPixel(dots_x, 3, color);
-  //   drawPixel(dots_x, 5, color);
-  // }
-  // show();
+  clear();
+  uint8_t num_x = (dots_left) ? 2 : 0;
+  drawBitmap(num_x  , 2, FONT_3x5[number / 10], 3,5, LED_RED);
+  drawBitmap(num_x+3, 2, FONT_3x5[number % 10], 3,5, LED_RED);
+
+  if (show_dots) {
+    uint8_t dots_x = (dots_left) ? 0 : 7;
+    drawPixel(dots_x, 3, LED_YELLOW);
+    drawPixel(dots_x, 5, LED_YELLOW);
+  }
+  writeDisplay();
 }
 
 void AlarmMatrix::displayDigitAndHand(uint8_t hour, uint8_t minute) {
   clear();
+  uint8_t digits[8] = {0,0,0,0,0,0,0,0};
   if (hour < 10) {
-    draw3x5Digit(hour % 10, 3, 2, LED_RED);
+    addBitmap(digits, FONT_3x5[hour % 10], 3, 2, 3,5);
   } else {
-    draw3x5Digit(hour / 10, 1, 2, LED_RED);
-    draw3x5Digit(hour % 10, 4, 2, LED_RED);
+    addBitmap(digits, FONT_3x5[hour / 10], 1,2, 3,5);
+    addBitmap(digits, FONT_3x5[hour % 10], 4,2, 3,5);
   }
-  addBitmap(0, 0, HAND_8_8x8[minute*8/60], 8, 8, LED_GREEN, LED_YELLOW);
-  writeDisplay();
+  drawTwoBitmaps(digits, HAND_8_8x8[minute*8/60], LED_RED, LED_YELLOW, LED_YELLOW);
 }

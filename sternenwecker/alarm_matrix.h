@@ -17,12 +17,16 @@ class AlarmMatrix : public Adafruit_BicolorMatrix {
     AlarmMatrix();
 
     // uint32_t getPixel(uint8_t x, uint8_t y);
-    void fillScreen(uint16_t color);
+    // void fillScreen(uint16_t color);
 
-    // // same as drawBitmap, but overlap_color will be used if a overpainted pixel already has a color before drawing
-    void addBitmap(uint8_t origin_x, uint8_t origin_y, const uint8_t bitmap[], uint8_t width, uint8_t height, uint16_t color, uint16_t overlap_color);
+    // adds source on target by changing target. left, top, width and height work like the ones in drawBitmap.
+    // target is assumed to be in non-pgm and source to be in pgm memory.
+    void addBitmap(uint8_t target[], const uint8_t source[], uint8_t left, uint8_t top, uint8_t width, uint8_t height);
+    // will draw a and b. If there are pixels set in both, overlap_color will be used.
+    // a is assumed to be in non-pgm and b to be in pgm memory.
+    void drawTwoBitmaps(const uint8_t a[], const uint8_t b[], uint16_t a_color, uint16_t b_color, uint16_t overlap_color);
     // no may be between 0..9
-    void draw3x5Digit(uint8_t no, uint8_t x, uint8_t y, uint16_t color);
+    // void draw3x5Digit(uint8_t no, uint8_t x, uint8_t y, uint16_t color);
     void displayMenuIcon(menu_icon_t menu_icon);
     void displayConfirm();
     void displayOff();
