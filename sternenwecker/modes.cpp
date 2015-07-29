@@ -14,6 +14,8 @@ MOff m_off = MOff();
 void MOff::enter() {
   matrix.clear();
   matrix.writeDisplay();
+  strip.clear();
+  strip.show();
 }
 
 Mode* MOff::loop() {
@@ -25,8 +27,7 @@ Mode* MOff::press() {
   return &m_time;
 }
 Mode* MOff::longpress() {
-  // return &m_alarming; // hidden easter egg (testing)
-  return &m_display_test; // hidden easter egg (testing)
+  return &m_alarming;
 }
 
 // --------- MTime ----------
@@ -93,11 +94,10 @@ Mode* MMenu::right_turn() {
 MTorch m_torch = MTorch();
 void MTorch::update() {
   show_time();
-  // TODO
-  // float normalized_brightness = brightness / (float)TORCH_BRIGHTNESS_STEPS;
-  // uint32_t color = matrix.hsv_to_color((hue * 360.0)/TORCH_HUE_STEPS, 1.0-0.3*pow(normalized_brightness, 3), normalized_brightness);
-  // matrix.fillScreen(color);
-  // matrix.show();
+  float normalized_brightness = brightness / (float)TORCH_BRIGHTNESS_STEPS;
+  uint32_t color = strip.hsv_to_color((hue * 360.0)/TORCH_HUE_STEPS, 1.0-0.3*pow(normalized_brightness, 3), normalized_brightness);
+  strip.fillScreen(color);
+  strip.show();
 }
 
 void MTorch::enter() {
@@ -258,21 +258,20 @@ void MAlarming::enter() {
 
 Mode* MAlarming::loop() {
   show_time();
-  // TODO
-  // double pos;
-  // unsigned long millis_since_start = millis() - start_millis;
-  // if (millis_since_start > ALARMING_AUTO_OFF)
-  //   return &m_off;
-  // if (millis_since_start > ALARMING_RISE_DURATION)
-  //   pos = 1.0;
-  // else
-  //   pos = fmod((double)millis_since_start / ALARMING_RISE_DURATION, 1.0);
-  //
-  // uint8_t r = 1+pow(pos, 2) * 254;
-  // uint8_t g = pow(pos, 3) * 255;
-  // uint8_t b = pow(pos, 5) * 150;
-  // matrix.fillScreen(matrix.Color(r,g,b));
-  // matrix.show();
+  double pos;
+  unsigned long millis_since_start = millis() - start_millis;
+  if (millis_since_start > ALARMING_AUTO_OFF)
+    return &m_off;
+  if (millis_since_start > ALARMING_RISE_DURATION)
+    pos = 1.0;
+  else
+    pos = fmod((double)millis_since_start / ALARMING_RISE_DURATION, 1.0);
+
+  uint8_t r = 1+pow(pos, 2) * 254;
+  uint8_t g = pow(pos, 3) * 255;
+  uint8_t b = pow(pos, 5) * 150;
+  strip.fillScreen(strip.Color(r,g,b));
+  strip.show();
   return NULL;
 }
 
@@ -288,16 +287,15 @@ void MSunset::enter() {
 
 Mode* MSunset::loop() {
   show_time();
-  // TODO
-  // unsigned long millis_since_start = millis() - start_millis;
-  // if (millis_since_start >= SUNSET_DURATION)
-  //   return &m_off;
-  //
-  // double pos = (double)millis_since_start / SUNSET_DURATION;
-  // uint8_t r = (1.0-pos) * 60;
-  // uint8_t g = (1.0-pos) * 30;
-  // matrix.fillScreen(matrix.Color(r,g,0));
-  // matrix.show();
+  unsigned long millis_since_start = millis() - start_millis;
+  if (millis_since_start >= SUNSET_DURATION)
+    return &m_off;
+
+  double pos = (double)millis_since_start / SUNSET_DURATION;
+  uint8_t r = (1.0-pos) * 60;
+  uint8_t g = (1.0-pos) * 30;
+  strip.fillScreen(strip.Color(r,g,0));
+  strip.show();
   return NULL;
 }
 

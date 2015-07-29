@@ -5,8 +5,7 @@ There is also a [table top version](https://github.com/motine/sternenwecker/tree
 
 ## Work to do...
 
-* enable strip
-* rethink what states should do when clicked (we do not need the press for showing the time anymore)
+* remove display test
 
 * Make this Readme nice
 * Adjust box design and readme for this version

@@ -24,6 +24,7 @@ void alarm_fired() {
 }
 
 AlarmMatrix matrix = AlarmMatrix();
+AlarmStrip strip = AlarmStrip(STRIP_WIDTH, STRIP_PIN);
 Button button = Button(ENCODER_BUTTON_PIN, button_press, button_longpress, button_hold);
 Encoder encoder = Encoder(ENCODER_A_PIN, ENCODER_B_PIN, encoder_left_turn, encoder_right_turn);
 AlarmClock clock = AlarmClock(alarm_fired);
@@ -32,10 +33,9 @@ void setup_resources() {
   // LEDs
   matrix.begin(0x70);
   matrix.setRotation(3);
-  // matrix.begin();
-  // matrix.setBrightness(BRIGHTNESS);
-  // matrix.clear();
-  // matrix.show();
+
+  strip.setup();
+  strip.setBrightness(STRIP_BRIGHTNESS);
 
   button.setup();
   encoder.setup();
