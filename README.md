@@ -5,8 +5,6 @@ There is also a [table top version](https://github.com/motine/sternenwecker/tree
 
 ## Work to do...
 
-* remove display test
-
 * Make this Readme nice
 * Adjust box design and readme for this version
 * Change part list to Arduino Pro Mini with USB

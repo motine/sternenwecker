@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include "resources.h"
 #include "alarm_clock.h"
-#include "display_test.h"
 #include "modes.h"
 #include "Adafruit_LEDBackpack.h"
 
