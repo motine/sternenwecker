@@ -16,6 +16,7 @@ void MOff::enter() {
   matrix.writeDisplay();
   strip.clear();
   strip.show();
+  matrix.dim();
 }
 
 Mode* MOff::loop() {
@@ -45,7 +46,6 @@ void MTime::enter() {
   matrix.dim();
 }
 void MTime::leave() {
-  matrix.undim();
 }
 
 Mode* MTime::press() {
@@ -63,6 +63,7 @@ void MMenu::update() {
 }
 
 void MMenu::enter() {
+  matrix.undim();
   current = 0;
   update();
 }
@@ -101,6 +102,7 @@ void MTorch::update() {
 }
 
 void MTorch::enter() {
+  matrix.middim();
   enter_millis = millis();
   hue = TORCH_HUE_START;
   brightness = TORCH_BRIGHTNESS_START;
@@ -143,6 +145,7 @@ void MSetTime::update() {
 }
 
 void MSetTime::enter() {
+  matrix.undim();
   state = SET_STATE_HOUR;
   hour = clock.current_hour;
   minute = clock.current_minute;
@@ -197,6 +200,7 @@ void MSetAlarm::update() {
 }
 
 void MSetAlarm::enter() {
+  matrix.undim();
   update();
 }
 
@@ -253,6 +257,7 @@ Mode* MSetAlarm::right_turn() {
 // --------- MAlarming ----------
 MAlarming m_alarming = MAlarming();
 void MAlarming::enter() {
+  matrix.dim();
   start_millis = millis();
 }
 
@@ -282,6 +287,7 @@ Mode* MAlarming::press() {
 // --------- MSunset ----------
 MSunset m_sunset = MSunset();
 void MSunset::enter() {
+  matrix.middim();
   start_millis = millis();
 }
 
@@ -292,6 +298,12 @@ Mode* MSunset::loop() {
     return &m_off;
 
   double pos = (double)millis_since_start / SUNSET_DURATION;
+  if (pos < 0.3)
+    matrix.undim();
+  else if (pos < 0.7)
+    matrix.middim();
+  else
+    matrix.dim();
   uint8_t r = (1.0-pos) * 60;
   uint8_t g = (1.0-pos) * 30;
   strip.fillScreen(strip.Color(r,g,0));
@@ -316,6 +328,7 @@ Mode* MSunset::right_turn() {
 // --------- MConfirm ----------
 MConfirm m_confirm = MConfirm();
 void MConfirm::enter() {
+  matrix.undim();
   enter_millis = millis();
   matrix.displayConfirm();
 }

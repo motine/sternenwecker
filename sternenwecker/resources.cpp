@@ -32,7 +32,7 @@ AlarmClock clock = AlarmClock(alarm_fired);
 void setup_resources() {
   // LEDs
   matrix.begin(0x70);
-  matrix.setRotation(3);
+  matrix.setRotation(1);
 
   strip.setup();
   strip.setBrightness(STRIP_BRIGHTNESS);

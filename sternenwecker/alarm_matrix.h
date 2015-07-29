@@ -6,6 +6,7 @@
 #include "Adafruit_LEDBackpack.h"
 
 #define TIME_BRIGHTNESS_DIM 0 // 0-15
+#define TIME_BRIGHTNESS_MID 6 // 0-15
 #define TIME_BRIGHTNESS_FULL 15 // 0-15
 
 enum menu_icon_t {
@@ -20,6 +21,7 @@ class AlarmMatrix : public Adafruit_BicolorMatrix {
     AlarmMatrix();
 
     void dim();
+    void middim();
     void undim();
       
     // adds source on target by changing target. left, top, width and height work like the ones in drawBitmap.

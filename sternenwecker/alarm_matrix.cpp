@@ -232,6 +232,9 @@ AlarmMatrix::AlarmMatrix():
 void AlarmMatrix::dim() {
   setBrightness(TIME_BRIGHTNESS_DIM);
 }
+void AlarmMatrix::middim() {
+  setBrightness(TIME_BRIGHTNESS_MID);  
+}
 void AlarmMatrix::undim() {
   setBrightness(TIME_BRIGHTNESS_FULL);  
 }
