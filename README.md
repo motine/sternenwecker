@@ -6,8 +6,8 @@ There is also a [table top version](https://github.com/motine/sternenwecker/tree
 ## Work to do...
 
 * Make this Readme nice
-* Adjust box design and readme for this version
 * Change part list to Arduino Pro Mini with USB
+* Adjust box design and readme for this version
 
 ## Circuit
 ### Parts
@@ -27,11 +27,23 @@ There is also a [table top version](https://github.com/motine/sternenwecker/tree
 
 ![circuit](https://raw.githubusercontent.com/motine/sternenwecker/master/wiring/circuit.png)
 
-The chosen power supply says that it is regulated (german _stabilisiert_), but when I measured the idle output the voltage was higher than 5V (5.5V). I was surprised that, an unregulated 5V power supply gives more that the 5V if you don't draw close to the maximum current. Regulated then means that the power supply does _not_ exceed its voltage even if there is less current drawn. With this in mind I wanted to make sure that nothing blows, so I am using Arduino's `RAW` pin instead of `VCC`. This way we include the Arduino's onboard voltage regulator.
+The chosen power supply says that it is regulated (german _stabilisiert_), but when I measured the idle output the voltage was higher than 5V (5.5V).
+I was surprised that, an unregulated 5V power supply gives more that the 5V if you don't draw close to the maximum current.
+Regulated then means that the power supply does _not_ exceed its voltage even if there is less current drawn.
+With this in mind I wanted to make sure that nothing blows, so I am using Arduino's `RAW` pin instead of `VCC`.
+This way we include the Arduino's onboard voltage regulator.
 
-I cut the cord of the power source and attached 5V & GND to the LED matrix. The LED matrix's data connection was connected to the running Arduino. Since, it did not light up straight away, I unplugged it very quickly and swapped the cables. Then the LEDs light up. In my case the cable with text was 5V. Since I was a little bit of a coward during the first try, I did not power the Arduino with my laptop, but with a USB battery I had lying around... Now, I have soldered a red cable to 5V and a black cable to GND of the power source's cord. Only then I did try the matrix with full power. **Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs**. The matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max!
+I cut the cord of the power source and attached 5V & GND to the LED matrix.
+The LED matrix's data connection was connected to the running Arduino. Since, it did not light up straight away, I unplugged it very quickly and swapped the cables.
+Then the LEDs light up. In my case the cable with text was 5V.
+Since I was a little bit of a coward during the first try, I did not power the Arduino with my laptop, but with a USB battery I had lying around...
+Now, I have soldered a red cable to 5V and a black cable to GND of the power source's cord. Only then I did try the matrix with full power.
 
-After I proudly introduced my nightstand to its new companion (the alarm), I found that the time drifts very much. So I woke a little earlier than expected. After this experience I decided to add the real time module.
+**Do not run the program with a brightness above 20 when powering the LED matrix via Arduino's power PINs**.
+The matrix [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 3.8A at max!
+
+After I proudly introduced my nightstand to its new companion (the alarm), I found that the time drifts very much.
+So I woke a little earlier than expected. After this experience I decided to add the real time module.
 
 ## Programming
 
@@ -66,13 +78,33 @@ mv rtclib RTClib
 
 ## Uploading
 
-**Add note about hitting reset**
-**Add instructions what to choose in the Arduino GUI**
+I used the [Arduino GUI](https://www.arduino.cc/en/Main/Software) for compiling and uploading the software.
+With my version of the Arduino Pro with USB (see shopping list above), I selected `Arduino Pro or Pro Mini`, chose `ATmega328 (5V, 16Mhz)` and selected the `/dev/cu.usbserial-Axxxxxxx` port.
+If you have downloaded the libraries as mentioned above, you should be able to compile and upload.
 
-In order to program the Arduino Pro Mini, please use a FTDI board (the Arduino does not have a USB connection, so we have to go through a serial connection).
+**With some models of the Arduino you may have to hit the reset button during upload.**.
+Go to the settings of the Ardunio GUI and activate verbose output during upload.
+Then when you see a big banner like the following, quickly press the reset button on the board.
+
+```text
+avrdude: Version 6.0.1, compiled on Apr 14 2015 at 16:30:25
+         Copyright (c) 2000-2005 Brian Dean, http://www.bdmicro.com/
+         Copyright (c) 2007-2009 Joerg Wunsch
+
+         System wide configuration file is "/opt/homebrew-cask/Caskroom/arduino/1.6.5/Arduino.app/Contents/Java/hardware/tools/avr/etc/avrdude.conf"
+         User configuration file is "/Users/motine/.avrduderc"
+         User configuration file does not exist or is not a regular file, skipping
+
+         Using Port                    : /dev/cu.usbserial-A50285BI
+         Using Programmer              : arduino
+         Overriding Baud Rate          : 57600
+```
+
+<!--In order to program the Arduino Pro Mini, please use a FTDI board (the Arduino does not have a USB connection, so we have to go through a serial connection).
 Here my wiring for the setup (note that I did not solder the headers to the Arduino so I can easily remove it):
 
 ![USB - FTDI - Arduino Pro Mini](https://raw.githubusercontent.com/motine/sternenwecker/master/wiring/usb-serial-aruino.png)
+-->
 
 ## Troubleshooting
 
