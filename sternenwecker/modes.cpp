@@ -69,15 +69,21 @@ void MMenu::enter() {
 
 Mode* MMenu::press() {
   switch (current) {
-    case 0: return &m_sunset;
-    case 1: return &m_set_alarm;
-    case 2: return &m_torch;
-    case 3: return &m_set_time;
+  case 0:
+    return &m_sunset;
+  case 1:
+    return &m_set_alarm;
+  case 2:
+    return &m_torch;
+  case 3:
+    return &m_set_time;
   }
   return &m_menu;
 }
 
-Mode* MMenu::longpress() { return &m_off; }
+Mode* MMenu::longpress() {
+  return &m_off;
+}
 
 Mode* MMenu::left_turn() {
   current = (current + MENU_COUNT - 1) % MENU_COUNT;
@@ -168,7 +174,9 @@ Mode* MSetTime::press() {
   }
   return NULL;
 }
-Mode* MSetTime::longpress() { return &m_menu; }
+Mode* MSetTime::longpress() {
+  return &m_menu;
+}
 Mode* MSetTime::left_turn() {
   if (state == SET_STATE_HOUR)
     hour = (hour + 24 - 1) % 24;
@@ -206,19 +214,21 @@ void MSetAlarm::enter() {
 Mode* MSetAlarm::press() {
   return &m_confirm;
 }
-Mode* MSetAlarm::longpress() { return &m_confirm; }
+Mode* MSetAlarm::longpress() {
+  return &m_confirm;
+}
 
 void MSetAlarm::change_alarm(int8_t add) {
   int8_t new_min = clock.alarm_minute + add;
   int8_t new_hour = clock.alarm_hour;
   bool new_enabled = true;
-  
+
   if (!clock.alarm_enabled && (add > 0)) { // exception: oho, we just enabled the alarm
     new_hour = MIN_ALARM_HOUR;
     new_min = 0;
     new_enabled = true;
   }
-  
+
   if (new_min < 0) {
     new_min+= 60;
     new_hour-= 1;

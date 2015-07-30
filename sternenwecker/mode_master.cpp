@@ -12,7 +12,7 @@ void ModeMaster::setup() {
 }
 void ModeMaster::loop() {
   if (current_mode==NULL) {
-    setModeUnlessNull(initial_mode);    
+    setModeUnlessNull(initial_mode);
   }
   setModeUnlessNull(current_mode->loop());
 }

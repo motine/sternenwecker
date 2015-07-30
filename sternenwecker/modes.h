@@ -24,7 +24,9 @@ class Mode {
   public:
     Mode() {};
     // if loop returns a Mode, the mode will be set by ModeMaster after completing this call.
-    virtual Mode* loop() { return NULL; };
+    virtual Mode* loop() {
+      return NULL;
+    };
     // called when the sketch initializes
     virtual void init() {};
     // called when the state is entered
@@ -32,12 +34,22 @@ class Mode {
     // called when the state is left
     virtual void leave() {};
     // called when the encoder button was pressed
-    virtual Mode* press() { return NULL; };
-    virtual Mode* longpress() { return NULL; };
-    virtual Mode* button_hold() { return NULL; };
+    virtual Mode* press() {
+      return NULL;
+    };
+    virtual Mode* longpress() {
+      return NULL;
+    };
+    virtual Mode* button_hold() {
+      return NULL;
+    };
     // called when the encoder turned clockwise or counter-clockwise
-    virtual Mode* left_turn() { return NULL; };
-    virtual Mode* right_turn() { return NULL; };
+    virtual Mode* left_turn() {
+      return NULL;
+    };
+    virtual Mode* right_turn() {
+      return NULL;
+    };
   protected:
     void show_time();
 };

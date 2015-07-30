@@ -37,12 +37,18 @@ uint32_t AlarmStrip::hsv_to_color(uint16_t hue, float saturation, float value) {
   uint8_t mi = m * 255;
 
   switch (hi) {
-    case 0:  return Color(ci+mi, xi+mi,  0+mi);
-    case 1:  return Color(xi+mi, ci+mi,  0+mi);
-    case 2:  return Color( 0+mi, ci+mi, xi+mi);
-    case 3:  return Color( 0+mi, xi+mi, ci+mi);
-    case 4:  return Color(xi+mi,  0+mi, ci+mi);
-    default: return Color(ci+mi,  0+mi, xi+mi);
+  case 0:
+    return Color(ci+mi, xi+mi,  0+mi);
+  case 1:
+    return Color(xi+mi, ci+mi,  0+mi);
+  case 2:
+    return Color( 0+mi, ci+mi, xi+mi);
+  case 3:
+    return Color( 0+mi, xi+mi, ci+mi);
+  case 4:
+    return Color(xi+mi,  0+mi, ci+mi);
+  default:
+    return Color(ci+mi,  0+mi, xi+mi);
   }
 }
 

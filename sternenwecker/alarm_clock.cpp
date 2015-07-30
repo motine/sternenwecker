@@ -40,8 +40,8 @@ void AlarmClock::check_alarm() {
     return;
   }
   if (last_alarm_millis + 61000 > millis()) { // the alarm was just fired, so we don't want to fire again
-      // TODO deal with millis() overflow
-      return;
+    // TODO deal with millis() overflow
+    return;
   }
   if ((current_hour == alarm_hour) && (current_minute == alarm_minute)) {
     alarm_callback();

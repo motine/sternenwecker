@@ -23,7 +23,7 @@ class AlarmMatrix : public Adafruit_BicolorMatrix {
     void dim();
     void middim();
     void undim();
-      
+
     // adds source on target by changing target. left, top, width and height work like the ones in drawBitmap.
     // target is assumed to be in non-pgm and source to be in pgm memory.
     void addBitmap(uint8_t target[], const uint8_t source[], uint8_t left, uint8_t top, uint8_t width, uint8_t height);
@@ -36,5 +36,5 @@ class AlarmMatrix : public Adafruit_BicolorMatrix {
     void displayOff();
     void displayTimeComponent(uint8_t number, bool dots_left, bool show_dots);
     void displayDigitAndHand(uint8_t hour, uint8_t minute);
-  };
+};
 #endif

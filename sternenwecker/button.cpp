@@ -10,7 +10,7 @@ void Button::setup() {
 
 void Button::loop() {
   int pin_state = digitalRead(pin);
-  
+
   if (millis_last_edge+BUTTON_DEBOUNCE_INTERVAL > millis()) // we are still waiting for the debounce intervall to pass by
     return;
 
