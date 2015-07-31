@@ -15,7 +15,7 @@ There is also a [table top version](https://github.com/motine/sternenwecker/tree
 - [Rotary encoder / button](http://www.conrad.com/ce/en/product/700708/Encoder-5-Vdc-0001-A-360-ALPS-STEC12E08-1-pcs) with [cap](http://www.conrad.com/ce/en/product/700619/ALPS-DK13-164A645-Rotary-Knob-For-Encoder-With-Plastic-Shaft-Rotary-button-?ref=oz)
 - [Tiny RTC](http://www.amazon.de/dp/B00NW50PA0) (Real Time Clock)
 - [External power source](http://www.amazon.de/dp/B004S7U4IO) with around 4A
-- 470 Ohm resistor, 1000μF
+- 470 Ohm resistor, 1000μF capacitor
 - [Some cables](http://www.amazon.de/dp/B00PXBVRZS) (maybe a bread board for developing)
 - [3mm MDF sheet(s)](http://www.modulor.de/en/Wood-Cork/Fibreboards/MDF-Boards/MDF-brown-uncoated.html)
 
