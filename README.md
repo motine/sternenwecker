@@ -1,10 +1,9 @@
 # sternenwecker
 
+![sternenwecker](https://raw.githubusercontent.com/motine/sternenwecker/master/sternenwecker.jpg)
+
 This branch is about the "LED strip behind the bed" version.
 There is also a [table top version](https://github.com/motine/sternenwecker/tree/single_matrix).
-
-![sternenwecker](https://raw.githubusercontent.com/motine/sternenwecker/master/sternenwecker.jpg)
-<!-- ![sternenwecker](https://raw.githubusercontent.com/motine/sternenwecker/master/box/logo.gif) -->
 
 ## Circuit
 ### Parts
@@ -42,6 +41,12 @@ The strip [needs](https://learn.adafruit.com/adafruit-neopixel-uberguide/power) 
 
 After I proudly introduced my nightstand to its new companion (the alarm), I found that the time drifted very much.
 So I woke a little earlier than expected. After this experience I decided to add the real time module...
+
+![matrix-orientation](https://raw.githubusercontent.com/motine/sternenwecker/master/wiring/matrix-orientation.jpg)
+![soldering-encoder](https://raw.githubusercontent.com/motine/sternenwecker/master/wiring/soldering-encoder.jpg)
+![soldering-multi-shrink](https://raw.githubusercontent.com/motine/sternenwecker/master/wiring/soldering-multi-shrink.jpg)
+![soldering-resistor](https://raw.githubusercontent.com/motine/sternenwecker/master/wiring/soldering-resistor.jpg)
+![soldering-strip](https://raw.githubusercontent.com/motine/sternenwecker/master/wiring/soldering-strip.jpg)
 
 ## Programming
 
@@ -113,9 +118,18 @@ I went to [FabLab Berlin](https://fablab.berlin/en/) and laser cut a small and a
 The larger version (`smallbox.svg`, not `tinybox.svg`) did fit and look better. In the file, the blue path means _cut_ and the green one means _mark_.
 This time, I did not shrink the jags to fit on by pressing them in. I did glue the box together:
 
-![boxes cut](https://raw.githubusercontent.com/motine/sternenwecker/master/box/boxes-cut.jpg)
+![boxes cut](https://raw.githubusercontent.com/motine/sternenwecker/master/box/box-cut.jpg)
 ![boxes glued](https://raw.githubusercontent.com/motine/sternenwecker/master/box/box-glue-bracket.jpg)
-![boxes glue](https://raw.githubusercontent.com/motine/sternenwecker/master/box/boxes-glue.jpg)
+![boxes glue](https://raw.githubusercontent.com/motine/sternenwecker/master/box/box-glue.jpg)
+
+## Concept
+
+![drawings](https://raw.githubusercontent.com/motine/sternenwecker/master/concept/digits-1-trim.jpeg)
+
+There was a lot of thinking about how the sternenwecker shall work. I have hardly documented anything.
+Feel free to browse the `concept` folder, [prior commits](https://github.com/motine/sternenwecker/commits/master) or the [other branch](https://github.com/motine/sternenwecker/tree/single_matrix).
+
+Please also feel free to contact me (see my [profile](https://github.com/motine)).
 
 ## Credits
 
