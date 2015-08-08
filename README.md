@@ -1,9 +1,13 @@
 # sternenwecker
 
+![sternenbett](https://raw.githubusercontent.com/motine/sternenwecker/master/sternenbett.jpg)
+
+The sternenwecker is a Arduino-based light alarm which wakes you gently. Its RGB-LED strip also serves as a nightlight. With a quick glance on the bi-color matrix, you always know what time it is. Claim back the space on your nightstand. All you need aside from the sternenwecker is a phone charger and a bar of chocolate.
+
 ![sternenwecker](https://raw.githubusercontent.com/motine/sternenwecker/master/sternenwecker.jpg)
 
-This branch is about the "LED strip behind the bed" version.
-There is also a [table top version](https://github.com/motine/sternenwecker/tree/single_matrix).
+_This branch is about the "LED strip behind the bed" version.
+There is also a [table top version](https://github.com/motine/sternenwecker/tree/single_matrix)._
 
 ## Circuit
 ### Parts
